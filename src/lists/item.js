@@ -25,6 +25,7 @@ const Comments = ({entity: {descendants, id}}) => {
 
 export default function ListItem({index, entity}) {
   const {url, title, score, by} = entity;
+  console.log('item', entity);
   return (
     <article class={styles.article}>
       <span class={styles.index}>{index}</span>

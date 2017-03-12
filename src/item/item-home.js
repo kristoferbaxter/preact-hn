@@ -22,7 +22,7 @@ class ItemView extends Component {
           <p>{thisItem.score} points by <a href={`/user/${thisItem.by}`} class={styles.link}>{thisItem.by}</a></p>
         </article>
         <div class={styles.comments}>
-          <h2>{thisItem.kids.length} comments</h2>
+          <h2>{thisItem.descendants} comments</h2>
           <LoadingView />
         </div>
       </div>

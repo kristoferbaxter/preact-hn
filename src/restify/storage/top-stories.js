@@ -2,7 +2,7 @@
 
 const uuid = require('uuid/v1');
 const fetch = require('node-fetch');
-const items = require('../items/items.js');
+const items = require('./items.js');
 
 var LATEST_UUID = '';
 var LATEST_DATA = {};

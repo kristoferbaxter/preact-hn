@@ -1,6 +1,6 @@
 'use strict';
 
-const items = require('../items/items.js');
+const items = require('../../storage/items.js');
 
 function apiTopRoute(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');

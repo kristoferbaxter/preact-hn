@@ -14,13 +14,13 @@ export default class RoutedView extends Component {
   }
 
   loader() {
-    const {load, name, delay} = this.props;
+    const {load, name, delay=DELAY} = this.props;
 
     let timeout = setTimeout(() => {
       this.setState({
         pastDelay: true
       });
-    }, DELAY);
+    }, delay);
 
     if (load) {
       load((file) => {

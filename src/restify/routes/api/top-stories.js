@@ -2,8 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const TopData = require('../top/top.js');
-const items = require('../items/items.js');
+const TopData = require('../../storage/top-stories.js');
+const items = require('../../storage/items.js');
 
 function apiTopRoute(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
