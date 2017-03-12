@@ -1,0 +1,21 @@
+.article {
+  margin-bottom: 1.5rem;
+  border-bottom: 2rem solid #f3f3f3;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.outboundLink {
+  display: block;
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: #000;
+  margin-bottom: .75rem;
+}
+
+.hostname {
+  margin-bottom: .75rem;
+  display: block;
+}
+.comments {
+  padding: 0 1.5rem;
+}

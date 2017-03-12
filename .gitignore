@@ -1,0 +1,9 @@
+# ignore all dist files
+dist/
+
+# ignore node_modules and yarn lock
+node_modules/
+yarn.lock
+
+# ignore vscode entries (best editor ever?!)
+.vscode/

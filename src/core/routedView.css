@@ -1,0 +1,8 @@
+.mainView {
+  margin: 0;
+}
+
+.viewHasHeader {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}

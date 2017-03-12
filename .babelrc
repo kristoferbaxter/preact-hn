@@ -1,0 +1,74 @@
+{
+  "env": {
+    "build.chrome": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "chrome": 52
+          },
+          "modules": false,
+          "debug": true,
+          "loose": true
+        }]
+      ]
+    },
+    "build.edge": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "edge": 14
+          },
+          "modules": false,
+          "debug": false,
+          "loose": true
+        }]
+      ]  
+    },
+    "build.safari": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "safari": 10
+          },
+          "modules": false,
+          "debug": false,
+          "loose": true
+        }]
+      ]  
+    },
+    "build.firefox": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "edge": 51
+          },
+          "modules": false,
+          "debug": false,
+          "loose": true
+        }]
+      ]  
+    },
+    "build.server": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "0.12"
+          },
+          "modules": false,
+          "debug": false,
+          "loose": true
+        }]
+      ]
+    }
+  },
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
+    }]
+  ],
+  "plugins": [
+    ["transform-react-jsx", { "pragma":"h" }]
+  ]
+}

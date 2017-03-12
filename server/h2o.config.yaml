@@ -1,0 +1,50 @@
+hosts:
+  "localhost:5080":
+    listen:
+      port: 5080
+    paths:
+      "/":
+        redirect: 
+          status: 301
+          url: "https://localhost/"
+  "localhost:5443":
+    listen:
+      port: 5443
+      ssl:
+        certificate-file: cert.pem
+        key-file: key.pem
+    paths:
+      "/":
+        proxy.reverse.url: http://localhost:8080/
+        # proxy.preserve-host: ON     # to not rewrite the incoming host:port
+        proxy.timeout.keepalive: 0  # to explicitly disable persistent connections to the application server
+        header.unset: "link"
+      "/bundle.service.worker.da8e4f9c28370f7222dc.js": #HACK!
+        file.file: ../chrome/bundle.service.worker.da8e4f9c28370f7222dc.js
+        header.add: "Cache-Control:public,max-age=31536000,immutable"
+        header.add: "timing-allow-origin:*"
+        header.add: "access-control-allow-credentials:true"
+        header.add: "access-control-allow-origin:*"
+        header.unset: "etag"
+      "/favicon.ico":
+        file.file: ../favicon.ico
+      "/dist":
+        file.dir: ../
+        header.add: "Cache-Control:public,max-age=31536000,immutable"
+        header.add: "timing-allow-origin:*"
+        header.add: "access-control-allow-credentials:true"
+        header.add: "access-control-allow-origin:*"
+        header.unset: "etag"
+      "/static":
+        file.dir: ./static
+        header.add: "Cache-Control:public,max-age=31536000,immutable"
+        header.add: "timing-allow-origin:*"
+        header.add: "access-control-allow-credentials:true"
+        header.add: "access-control-allow-origin:*"
+        header.unset: "etag"
+access-log: ./logs/h2o/access
+error-log: ./logs/h2o/error
+pid-file: ./h2o.pid
+http2-reprioritize-blocking-assets: OFF   # performance tuning option
+http2-push-preload: ON
+compress: ON # Enable Brotli and Gzip compression

@@ -1,0 +1,90 @@
+'use strict';
+
+// This is an experiment to server-render more than appshell.
+// Will complete after functionality is finished.
+
+const fetch = require('node-fetch');
+// UI Imports
+import {h} from 'preact';
+import render from 'preact-render-to-string';
+// UI Components
+import RoutedView from '../../core/routedView.js';
+import LoadingView from '../../core/loadingView.js';
+import TopHome from '../../lists/top-home.js';
+
+function defaultRoute(req, res, next) {
+  req.log.warn(req.url);
+  
+  const supportsManifest = req.userAgentClassifiction === 'chrome';
+  const resources = req.resources;
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Connection': 'Transfer-Encoding',
+    'Transfer-Encoding': 'chunked',
+    'Strict-Transport-Security': 'max-age=31557600; preload'
+  });
+
+  res.write(`<html>
+    <head>
+      <title>Preact Hacker News</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+      ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
+      <style>${resources.inline}</style>
+      ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
+      ${supportsManifest ? '<link rel="manifest" href="dist/chrome/manifest.json" />' : ''}
+      ${resources['service.worker'] ? '<meta name="config.serviceworker" id="config.serviceworker" content="/' + resources['service.worker'] + '" />' : ''}
+      <link rel="icon" href="/static/icon/favicon.ico">
+      <script src="${resources.js}" async></script>
+    </head>
+    <body>
+      <div id="mount">`);
+
+    // TODO: <script src="${resources.route.js}" async></script> in head, solve.
+
+  req.log.warn('fetch', 'https://localhost/api/top');
+  fetch('http://localhost:8080/api/top')
+  .then(response => response.json())
+  .then(function(json) {
+    const RoutedViewComponent = render(
+      <RoutedView
+        url={req.url}
+        logger={req.log.info.bind(req.log)}>
+        <TopHome uuid={json.uuid} stories={json.stories} />
+      </RoutedView>
+    );  
+
+    res.write(`
+          ${RoutedViewComponent}
+          </div>
+        </body>
+      </html>`);
+
+    res.end();
+
+    next();
+  })
+  .catch(function(error) {
+    req.log.warn('error', error);
+
+    const RoutedViewComponent = render(
+      <RoutedView
+        url={req.url}
+        logger={req.log.info.bind(req.log)}>
+        <LoadingView />
+      </RoutedView>
+    );  
+
+    res.write(`
+          ${RoutedViewComponent}
+          </div>
+        </body>
+      </html>`);
+
+    res.end();
+
+    next();
+  })
+}
+
+module.exports = defaultRoute;

@@ -1,0 +1,29 @@
+.article {
+  display: flex;
+  padding: 10px 16px;
+}
+
+.index {
+  font-size: 1.6rem;
+  margin-right: 1rem;
+  color: #333;
+  text-align: right;
+  min-width: 2rem;
+}
+
+.outboundLink {
+  display: block;
+  font-weight: 400;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+  text-decoration: none;
+  color: #000; 
+}
+
+.metadata > p {
+  font-size: .8rem;
+  color: #666;
+}
+.link {
+  color: #666;
+}
