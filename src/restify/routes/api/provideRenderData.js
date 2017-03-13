@@ -4,16 +4,16 @@
  * This is intended to start necessary effort for sync access to data for server-side rendering.
  */
 
-const TopData = require('../../storage/top-stories.js');
-const items = require('../../storage/items.js');
+const ListData = require('../../storage/lists.js');
+const ItemsData = require('../../storage/items.js');
 
 function provideRenderData(req, properties) {
   req.log.info('provideRenderData called');
 
-  const latestUUID = TopData.uuid();
-  const latestTopItems = TopData.latest().slice(0,20);
+  const latestUUID = ListData.uuid('top');
+  const latestTopItems = ListData.latest('top').slice(0,20);
   const latestEntities = latestTopItems.reduce(function(acc, cur, index) {
-    const item = items.get(cur, req.log);
+    const item = ItemsData.get(cur, req.log);
     acc[item.id] = item;
     return acc;
   }, {});
