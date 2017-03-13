@@ -9,8 +9,7 @@ const setRequestResources = require('./plugins/setRequestResources.js');
 const preloads = require('./plugins/preloads.js');
 
 // Routes
-const apiTopRoute = require('./routes/api/top-stories.js');
-const apiNewRoute = require('./routes/api/new-stories.js');
+const apiListRoute = require('./routes/api/list.js');
 const apiItemsRoute = require('./routes/api/items.js');
 const defaultRoute = require('./routes/default.js');
 
@@ -34,9 +33,8 @@ server.use(preloads());
 
 // TODO: Do not duplicate route definitions...
 // Programatically derive from a single source of truth.
-server.get('/api/top', apiTopRoute);
+server.get('/api/list/:type', apiListRoute);
 server.get('/api/items', apiItemsRoute);
-server.get('/api/new', apiNewRoute);
 server.get('/', defaultRoute);
 server.get('/top', defaultRoute);
 server.get('/top/.*', defaultRoute);
@@ -45,15 +43,15 @@ server.get('/new/.*', defaultRoute);
 server.get('/item/.*', defaultRoute);
 
 // Prefetch Data for API.
-const successfulTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {successfulTopUpdate, errorTopUpdate});
-const errorTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {successfulTopUpdate, errorTopUpdate});
-ListData.update('top', logger, {successfulNewUpdate, errorNewUpdate});
+const successfulTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
+const errorTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
+ListData.update('top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
 
 // Time to abstract.... 
 // Now more than one timeout and now over requesting even when item in memory from less than a second ago.
-const successfulNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {successfulNewUpdate, errorNewUpdate});
-const errorNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {successfulNewUpdate, errorNewUpdate});
-ListData.update('new', logger, {successfulNewUpdate, errorNewUpdate});
+const successfulNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
+const errorNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
+ListData.update('new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
 
 server.listen(8080, function() {
   console.log('%s listening at %s', server.name, server.url);

@@ -59,7 +59,7 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       }
 
       // Fetch the missing values.
-      fetch(`/api/${listType}?uuid=${uuid}&values=${JSON.stringify(missingValues)}`)
+      fetch(`/api/list/${listType}?uuid=${uuid}&values=${JSON.stringify(missingValues)}`)
         .then(response => response.json())
         .then(json => {
           list[json.uuid] = Object.assign(list[json.uuid] || {}, json.items);
@@ -75,7 +75,7 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
         });
     }
   } else {
-    fetch(`/api/${listType}`)
+    fetch(`/api/list/${listType}`)
       .then(response => response.json())
       .then(json => {
         LATEST_UUID[listType] = json.uuid;
