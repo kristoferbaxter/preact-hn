@@ -4,8 +4,8 @@
  * This is intended to start necessary effort for sync access to data for server-side rendering.
  */
 
-const TopData = require('./storage/top-stories.js');
-const items = require('./storage/items.js');
+const TopData = require('../../storage/top-stories.js');
+const items = require('../../storage/items.js');
 
 function provideRenderData(req, properties) {
   req.log.info('provideRenderData called');
@@ -19,11 +19,11 @@ function provideRenderData(req, properties) {
   }, {});
 
   return {
-    'uuid': latestUUID,
-    'from': 0,
-    'to': 20,
-    'items': latestTopItems,
-    '$entities': latestEntities
+    uuid: latestUUID,
+    from: 0,
+    to: 20,
+    items: latestTopItems,
+    entities: latestEntities
   };
 }
 

@@ -1,16 +1,13 @@
 'use strict';
 
-// This is an experiment to server-render more than appshell.
-// Will complete after functionality is finished.
-
-const fetch = require('node-fetch');
+const provideRenderData = require('../routes/api/provideRenderData.js');
 // UI Imports
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
-import TopHome from '../../lists/views/top.js';
+import ListView from '../../lists/list.js';
 
 function defaultRoute(req, res, next) {
   req.log.warn(req.url);
@@ -40,51 +37,28 @@ function defaultRoute(req, res, next) {
     <body>
       <div id="mount">`);
 
-    // TODO: <script src="${resources.route.js}" async></script> in head, solve.
+ // TODO: <script src="${resources.route.js}" async></script> in head, solve.
+ // <img src="${resources.route.js}" style="width:1;height:1;position:absolute;top:0;left:0" />
+  const RoutedViewComponent = render(
+    <RoutedView
+      url={req.url}
+      logger={req.log.info.bind(req.log)}
+      delay={0}>
+      <ListView data={provideRenderData(req)} />
+    </RoutedView>
+  );  
 
-  req.log.warn('fetch', 'https://localhost/api/top');
-  fetch('http://localhost:8080/api/top')
-  .then(response => response.json())
-  .then(function(json) {
-    const RoutedViewComponent = render(
-      <RoutedView
-        url={req.url}
-        logger={req.log.info.bind(req.log)}>
-        <TopHome uuid={json.uuid} stories={json.stories} />
-      </RoutedView>
-    );  
+  res.write(`<script>window.seed=${JSON.stringify(provideRenderData(req))}</script>`);
 
-    res.write(`
-          ${RoutedViewComponent}
-          </div>
-        </body>
-      </html>`);
+  res.write(`
+        ${RoutedViewComponent}
+        </div>
+      </body>
+    </html>`);
 
-    res.end();
+  res.end();
 
-    next();
-  })
-  .catch(function(error) {
-    req.log.warn('error', error);
-
-    const RoutedViewComponent = render(
-      <RoutedView
-        url={req.url}
-        logger={req.log.info.bind(req.log)}>
-        <LoadingView />
-      </RoutedView>
-    );  
-
-    res.write(`
-          ${RoutedViewComponent}
-          </div>
-        </body>
-      </html>`);
-
-    res.end();
-
-    next();
-  })
+  next();
 }
 
 module.exports = defaultRoute;

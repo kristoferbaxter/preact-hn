@@ -1,6 +1,5 @@
 'use strict';
 
-const fetch = require('node-fetch');
 // UI Imports
 import {h} from 'preact';
 import render from 'preact-render-to-string';
@@ -38,14 +37,14 @@ function defaultRoute(req, res, next) {
 
  // TODO: <script src="${resources.route.js}" async></script> in head, solve.
  // <img src="${resources.route.js}" style="width:1;height:1;position:absolute;top:0;left:0" />
-
   const RoutedViewComponent = render(
     <RoutedView
       url={req.url}
-      logger={req.log.info.bind(req.log)}>
+      logger={req.log.info.bind(req.log)}
+      delay={0}>
       <LoadingView />
     </RoutedView>
-  );  
+  );
 
   res.write(`
         ${RoutedViewComponent}

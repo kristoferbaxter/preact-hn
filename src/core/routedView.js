@@ -64,7 +64,7 @@ export default class RoutedView extends Component {
       <div class={viewClasses}>
         <Header />
         <div className={styles.mainView}>
-          {child ? h(child, props) : (pastDelay ? props.children : null)}
+          {child ? h(child, props) : (pastDelay || props.delay === 0 ? props.children : null)}
         </div>
       </div>
     );

@@ -7,8 +7,6 @@ import './core/api/memory.js';
 
 import './reset.css';
 
-const mountElement = document.getElementById('mount');
-
 render((
   <Router>
     <RoutedView
@@ -60,7 +58,7 @@ render((
      <LoadingView />
     </RoutedView>
   </Router>
-), null, mountElement);
+), null, document.getElementById('mount'));
 
 const serviceWorkerConfig = document.getElementById('config.serviceworker');
 if ('serviceWorker' in navigator && serviceWorkerConfig) {
