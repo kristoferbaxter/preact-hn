@@ -8,7 +8,7 @@ export default function withData(WrappedComponent, {fetchDataFunction, propertie
       super(props);
       
       this.state = {
-        data: {}
+        data: null
       };
 
       this.handlePartialData = this.handlePartialData.bind(this);
@@ -17,13 +17,14 @@ export default function withData(WrappedComponent, {fetchDataFunction, propertie
     }
 
     handlePartialData(partialData) {
-      console.log('partial', partialData);
       this.setState({
         data: partialData
       });
     }
     handleCompleteData(completeData) {
-      console.log('complete', completeData);
+      if (properties.uuid !== completeData.uuid) {
+        this.props.handleUUIDChange(completeData.uuid);
+      }
       this.setState({
         data: completeData
       });

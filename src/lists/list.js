@@ -3,11 +3,12 @@ import LoadingView from '../core/loadingView.js';
 import ListItem from '../lists/item.js';
 
 export default class ListView extends Component {
-  render({data: {items, entities}}) {
-    if (!items || items === null) {
+  render({data}) {
+    if (!data || data === null) {
       return <LoadingView />;
     }
 
+    const {items, entities} = data;
     return (
       <main>
         {Object.keys(items).map(item => {
