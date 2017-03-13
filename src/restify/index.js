@@ -1,8 +1,7 @@
 const restify = require('restify');
 const bunyan = require('bunyan');
 const WebpackResources = require('./resources.js');
-const TopData = require('./storage/top-stories.js');
-const NewData = require('./storage/new-stories.js');
+const ListData = require('./storage/lists.js');
 
 // Restify Plugins
 const classifyBrowser = require('./plugins/classifyBrowser.js');
@@ -46,15 +45,15 @@ server.get('/new/.*', defaultRoute);
 server.get('/item/.*', defaultRoute);
 
 // Prefetch Data for API.
-const successfulTopUpdate = () => setTimeout(TopData.update, 600000, logger, successfulTopUpdate, errorTopUpdate);
-const errorTopUpdate = () => setTimeout(TopData.update, 600000, logger, successfulTopUpdate, errorTopUpdate);
-TopData.update(logger, successfulTopUpdate, errorTopUpdate);
+const successfulTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {successfulTopUpdate, errorTopUpdate});
+const errorTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {successfulTopUpdate, errorTopUpdate});
+ListData.update('top', logger, {successfulNewUpdate, errorNewUpdate});
 
 // Time to abstract.... 
 // Now more than one timeout and now over requesting even when item in memory from less than a second ago.
-const successfulNewUpdate = () => setTimeout(NewData.update, 600000, logger, successfulNewUpdate, errorNewUpdate);
-const errorNewUpdate = () => setTimeout(NewData.update, 600000, logger, successfulNewUpdate, errorNewUpdate);
-NewData.update(logger, successfulNewUpdate, errorNewUpdate);
+const successfulNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {successfulNewUpdate, errorNewUpdate});
+const errorNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {successfulNewUpdate, errorNewUpdate});
+ListData.update('new', logger, {successfulNewUpdate, errorNewUpdate});
 
 server.listen(8080, function() {
   console.log('%s listening at %s', server.name, server.url);

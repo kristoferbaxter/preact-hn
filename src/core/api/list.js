@@ -1,14 +1,7 @@
 'use strict';
 
 import {MemoryRetrieveAll, MemoryStore} from './memory.js';
-
-const LIST_TYPES = {
-  top: 'top',
-  new: 'new',
-  show: 'show',
-  ask: 'ask',
-  jobs: 'jobs'
-};
+import LIST_TYPES from '../../restify/storage/list-types.js';
 
 let lists = {};
 let LATEST_UUID = {};
