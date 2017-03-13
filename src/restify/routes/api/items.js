@@ -1,15 +1,15 @@
 'use strict';
 
-const items = require('../../storage/items.js');
+const ItemsData = require('../../storage/items.js');
 
-function apiTopRoute(req, res, next) {
+function apiItemsRoute(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
 
   const ItemsToRetrieve = JSON.parse(req.query.items);
 
   res.send({
     '$entities': ItemsToRetrieve.reduce(function(acc, cur, index) {
-      const item = items.get(cur, req.log);
+      const item = ItemsData.get(cur, req.log);
       acc[item.id] = item;
       return acc;
     }, {})
@@ -18,4 +18,4 @@ function apiTopRoute(req, res, next) {
   next();
 }
 
-module.exports = apiTopRoute;
+module.exports = apiItemsRoute;
