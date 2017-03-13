@@ -1,10 +1,10 @@
 import {h, Component} from 'preact';
-import withData from '../core/withData.hoc.js';
+import withData from '../../core/withData.hoc.js';
 
-import {GetItems} from '../core/api/items.js';
-import LoadingView from '../core/loadingView.js';
+import {GetItems} from '../../core/api/items.js';
+import LoadingView from '../../core/loadingView.js';
 
-import styles from './item-home.css';
+import styles from './item.css';
 
 class ItemView extends Component {
   render({matches: {id}, data}) {

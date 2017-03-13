@@ -1,6 +1,6 @@
 import {h, Component} from 'preact';
 import LoadingView from '../core/loadingView.js';
-import ListItem from '../lists/item.js';
+import ListItem from './item.js';
 
 export default class ListView extends Component {
   render({data}) {

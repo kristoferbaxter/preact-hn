@@ -39,7 +39,7 @@ export default function withData(WrappedComponent, {fetchDataFunction, propertie
         partial: this.handlePartialData,
         complete: this.handleCompleteData,
         error: this.handleErrorData  
-      })
+      });
     }
 
     render(props, {data}) {

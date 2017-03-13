@@ -7,7 +7,6 @@ import render from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
-import TopHome from '../../lists/top-home.js';
 
 function defaultRoute(req, res, next) {
   req.log.warn(req.url);
