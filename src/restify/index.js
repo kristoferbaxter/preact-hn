@@ -35,12 +35,7 @@ server.use(preloads());
 // Programatically derive from a single source of truth.
 server.get('/api/list/:type', apiListRoute);
 server.get('/api/items', apiItemsRoute);
-server.get('/', defaultRoute);
-server.get('/top', defaultRoute);
-server.get('/top/.*', defaultRoute);
-server.get('/new', defaultRoute);
-server.get('/new/.*', defaultRoute);
-server.get('/item/.*', defaultRoute);
+server.get('/.*', defaultRoute);
 
 // Prefetch Data for API.
 ListData.init(logger);
