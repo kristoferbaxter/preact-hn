@@ -18,11 +18,24 @@ const FETCH_LOCATIONS = {
   [LIST_TYPES['new']]: 'https://hacker-news.firebaseio.com/v0/newstories.json',
   [LIST_TYPES['show']]: 'https://hacker-news.firebaseio.com/v0/showstories.json',
   [LIST_TYPES['ask']]: 'https://hacker-news.firebaseio.com/v0/askstories.json',
-  [LIST_TYPES['jobs']]: 'https://hacker-news.firebaseio.com/v0/jobstories' 
+  [LIST_TYPES['jobs']]: 'https://hacker-news.firebaseio.com/v0/jobstories.json' 
+}
+
+/*
+ * log {BunyanLogger}
+ */
+function init(log) {
+  const success = (type) => setTimeout(update, 600000, type, log, {success: success, error: error});
+  const error = (type) => setTimeout(update, 600000, type, log, {success: success, error: error});
+
+  Object.keys(LIST_TYPES).forEach(function(type) {
+    update(type, log, {success: success, error: error});
+  });
 }
 
 /*
  * type {String}:MemberOf(LIST_TYPES)
+ * log {BunyanLogger}
  * callbacks {Object}
  *  - success {Function}
  *  - error {Function}
@@ -55,5 +68,6 @@ module.exports = {
   uuid: (type) => LATEST_UUID[type],
   latest: (type) => LATEST_DATA[type],
   all: () => IN_MEMORY_DATA,
-  update: update
+  update: update,
+  init: init
 };

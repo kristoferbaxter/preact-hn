@@ -43,15 +43,7 @@ server.get('/new/.*', defaultRoute);
 server.get('/item/.*', defaultRoute);
 
 // Prefetch Data for API.
-const successfulTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
-const errorTopUpdate = () => setTimeout(ListData.update, 600000, 'top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
-ListData.update('top', logger, {success: successfulTopUpdate, error: errorTopUpdate});
-
-// Time to abstract.... 
-// Now more than one timeout and now over requesting even when item in memory from less than a second ago.
-const successfulNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
-const errorNewUpdate = () => setTimeout(ListData.update, 600000, 'new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
-ListData.update('new', logger, {success: successfulNewUpdate, error: errorNewUpdate});
+ListData.init(logger);
 
 server.listen(8080, function() {
   console.log('%s listening at %s', server.name, server.url);
