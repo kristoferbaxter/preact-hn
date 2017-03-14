@@ -3,6 +3,7 @@ import {Router} from 'preact-router';
 
 import RoutedView from './core/routedView.js';
 import LoadingView from './core/loadingView.js';
+import LIST_TYPES from './restify/storage/list-types.js';
 import './core/api/memory.js';
 
 import './reset.css';
@@ -11,25 +12,29 @@ render((
   <Router>
     <RoutedView
       path='/new'  
-      load={require('bundle-loader?lazy&name=NewHome!./lists/views/new.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      listType={LIST_TYPES.new}
       name='NewHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/show'  
-      load={require('bundle-loader?lazy&name=ShowHome!./lists/views/show.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      listType={LIST_TYPES.show}
       name='ShowHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/ask'  
-      load={require('bundle-loader?lazy&name=AskHome!./lists/views/ask.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      listType={LIST_TYPES.ask}
       name='AskHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/jobs'  
-      load={require('bundle-loader?lazy&name=JobsHome!./lists/views/jobs.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      listType={LIST_TYPES.jobs}
       name='JobsHome'>
       <LoadingView />
     </RoutedView>
@@ -53,7 +58,8 @@ render((
     </RoutedView>
     <RoutedView
       path="/" default
-      load={require('bundle-loader?lazy&name=TopHome!./lists/views/top.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      listType={LIST_TYPES.top}
       name='TopHome'>
      <LoadingView />
     </RoutedView>

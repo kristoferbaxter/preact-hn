@@ -1,7 +1,7 @@
 import {h, Component} from 'preact';
-import {GetListApi} from '../core/api/list.js';
-import withData from '../core/withData.hoc.js';
-import ListView from './list.js';
+import {GetListApi} from '../../core/api/list.js';
+import withData from '../../core/withData.hoc.js';
+import ListView from '../list.js';
 
 export default function withListType(listType) {
   return class extends Component {

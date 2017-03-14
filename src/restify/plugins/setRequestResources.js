@@ -12,8 +12,10 @@ function setRequestResources(resourcesList) {
     
     if (/\/item/.test(req.url)) {
       return routeResources && routeResources.ItemHome;
+    } else if (/\/user/.test(req.url)) {
+      return routeResources && routeResources.UserHome;
     }
-    return routeResources && routeResources.TopHome;
+    return routeResources && routeResources.ListHome;
   }
 
   function setResources(req, res, next) {
