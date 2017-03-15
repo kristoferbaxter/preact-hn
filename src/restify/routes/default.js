@@ -28,13 +28,13 @@ function defaultRoute(req, res, next) {
       <style>${resources.inline}</style>
       ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
       ${supportsManifest ? '<link rel="manifest" href="dist/chrome/manifest.json" />' : ''}
-      ${resources['service.worker'] ? '<meta name="config.serviceworker" id="config.serviceworker" content="/' + resources['service.worker'] + '" />' : ''}
       <link rel="icon" href="/static/icon/favicon.ico">
       <script src="${resources.js}" async></script>
     </head>
     <body>
       <div id="mount">`);
 
+ // ${resources['service.worker'] ? '<meta name="config.serviceworker" id="config.serviceworker" content="/' + resources['service.worker'] + '" />' : ''}
  // TODO: <script src="${resources.route.js}" async></script> in head, solve.
  // <img src="${resources.route.js}" style="width:1;height:1;position:absolute;top:0;left:0" />
   const RoutedViewComponent = render(

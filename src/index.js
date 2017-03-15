@@ -66,10 +66,11 @@ render((
   </Router>
 ), null, document.getElementById('mount'));
 
-const serviceWorkerConfig = document.getElementById('config.serviceworker');
-if ('serviceWorker' in navigator && serviceWorkerConfig) {
+require('offline-plugin/runtime').install();
+/*
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register(serviceWorkerConfig.content).then((registration) => {
+    navigator.serviceWorker.register('/sw.js').then((registration) => {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }).catch((err) => {
@@ -78,3 +79,4 @@ if ('serviceWorker' in navigator && serviceWorkerConfig) {
     });
   });
 }
+*/

@@ -2,6 +2,7 @@ const path = require('path');
 const BabiliPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeJsPlugin = require("optimize-js-plugin");
+const OfflinePlugin = require('offline-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
@@ -9,8 +10,8 @@ const BROWSER_MIN_SUPPORTED_VERSION = 52;
 
 module.exports = {
   entry: {
-    'application': './src/index.js',
-    'service.worker': './src/core/service.worker.js'
+    'application': './src/index.js'
+    //'service.worker': './src/core/service.worker.js'
   },
   output: {
     filename: 'bundle.[name].[chunkhash].js',
@@ -31,7 +32,16 @@ module.exports = {
     ], {copyUnmodified: true}),
     new BabiliPlugin({unsafe: false}),
     new OptimizeJsPlugin({sourceMap: false}),
-    CommonOptions.ExtractCSSPlugin
+    CommonOptions.ExtractCSSPlugin,
+    new OfflinePlugin({
+      caches: 'all',
+      externals: ['/'],
+      autoUpdate: false,
+      AppCache: false,
+      ServiceWorker: {
+        publicPath: '/sw.js'
+      }
+    })
   ],
   resolve: {
     modules: ['node_modules'],
