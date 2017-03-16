@@ -41,6 +41,7 @@ export default class RoutedView extends Component {
   componentWillReceiveProps({name}) {
     if (this.props.name !== name) {
       let nextChild = this.lazyLoadedRoutes[name];
+
       this.setState({
         child: nextChild
       }, function() {
@@ -49,7 +50,7 @@ export default class RoutedView extends Component {
     }
   }
 
-  render(props, {child, loaded, pastDelay}) {
+  render(props, {child, pastDelay}) {
     this.context = Object.assign(this.context, {
       url: props.url,
       logger: this.logger

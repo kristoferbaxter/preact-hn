@@ -22,9 +22,9 @@ export default function withListType(listType) {
     handleUUIDChange(uuid) {
       this.state.uuid = uuid;
     }
-    render({fetchDataFunction}) {
+    render() {
       const ViewWithData = withData(ListView, {
-        fetchDataFunction: fetchDataFunction || GetListApi,
+        fetchDataFunction: GetListApi,
         properties: this.state
       });
 

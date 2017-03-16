@@ -10,14 +10,16 @@ function apiNewRoute(req, res, next) {
 
   const type = req.params.type;
   const latestUUID = ListData.uuid(type);
-  const latestNewItems = ListData.latest(type).slice(0,20);
+  const latestNewItems = ListData.latest(type);
+  const rangedItems = latestNewItems.slice(0,20);
 
   res.send({
     'uuid': latestUUID,
     'from': 0,
     'to': 20,
-    'items': latestNewItems,
-    '$entities': latestNewItems.reduce(function(acc, cur, index) {
+    'max': latestNewItems.length,
+    'items': rangedItems,
+    '$entities': rangedItems.reduce(function(acc, cur, index) {
       const item = ItemsData.get(cur, req.log);
       acc[item.id] = item;
       return acc;

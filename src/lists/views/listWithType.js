@@ -1,10 +1,32 @@
 import {h, Component} from 'preact';
-import withListType from './withListType.hoc.js';
+import {GetListApi} from '../../core/api/list.js';
+import withData from '../../core/withData.hoc.js';
+import ListView from '../list.js';
 
 export default class ListHome extends Component {
-  render({listType}) {
-    const ListHomeWithListType = withListType(listType);
+  constructor(props) {
+    super(props);
 
-    return <ListHomeWithListType />;
+    this.handleUUIDChange = this.handleUUIDChange.bind(this);
+  }
+
+  handleUUIDChange(uuid) {
+    this.state.uuid = uuid;
+  }
+  componentWillReceiveProps() {
+    this.state.uuid = null;
+  }
+  
+  render({listType}, {uuid}) {
+    const ViewWithData = withData(ListView, {
+      fetchDataFunction: GetListApi,
+      properties: Object.assign({
+        from: 0,
+        to: 20,
+        listType: listType
+      }, uuid ? {uuid: uuid} : {})
+    });
+
+    return <ViewWithData handleUUIDChange={this.handleUUIDChange} />
   }
 }

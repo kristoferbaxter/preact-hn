@@ -3,11 +3,13 @@
 import {MemoryRetrieveAll, MemoryStore} from './memory.js';
 import LIST_TYPES from '../../restify/storage/list-types.js';
 
-let lists = {};
+let LISTS = {};
+let LIST_MAX = {};
 let LATEST_UUID = {};
 // Pre-populate based on how many list types are supported.
 Object.keys(LIST_TYPES).forEach(function(list) {
-  lists[list] = {};
+  LISTS[list] = {};
+  LIST_MAX[list] = null;
   LATEST_UUID[list] = null;
 });
 
@@ -19,7 +21,7 @@ return {
 }
 */
 function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks) {
-  const list = lists[listType];
+  const list = LISTS[listType];
   const stored = uuid && list[uuid];
 
   if (stored) {
@@ -40,6 +42,7 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       callbacks.complete({
         uuid: uuid,
         items: cachedItems,
+        max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
     } else {
@@ -47,6 +50,7 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       callbacks.partial({
         uuid: uuid,
         items: cachedItems,
+        max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
 
@@ -59,15 +63,18 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       }
 
       // Fetch the missing values.
+      // This likely needs to be a /api/items call. Verify!
       fetch(`/api/list/${listType}?uuid=${uuid}&values=${JSON.stringify(missingValues)}`)
         .then(response => response.json())
         .then(json => {
           list[json.uuid] = Object.assign(list[json.uuid] || {}, json.items);
+          LIST_MAX[listType] = json.max;
           MemoryStore(json.$entities);
 
           callbacks.complete({
             uuid: uuid,
             items: list[json.uuid],
+            max: json.max,
             entities: MemoryRetrieveAll()
           });
         }).catch(error => {
@@ -80,11 +87,13 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       .then(json => {
         LATEST_UUID[listType] = json.uuid;
         list[json.uuid] = Object.assign(list[json.uuid] || {}, json.items);
+        LIST_MAX[listType] = json.max;
         MemoryStore(json.$entities);
 
         callbacks.complete({
           uuid: json.uuid,
           items: list[json.uuid],
+          max: json.max,
           entities: MemoryRetrieveAll()
         });
       }).catch(error => {
