@@ -12,28 +12,56 @@ render((
   <Router>
     <RoutedView
       path='/new'  
-      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
+      listType={LIST_TYPES.new}
+      name='NewHome'>
+      <LoadingView />
+    </RoutedView>
+    <RoutedView
+      path='/new/:page'  
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
       listType={LIST_TYPES.new}
       name='NewHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/show'  
-      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
+      listType={LIST_TYPES.show}
+      name='ShowHome'>
+      <LoadingView />
+    </RoutedView>
+    <RoutedView
+      path='/show/:page'  
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
       listType={LIST_TYPES.show}
       name='ShowHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/ask'  
-      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
+      listType={LIST_TYPES.ask}
+      name='AskHome'>
+      <LoadingView />
+    </RoutedView>
+    <RoutedView
+      path='/ask/:page'  
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
       listType={LIST_TYPES.ask}
       name='AskHome'>
       <LoadingView />
     </RoutedView>
     <RoutedView
       path='/jobs'  
-      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
+      listType={LIST_TYPES.jobs}
+      name='JobsHome'>
+      <LoadingView />
+    </RoutedView>
+    <RoutedView
+      path='/jobs/:page'  
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
       listType={LIST_TYPES.jobs}
       name='JobsHome'>
       <LoadingView />
@@ -57,8 +85,8 @@ render((
       <LoadingView />
     </RoutedView>
     <RoutedView
-      path="/" default
-      load={require('bundle-loader?lazy&name=ListHome!./lists/views/listWithType.js')}
+      path="/top/:page" default
+      load={require('bundle-loader?lazy&name=ListHome!./lists/views/list.js')}
       listType={LIST_TYPES.top}
       name='TopHome'>
      <LoadingView />

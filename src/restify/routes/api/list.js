@@ -9,16 +9,21 @@ function apiNewRoute(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
 
   const type = req.params.type;
+  const from = parseInt(req.query.from || 0, 10);
+  const to = parseInt(req.query.to || 20, 10);
   const latestUUID = ListData.uuid(type);
   const latestNewItems = ListData.latest(type);
-  const rangedItems = latestNewItems.slice(0,20);
+  const rangedItems = latestNewItems.slice(from,to);
 
   res.send({
     'uuid': latestUUID,
-    'from': 0,
-    'to': 20,
+    'from': from,
+    'to': to,
     'max': latestNewItems.length,
-    'items': rangedItems,
+    'items': rangedItems.reduce(function(acc, cur, index) {
+      acc[index+from] = cur;
+      return acc;
+    }, {}),
     '$entities': rangedItems.reduce(function(acc, cur, index) {
       const item = ItemsData.get(cur, req.log);
       acc[item.id] = item;

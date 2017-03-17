@@ -20,7 +20,7 @@ return {
   error: function()
 }
 */
-function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks) {
+function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callbacks) {
   const list = LISTS[listType];
   const stored = uuid && list[uuid];
 
@@ -35,13 +35,14 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       cachedItems[key] = stored[key];
     });
 
-    if (cachedKeys.length = ((to-from) + 1)) {
+    if (cachedKeys.length >= (to-from)) {
       // If the filtered items (only ones within the range of from->to) 
       // has a length equal to the length between from and to...
       // then all the items are present in the cachedKeys.
       callbacks.complete({
         uuid: uuid,
         items: cachedItems,
+        type: listType,
         max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
@@ -50,30 +51,26 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
       callbacks.partial({
         uuid: uuid,
         items: cachedItems,
+        type: listType,
         max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
 
-      // Find what is missing in the range.
-      let missingValues = [];
-      for (let iterator = from; iterator < to; iterator++) {
-        if (!cachedItems[iterator]) {
-          missingValues.push(iterator);
-        }
-      }
-
       // Fetch the missing values.
-      // This likely needs to be a /api/items call. Verify!
-      fetch(`/api/list/${listType}?uuid=${uuid}&values=${JSON.stringify(missingValues)}`)
+      fetch(`/api/list/${listType}?uuid=${uuid}&from=${from}&to=${to}`)
         .then(response => response.json())
         .then(json => {
+          LATEST_UUID[listType] = json.uuid;
           list[json.uuid] = Object.assign(list[json.uuid] || {}, json.items);
           LIST_MAX[listType] = json.max;
           MemoryStore(json.$entities);
 
           callbacks.complete({
-            uuid: uuid,
-            items: list[json.uuid],
+            uuid: json.uuid,
+            items: Object.assign({}, ...Object.keys(list[json.uuid])
+                        .filter(key => key >= from && key <= to)
+                        .map(key => ({[key]: list[json.uuid][key]}))),
+            type: listType,
             max: json.max,
             entities: MemoryRetrieveAll()
           });
@@ -82,7 +79,7 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
         });
     }
   } else {
-    fetch(`/api/list/${listType}`)
+    fetch(`/api/list/${listType}?from=${from}&to=${to}`)
       .then(response => response.json())
       .then(json => {
         LATEST_UUID[listType] = json.uuid;
@@ -92,7 +89,10 @@ function GetListApi({listType, from, to, uuid=LATEST_UUID[listType]}, callbacks)
 
         callbacks.complete({
           uuid: json.uuid,
-          items: list[json.uuid],
+          items: Object.assign({}, ...Object.keys(list[json.uuid])
+                        .filter(key => key >= from && key <= to)
+                        .map(key => ({[key]: list[json.uuid][key]}))),
+          type: listType,
           max: json.max,
           entities: MemoryRetrieveAll()
         });
