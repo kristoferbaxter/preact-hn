@@ -2,6 +2,7 @@
 
 import {MemoryRetrieveAll, MemoryStore} from './memory.js';
 import LIST_TYPES from '../../restify/storage/list-types.js';
+import {ITEMS_PER_PAGE} from '../../lists/constants.js';
 
 let LISTS = {};
 let LIST_MAX = {};
@@ -20,9 +21,11 @@ return {
   error: function()
 }
 */
-function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callbacks) {
+function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
   const list = LISTS[listType];
   const stored = uuid && list[uuid];
+  const from = (page-1) * ITEMS_PER_PAGE;
+  const to = from + ITEMS_PER_PAGE;
 
   if (stored) {
     // The memory store has data for this uuid, filter the data for the range requested (from->to).
@@ -43,6 +46,7 @@ function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callb
         uuid: uuid,
         items: cachedItems,
         type: listType,
+        page: page,
         max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
@@ -52,6 +56,7 @@ function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callb
         uuid: uuid,
         items: cachedItems,
         type: listType,
+        page: page,
         max: LIST_MAX[listType],
         entities: MemoryRetrieveAll()
       });
@@ -71,6 +76,7 @@ function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callb
                         .filter(key => key >= from && key <= to)
                         .map(key => ({[key]: list[json.uuid][key]}))),
             type: listType,
+            page: page,
             max: json.max,
             entities: MemoryRetrieveAll()
           });
@@ -93,6 +99,7 @@ function GetListApi({listType, from=0, to=20, uuid=LATEST_UUID[listType]}, callb
                         .filter(key => key >= from && key <= to)
                         .map(key => ({[key]: list[json.uuid][key]}))),
           type: listType,
+          page: page,
           max: json.max,
           entities: MemoryRetrieveAll()
         });

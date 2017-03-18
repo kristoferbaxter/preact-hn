@@ -2,6 +2,9 @@
   display: flex;
   padding: 10px 16px;
 }
+.article:first-of-type {
+  padding-top: 5rem;
+}
 
 .index {
   font-size: 1.6rem;

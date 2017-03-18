@@ -3,8 +3,6 @@ import {GetListApi} from '../../core/api/list.js';
 import withData from '../../core/withData.hoc.js';
 import ListView from '../list.js';
 
-const ITEMS_PER_PAGE = 20;
-
 export default class ListHome extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +21,7 @@ export default class ListHome extends Component {
     const ViewWithData = withData(ListView, {
       fetchDataFunction: GetListApi,
       properties: Object.assign({
-        from: page ? ((page-1) * ITEMS_PER_PAGE) : 0,
-        to: page ? (((page-1) * ITEMS_PER_PAGE) + 20) : 20,
+        page: page,
         listType: listType
       }, uuid ? {uuid: uuid} : {})
     });

@@ -9,8 +9,7 @@ const BROWSER_MIN_SUPPORTED_VERSION = 14;
 
 module.exports = {
   entry: {
-    'application': './src/index.js',
-    'service.worker': './src/core/service.worker.js'
+    'application': './src/index.js'
   },
   output: {
     filename: 'bundle.[name].[chunkhash].js',

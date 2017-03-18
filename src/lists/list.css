@@ -1,0 +1,21 @@
+.pagination {
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 1rem solid #f3f3f3;
+  position: fixed;
+  width: 100%;
+  top: 48px;
+  background: #fff;
+  height: 4rem;
+}
+.pages {
+  margin: 0 1rem;
+}
+
+.navigate {
+  text-decoration: none;
+  color: #000;
+}
+.disabled {
+  color: #666;
+}

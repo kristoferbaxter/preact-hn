@@ -11,7 +11,6 @@ const BROWSER_MIN_SUPPORTED_VERSION = 52;
 module.exports = {
   entry: {
     'application': './src/index.js'
-    //'service.worker': './src/core/service.worker.js'
   },
   output: {
     filename: 'bundle.[name].[chunkhash].js',
