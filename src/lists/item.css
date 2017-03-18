@@ -1,17 +1,17 @@
 .article {
   display: flex;
-  padding: 10px 16px;
+  padding: .5rem 1rem .5rem 0;
 }
 .article:first-of-type {
-  padding-top: 5rem;
+  padding-top: 4.5rem;
 }
 
 .index {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   margin-right: 1rem;
   color: #333;
   text-align: right;
-  min-width: 2rem;
+  min-width: 3rem;
 }
 
 .outboundLink {

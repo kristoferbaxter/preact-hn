@@ -1,12 +1,14 @@
 .pagination {
   text-align: center;
-  padding: 1rem 0;
-  border-bottom: 1rem solid #f3f3f3;
   position: fixed;
   width: 100%;
   top: 48px;
   background: #fff;
-  height: 4rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .pages {
   margin: 0 1rem;
@@ -18,4 +20,5 @@
 }
 .disabled {
   color: #666;
+  pointer-events: none;
 }
