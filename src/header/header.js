@@ -6,7 +6,7 @@ import Logo from '../icons/logo.js';
 import styles from './header.css';
 
 const Item = ({href, text}, {url}) => {
-  const hrefRegex = href === '/' ? /\/$/ : new RegExp(href);
+  const hrefRegex = href === '/' ? /(\/$|\/top)/ : new RegExp(href);
 
   return (
     <li class={styles.item}>
