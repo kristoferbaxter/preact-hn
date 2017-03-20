@@ -29,7 +29,6 @@ function defaultRoute(req, res, next) {
       ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
       ${supportsManifest ? '<link rel="manifest" href="dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icon/favicon.ico">
-      <script src="${resources.js}" async></script>
     </head>
     <body>
       <div id="mount">`);
@@ -49,6 +48,8 @@ function defaultRoute(req, res, next) {
   res.write(`
         ${RoutedViewComponent}
         </div>
+        <script src="${resources.js}"></script>
+        <script src="${resources.route.js}"></script>
       </body>
     </html>`);
 
