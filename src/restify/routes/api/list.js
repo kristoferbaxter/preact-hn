@@ -26,7 +26,9 @@ function apiNewRoute(req, res, next) {
     }, {}),
     '$entities': rangedItems.reduce(function(acc, cur, index) {
       const item = ItemsData.get(cur, req.log);
-      acc[item.id] = item;
+      if (item) {
+        acc[item.id] = item;
+      }
       return acc;
     }, {})
   });

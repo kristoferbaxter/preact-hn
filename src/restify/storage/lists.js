@@ -53,7 +53,10 @@ function update(type, log, callbacks) {
       log.warn(`uuid: ${thisUpdateUUID} retrieved`);
 
       // Ask the items to be pre-cached.
-      json.forEach((item) => items.get(item, log));
+      json.forEach((item, index) => {
+        log.info(`please store ${item}, index: ${index}, type: ${type}`);
+        items.store(item, log)
+      });
       
       callbacks.success();  
     })

@@ -11,6 +11,7 @@ const preloads = require('./plugins/preloads.js');
 // Routes
 const apiListRoute = require('./routes/api/list.js');
 const apiItemsRoute = require('./routes/api/items.js');
+const apiCommentsRoute = require('./routes/api/comments.js');
 const defaultRoute = require('./routes/default.js');
 
 // Server Constants
@@ -35,6 +36,7 @@ server.use(preloads());
 // Programatically derive from a single source of truth.
 server.get('/api/list/:type', apiListRoute);
 server.get('/api/items', apiItemsRoute);
+server.get('/api/comments/:id', apiCommentsRoute);
 server.get('/.*', defaultRoute);
 
 // Prefetch Data for API.

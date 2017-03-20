@@ -1,8 +1,8 @@
 import {h, Component} from 'preact';
 import withData from '../../core/withData.hoc.js';
-
 import {GetItems} from '../../core/api/items.js';
 import LoadingView from '../../core/loadingView.js';
+import Comments from './comments.js';
 
 import styles from './item.css';
 
@@ -12,18 +12,18 @@ class ItemView extends Component {
       return <LoadingView />;
     }
 
-    const thisItem = data[parseInt(id, 10)];
-    const hostname = new URL(thisItem.url).hostname;
+    const thisId = parseInt(id, 10);
+    const {url, title, score, by, descendants} = data[thisId];
     return (
       <div class={styles.wrapper}>
         <article class={styles.article}>
-          <h1><a href={thisItem.url} class={styles.outboundLink}>{thisItem.title}</a></h1>
-          <small class={styles.hostname}>({new URL(thisItem.url).hostname})</small>
-          <p>{thisItem.score} points by <a href={`/user/${thisItem.by}`} class={styles.link}>{thisItem.by}</a></p>
+          <h1><a href={url} class={styles.outboundLink}>{title}</a></h1>
+          {url && <small class={styles.hostname}>({new URL(url).hostname})</small>}
+          <p>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
         </article>
         <div class={styles.comments}>
-          <h2>{thisItem.descendants} comments</h2>
-          <LoadingView />
+          <h2>{descendants} comments</h2>
+          <Comments root={thisId} />
         </div>
       </div>
     );
