@@ -24,7 +24,7 @@ function determineListRange(page) {
 function deriveResponse({type, to, from, page}, json) {
   const {uuid, items, max, $entities} = json;
 
-  LATEST_UUID[type] = uuid;
+  setUUID(type, uuid);
   MemoryStore({[uuid]: Object.assign(items, MemoryRetrieve(uuid))});
   LIST_MAX[type] = max;
   MemoryStore($entities);
@@ -39,6 +39,10 @@ function deriveResponse({type, to, from, page}, json) {
     max,
     entities: MemoryRetrieveAll()
   };
+}
+
+function setUUID(type, uuid) {
+  LATEST_UUID[type] = uuid;
 }
 
 /*
@@ -97,5 +101,6 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
 
 export {
   GetListApi,
-  determineListRange
+  determineListRange,
+  setUUID
 };

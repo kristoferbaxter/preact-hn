@@ -9,6 +9,7 @@ function serverListData(req, properties) {
   let json = List.generateJSON('top', 0, 20);
 
   list.entities = list.$entities;
+  list.$entities = null;
   return list;
 }
 

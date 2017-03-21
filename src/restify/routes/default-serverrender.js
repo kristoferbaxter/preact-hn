@@ -63,6 +63,7 @@ function defaultRoute(req, res, next) {
   res.write(`
         ${RoutedViewComponent}
         </div>
+        <script>window.seed=${JSON.stringify(data)};</script>
         <script src="${resources.js}"></script>
         <script src="${resources.route.js}"></script>
       </body>
