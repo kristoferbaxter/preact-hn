@@ -73,4 +73,6 @@ function apiCommentsRoute(req, res, next) {
   next();
 }
 
-module.exports = apiCommentsRoute;
+module.exports = {
+  route: apiCommentsRoute
+};

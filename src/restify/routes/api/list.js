@@ -2,21 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
+import {determineListRange} from '../../../core/api/list.js';
 const ListData = require('../../storage/lists.js');
 const ItemsData = require('../../storage/items.js');
 
-function apiNewRoute(req, res, next) {
-  res.setHeader('content-type', 'application/json; charset=utf-8');
-
-  const type = req.params.type;
-  const from = parseInt(req.query.from || 0, 10);
-  const to = parseInt(req.query.to || 20, 10);
-  const latestUUID = ListData.uuid(type);
+function generateJSON(req, {type, from, to, uuid}) {
   const latestNewItems = ListData.latest(type);
   const rangedItems = latestNewItems.slice(from,to);
 
-  res.send({
-    'uuid': latestUUID,
+  return {
+    'uuid': uuid,
     'from': from,
     'to': to,
     'max': latestNewItems.length,
@@ -31,9 +26,34 @@ function apiNewRoute(req, res, next) {
       }
       return acc;
     }, {})
-  });
+  }
+}
+
+function apiListRoute(req, res, next) {
+  res.setHeader('content-type', 'application/json; charset=utf-8');
+
+  const type = req.params.type;
+  const from = parseInt(req.query.from || 0, 10);
+  const to = parseInt(req.query.to || 20, 10);
+  const uuid = req.query.uuid || ListData.uuid(type);
+  
+  res.send(generateJSON(req, {type, from, to, uuid}));
 
   next();
 }
 
-module.exports = apiNewRoute;
+function serverListRoute(req, {type}) {
+  const page = req.params.id || 1;
+  const {from, to} = determineListRange(page);
+  let json = generateJSON(req, {type: type, from: from, to: to, uuid: ListData.uuid(type)});
+
+  json.entities = json.$entities;
+  json.page = page
+  req.log.warn('serverListRoute', json);
+  return json;
+}
+
+module.exports = {
+  route: apiListRoute,
+  serverRoute: serverListRoute
+}

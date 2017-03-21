@@ -6,9 +6,7 @@ const CommonOptions = require('./common.js');
 const BROWSER_NAME = 'fallback';
 
 module.exports = {
-  entry: {
-    'application': './src/index.js'
-  },
+  entry: CommonOptions.EntryPoints,
   output: {
     filename: 'bundle.[name].[chunkhash].js',
     path: path.resolve(__dirname, '..', 'dist', BROWSER_NAME),

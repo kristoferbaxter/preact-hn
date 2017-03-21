@@ -18,4 +18,6 @@ function apiItemsRoute(req, res, next) {
   next();
 }
 
-module.exports = apiItemsRoute;
+module.exports = {
+  route: apiItemsRoute
+};

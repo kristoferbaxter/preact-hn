@@ -14,21 +14,24 @@ export default class RoutedView extends Component {
   }
 
   loader() {
-    const {load, name, delay=DELAY} = this.props;
+    const {load, path, delay=DELAY} = this.props;
+    let timeout = null;
 
-    let timeout = setTimeout(() => {
-      this.setState({
-        pastDelay: true
-      });
-    }, delay);
+    if (delay > 0) {
+      timeout = setTimeout(() => {
+        this.setState({
+          pastDelay: true
+        });
+      }, delay);
+    }
 
     if (load) {
       load((file) => {
-        clearTimeout(timeout);
+        timeout && clearTimeout(timeout);        
         this.setState({
           child: file.default
         }, function() {
-          this.lazyLoadedRoutes[name] = file.default;
+          this.lazyLoadedRoutes[path] = file.default;
         }.bind(this));
       });
     }
@@ -38,9 +41,9 @@ export default class RoutedView extends Component {
     this.loader();
   }
 
-  componentWillReceiveProps({name}) {
-    if (this.props.name !== name) {
-      let nextChild = this.lazyLoadedRoutes[name];
+  componentWillReceiveProps({path}) {
+    if (this.props.path !== path) {
+      let nextChild = this.lazyLoadedRoutes[path];
 
       this.setState({
         child: nextChild
@@ -56,6 +59,7 @@ export default class RoutedView extends Component {
       logger: this.logger
     });
 
+    const renderChild = props.child || child || null;
     const viewClasses = {
       [styles.view]: true,
       [styles.viewHasHeader]: true
@@ -64,8 +68,8 @@ export default class RoutedView extends Component {
     return (
       <div class={viewClasses}>
         <Header />
-        <div className={styles.mainView}>
-          {child ? h(child, props) : (pastDelay || props.delay === 0 ? props.children : null)}
+        <div class={styles.mainView}>
+          {renderChild ? h(renderChild, props) : (pastDelay || props.delay === 0 ? props.children : null)}
         </div>
       </div>
     );

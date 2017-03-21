@@ -3,7 +3,7 @@
 const uuid = require('uuid/v1');
 const fetch = require('node-fetch');
 const items = require('./items.js');
-const LIST_TYPES = require('./list-types.js');
+import {LIST_TYPES} from '../../lists/constants.js';
 
 var LATEST_UUID = {};
 var LATEST_DATA = {};

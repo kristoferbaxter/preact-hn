@@ -9,10 +9,10 @@ const setRequestResources = require('./plugins/setRequestResources.js');
 const preloads = require('./plugins/preloads.js');
 
 // Routes
-const apiListRoute = require('./routes/api/list.js');
-const apiItemsRoute = require('./routes/api/items.js');
-const apiCommentsRoute = require('./routes/api/comments.js');
-const defaultRoute = require('./routes/default.js');
+const apiList = require('./routes/api/list.js');
+const apiItems = require('./routes/api/items.js');
+const apiComments = require('./routes/api/comments.js');
+const defaultRoute = require('./routes/default-serverrender.js');
 
 // Server Constants
 const APPLICATION_NAME = 'hn-web';
@@ -34,9 +34,10 @@ server.use(preloads());
 
 // TODO: Do not duplicate route definitions...
 // Programatically derive from a single source of truth.
-server.get('/api/list/:type', apiListRoute);
-server.get('/api/items', apiItemsRoute);
-server.get('/api/comments/:id', apiCommentsRoute);
+server.get('/api/list/:type', apiList.route);
+server.get('/api/items', apiItems.route);
+server.get('/api/comments/:id', apiComments.route);
+server.get('/:type/:id', defaultRoute);
 server.get('/.*', defaultRoute);
 
 // Prefetch Data for API.

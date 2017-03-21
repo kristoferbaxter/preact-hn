@@ -8,9 +8,7 @@ const BROWSER_NAME = 'firefox';
 const BROWSER_MIN_SUPPORTED_VERSION = 50;
 
 module.exports = {
-  entry: {
-    'application': './src/index.js'
-  },
+  entry: CommonOptions.EntryPoints,
   output: {
     filename: 'bundle.[name].[chunkhash].js',
     path: path.resolve(__dirname, '..', 'dist', BROWSER_NAME),

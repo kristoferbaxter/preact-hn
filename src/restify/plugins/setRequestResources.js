@@ -11,11 +11,20 @@ function setRequestResources(resourcesList) {
     const routeResources = resources && resources.routes;
     
     if (/\/item/.test(req.url)) {
-      return routeResources && routeResources.ItemHome;
+      return routeResources && {
+        js: routeResources.ItemHome//.js,
+        //css: routeResources.ItemHome.css
+      };
     } else if (/\/user/.test(req.url)) {
-      return routeResources && routeResources.UserHome;
+      return routeResources && {
+        js: routeResources.UserHome//.js,
+        //css: routeResources.UserHome.css
+      };
     }
-    return routeResources && routeResources.ListHome;
+    return routeResources && {
+      js: routeResources.ListHome//.js,
+      //css: routeResources.ListHome.css
+    };
   }
 
   function setResources(req, res, next) {
@@ -27,9 +36,7 @@ function setRequestResources(resourcesList) {
         css: resources && resources.css && resources.css.url,
         js: resources && resources.js,
         'service.worker': resources && resources['service.worker'],
-        route: {
-          js: routeBundle(req, resources)
-        }
+        route: routeBundle(req, resources)
       }
     }
     

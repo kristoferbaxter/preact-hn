@@ -33,9 +33,6 @@ function defaultRoute(req, res, next) {
     <body>
       <div id="mount">`);
 
- // ${resources['service.worker'] ? '<meta name="config.serviceworker" id="config.serviceworker" content="/' + resources['service.worker'] + '" />' : ''}
- // TODO: <script src="${resources.route.js}" async></script> in head, solve.
- // <img src="${resources.route.js}" style="width:1;height:1;position:absolute;top:0;left:0" />
   const RoutedViewComponent = render(
     <RoutedView
       url={req.url}
@@ -52,6 +49,8 @@ function defaultRoute(req, res, next) {
         <script src="${resources.route.js}"></script>
       </body>
     </html>`);
+
+    // TODO: More research on why these scripts cannot be loaded async.
 
   res.end();
 

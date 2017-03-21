@@ -16,8 +16,9 @@ function loadResources(bunyanLogger) {
       const cssFilename = assetsByChunkName.application.filter((filename) => /.css/.test(filename));
       const jsFilename = assetsByChunkName.application.filter((filename) => /.js/.test(filename));
       const jsRoutes = Object.keys(assetsByChunkName)
-        .filter(key => key !== 'application' || key !== 'service.worker')
+        .filter(key => key !== 'application')
         .reduce((res, key) => (res[key] = `/dist/${classification}/${assetsByChunkName[key]}`, res), {});
+        //.reduce((res, key) => (res[key] = { js: `/dist/${classification}/${assetsByChunkName[key][0]}`, css: `/dist/${classification}/${assetsByChunkName[key][1]}`}, res), {});
 
       if (cssFilename && cssFilename.length > 0 && jsFilename && jsFilename.length > 0) {
         fs.readFile(path.resolve('dist', classification, cssFilename[0]), 'utf8', function(err, data) {

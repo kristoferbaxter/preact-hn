@@ -22,7 +22,14 @@ const POSTCSS_LOADER_OPTIONS = (browsers=["last 3 versions"]) => {
   }; 
 };
 
-const ExtractCSSPlugin = new ExtractTextPlugin({filename: 'bundle.[name].[chunkhash].css'});
+const ExtractCSSPlugin = new ExtractTextPlugin({
+  filename: 'bundle.[name].[chunkhash].css',
+  allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
+});
+
+const EntryPoints = {
+  'application': './src/client.js'
+};
 
 const WebpackStats = {
   assets: true,
@@ -67,6 +74,7 @@ module.exports = {
   IN_PRODUCTION,
   CSS_LOADER_OPTIONS,
   ExtractCSSPlugin,
+  EntryPoints,
   WebpackStats,
   BabelLoaderRule,
   CSSLoaderRule

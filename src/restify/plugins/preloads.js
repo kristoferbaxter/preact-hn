@@ -14,14 +14,21 @@ function preloads(opts) {
     // This 100 indicates to h2o it should h2 server push these linked files.
     if (req.resources) {
       const CRLF = '\r\n';
-      const links = [req.resources.js, req.resources.route.js];
+      const js = [req.resources.js, req.resources.route.js];
+
       let strlinks = '';
-      for (var i in links) {
-        strlinks += CRLF + `Link: <${links[i]}>; rel=preload; as=script`
+      for (var iterator in js) {
+        strlinks += CRLF + `Link: <${js[iterator]}>; rel=preload; as=script`;
       }
 
+      // When enabling CSS files in the future, push them.
+      //const css = [req.resources.route.css];
+      //for (var iterator in css) {
+      //  strlinks += CRLF + `Link: <${css[iterator]}>; rel=preload; as=style`;
+      //}
+
       const rawWrite = `HTTP/1.1 100 Continue${strlinks}${CRLF}${CRLF}`;
-      req.log.warn(`preload-bundle: ${links}`, `raw write: ${rawWrite}`);
+      req.log.warn(`raw write: ${rawWrite}`);
 
       res._writeRaw(rawWrite, 'ascii');
     }

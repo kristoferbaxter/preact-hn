@@ -33,21 +33,17 @@ function GetItems({keys}, callbacks) {
       callbacks.partial(resolved);
     } else {
       callbacks.complete(resolved);
+      return;
     }
   }
 
-  if (anyUnresolved) {
-    // Fetch the missing values.
-    fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)
-      .then(response => response.json())
-      .then(function handleJson(json) {
-        MemoryStore(json.$entities);
-
-        callbacks.complete(Object.assign(resolved, json.$entities));
-      }).catch(function handleError(error) {
-        callbacks.error(error);
-      });
-  }
+  // Fetch the missing values.
+  fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)
+    .then(response => response.json())
+    .then((json) => {
+      MemoryStore(json.$entities);
+      callbacks.complete(Object.assign(resolved, json.$entities));
+    }).catch((error) => callbacks.error(error));
 }
 
 export {
