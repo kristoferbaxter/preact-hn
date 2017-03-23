@@ -60,13 +60,8 @@ export default class RoutedView extends Component {
     });
 
     const renderChild = props.child || child || null;
-    const viewClasses = {
-      [styles.view]: true,
-      [styles.viewHasHeader]: true
-    };
-
     return (
-      <div class={viewClasses}>
+      <div class={styles.viewHasHeader}>
         <Header />
         <div class={styles.mainView}>
           {renderChild ? h(renderChild, props) : (pastDelay || props.delay === 0 ? props.children : null)}

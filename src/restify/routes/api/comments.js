@@ -38,8 +38,6 @@ const ItemsData = require('../../storage/items.js');
 function getComments(res, acc, id, log) {
   const item = ItemsData.get(id, log);
 
-  log.warn(`${id}, item: `, item);
-
   res.$entities[id] = item;
   if (item.kids && item.kids.length > 0) {
     acc.id = item.id;
@@ -63,7 +61,6 @@ function apiCommentsRoute(req, res, next) {
 
   const root = req.params.id;
   const comments = getComments(res, {}, root, req.log);
-  req.log.warn(comments);
   
   res.send({
     $entities: res.$entities,

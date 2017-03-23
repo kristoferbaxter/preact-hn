@@ -33,12 +33,15 @@ module.exports = {
     new OfflinePlugin({
       caches: 'all',
       externals: ['/'],
+      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
       autoUpdate: false,
       AppCache: false,
       ServiceWorker: {
         publicPath: '/sw.js'
       }
-    })
+    }),
+    CommonOptions.ZopfliCompression,
+    CommonOptions.BrotliCompression
   ],
   resolve: {
     modules: ['node_modules'],

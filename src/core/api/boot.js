@@ -1,10 +1,16 @@
 import {MemoryStore} from './memory.js';
-import {setUUID} from './list.js';
+import {setLatestUUID} from './list.js';
 
 (() => {
-  const {uuid, items, entities} = window.seed;
+  const {uuid, items, $entities, max, type} = window.seed;
 
-  MemoryStore({[uuid]: items});
-  MemoryStore(entities);
-  setUUID('top', uuid);
+  MemoryStore({
+    [uuid]: {
+      items,
+      max,
+      type
+    }
+  });
+  MemoryStore($entities);
+  setLatestUUID(type, uuid);
 })();

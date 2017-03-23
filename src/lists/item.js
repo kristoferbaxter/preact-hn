@@ -10,6 +10,8 @@ const Comments = ({entity: {descendants, id}}) => {
 }
 
 export default function ListItem({index, entity}) {
+  if (!entity) return null;
+  
   const {url, title, score, by, time} = entity;
   return (
     <article class={styles.article}>

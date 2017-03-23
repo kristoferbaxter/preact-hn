@@ -22,7 +22,8 @@ module.exports = {
   },
   plugins: [
     new BabiliPlugin({'unsafe': false}),
-    CommonOptions.ExtractCSSPlugin
+    CommonOptions.ExtractCSSPlugin,
+    CommonOptions.ZopfliCompression
   ],
   resolve: {
     modules: ['node_modules'],

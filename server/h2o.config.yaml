@@ -19,22 +19,8 @@ hosts:
         # proxy.preserve-host: ON     # to not rewrite the incoming host:port
         proxy.timeout.keepalive: 0  # to explicitly disable persistent connections to the application server
         header.unset: "link"
-      "/sw.js": #HACK!
-        file.file: ../chrome/sw.js
-        header.add: "Cache-Control:public,max-age=31536000,immutable"
-        header.add: "timing-allow-origin:*"
-        header.add: "access-control-allow-credentials:true"
-        header.add: "access-control-allow-origin:*"
-        header.unset: "etag"
       "/favicon.ico":
         file.file: ../favicon.ico
-      "/dist":
-        file.dir: ../
-        header.add: "Cache-Control:public,max-age=31536000,immutable"
-        header.add: "timing-allow-origin:*"
-        header.add: "access-control-allow-credentials:true"
-        header.add: "access-control-allow-origin:*"
-        header.unset: "etag"
       "/static":
         file.dir: ./static
         header.add: "Cache-Control:public,max-age=31536000,immutable"

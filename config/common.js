@@ -1,4 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require('brotli-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -26,6 +28,17 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
+const ZopfliCompression = IN_PRODUCTION ? new CompressionPlugin({
+  asset: "[path].gzip[query]",
+  algorithm: "zopfli",
+  test: /\.(js|css)$/
+}) : {};
+const BrotliCompression = IN_PRODUCTION ? new BrotliPlugin({
+  asset: '[path].br[query]',
+  test: /\.(js|css)$/,
+  mode: 0,
+  quality: 11
+}) : {};
 
 const EntryPoints = {
   'application': './src/client.js'
@@ -77,5 +90,7 @@ module.exports = {
   EntryPoints,
   WebpackStats,
   BabelLoaderRule,
-  CSSLoaderRule
+  CSSLoaderRule,
+  ZopfliCompression,
+  BrotliCompression
 }

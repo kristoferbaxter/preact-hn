@@ -12,10 +12,16 @@ import LoadingView from '../../core/loadingView.js';
 import ListViewWithData from '../../lists/list.js';
 
 function defaultRoute(req, res, next) {
-  req.log.warn(req.url);
-  
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
+
+  if (resources) {
+    let linkHeaderValue = '';
+    [resources.js, resources.route.js].forEach((preloadResource) => {
+      linkHeaderValue += `<${preloadResource}>; rel=preload; as=script,`;
+    });
+    res.setHeader('Link', linkHeaderValue);
+  }
 
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8',

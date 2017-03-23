@@ -23,6 +23,7 @@ module.exports = {
   plugins: [
     new BabiliPlugin({unsafe: false}),
     new OptimizeJsPlugin({sourceMap: false}),
-    CommonOptions.ExtractCSSPlugin
+    CommonOptions.ExtractCSSPlugin,
+    CommonOptions.ZopfliCompression
   ]
 };

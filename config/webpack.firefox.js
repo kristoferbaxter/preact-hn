@@ -28,7 +28,9 @@ module.exports = {
     ], {copyUnmodified: true}),
     new BabiliPlugin({unsafe: false}),
     new OptimizeJsPlugin({sourceMap: false}),
-    CommonOptions.ExtractCSSPlugin
+    CommonOptions.ExtractCSSPlugin,
+    CommonOptions.ZopfliCompression,
+    CommonOptions.BrotliCompression
   ],
   resolve: {
     modules: ['node_modules'],

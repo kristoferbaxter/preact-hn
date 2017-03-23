@@ -1,4 +1,5 @@
 const restify = require('restify');
+const path = require('path');
 const bunyan = require('bunyan');
 const WebpackResources = require('./resources.js');
 const ListData = require('./storage/lists.js');
@@ -13,6 +14,9 @@ const apiList = require('./routes/api/list.js');
 const apiItems = require('./routes/api/items.js');
 const apiComments = require('./routes/api/comments.js');
 const defaultRoute = require('./routes/default-serverrender.js');
+const shellRoute = require('./routes/default.js');
+const staticRoute = require('./routes/static.js');
+const serviceWorkerRoute = require('./routes/serviceWorker.js');
 
 // Server Constants
 const APPLICATION_NAME = 'hn-web';
@@ -30,7 +34,6 @@ server.use(restify.bodyParser());
 server.use(restify.queryParser());
 server.use(classifyBrowser());
 server.use(setRequestResources(browserResources));
-server.use(preloads());
 
 // TODO: Do not duplicate route definitions...
 // Programatically derive from a single source of truth.
@@ -38,6 +41,9 @@ server.get('/api/list/:type', apiList.route);
 server.get('/api/items', apiItems.route);
 server.get('/api/comments/:id', apiComments.route);
 server.get('/:type/:id', defaultRoute);
+server.get('/shell', shellRoute);
+server.get('/dist/:classification/:file', staticRoute);
+server.get('/sw.js', serviceWorkerRoute);
 server.get('/.*', defaultRoute);
 
 // Prefetch Data for API.

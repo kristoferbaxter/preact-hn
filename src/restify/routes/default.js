@@ -7,9 +7,7 @@ import render from 'preact-render-to-string';
 import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
 
-function defaultRoute(req, res, next) {
-  req.log.warn(req.url);
-  
+function defaultRoute(req, res, next) {  
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
 

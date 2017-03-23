@@ -30,13 +30,13 @@ export default class ListView extends Component {
       return <LoadingView />;
     }
 
-    const {items, entities} = data;
+    const {items, $entities} = data;
     return (
       <main>
         <Pagination data={data} />
         {Object.keys(items).map(item => {
           const itemAsInt = parseInt(item, 10);
-          return <ListItem index={itemAsInt+1} entity={entities[items[itemAsInt]]} />;
+          return <ListItem index={itemAsInt+1} entity={$entities[items[itemAsInt]]} />;
         })}
       </main>
     );

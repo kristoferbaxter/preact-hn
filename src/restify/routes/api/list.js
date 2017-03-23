@@ -12,6 +12,7 @@ function generateJSON(req, {type, from, to, uuid}) {
 
   return {
     'uuid': uuid,
+    'type': type,
     'from': from,
     'to': to,
     'max': latestNewItems.length,
@@ -45,11 +46,9 @@ function apiListRoute(req, res, next) {
 function serverListRoute(req, {type}) {
   const page = req.params.id || 1;
   const {from, to} = determineListRange(page);
-  let json = generateJSON(req, {type: type, from: from, to: to, uuid: ListData.uuid(type)});
+  let json = generateJSON(req, {type, from, to, uuid: ListData.uuid(type)});
 
-  json.entities = json.$entities;
-  json.page = page
-  req.log.warn('serverListRoute', json);
+  json.page = page;
   return json;
 }
 

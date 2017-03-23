@@ -3,11 +3,9 @@
 import {MemoryRetrieveAll, MemoryRetrieve, MemoryStore} from './memory.js';
 import {ITEMS_PER_PAGE, LIST_TYPES} from '../../lists/constants.js';
 
-let LIST_MAX = {};
 let LATEST_UUID = {};
 // Pre-populate based on how many list types are supported.
 Object.keys(LIST_TYPES).forEach(function(list) {
-  LIST_MAX[list] = null;
   LATEST_UUID[list] = null;
 });
 
@@ -23,10 +21,16 @@ function determineListRange(page) {
 
 function deriveResponse({type, to, from, page}, json) {
   const {uuid, items, max, $entities} = json;
+  const stored = MemoryRetrieve(uuid);
 
-  setUUID(type, uuid);
-  MemoryStore({[uuid]: Object.assign(items, MemoryRetrieve(uuid))});
-  LIST_MAX[type] = max;
+  setLatestUUID(type, uuid);
+  MemoryStore({
+    [uuid]: {
+      items: Object.assign(stored && stored.items || {}, items),
+      max,
+      type
+    }
+  });
   MemoryStore($entities);
 
   return {
@@ -37,11 +41,11 @@ function deriveResponse({type, to, from, page}, json) {
     type,
     page,
     max,
-    entities: MemoryRetrieveAll()
+    $entities
   };
 }
 
-function setUUID(type, uuid) {
+function setLatestUUID(type, uuid) {
   LATEST_UUID[type] = uuid;
 }
 
@@ -59,21 +63,24 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
 
   if (stored) {
     // The memory store has data for this uuid, filter the data for the range requested (from->to).
-    const cachedKeys = Object.keys(list).filter(itemOrder => itemOrder >= from && itemOrder <= to);
+    const cachedKeys = Object.keys(list.items).filter(itemOrder => itemOrder >= from && itemOrder <= to);
 
     // Create a copy of the data for the range we have in-memory.
     // This allows the UI to have at least a partial response.
     let cachedItems = {};
+    let cachedEntities = {}
     cachedKeys.forEach(function insert(key) {
-      cachedItems[key] = stored[key];
+      const entityId = stored.items[key];
+      cachedItems[key] = entityId;
+      cachedEntities[entityId] = MemoryRetrieve(entityId);
     });
     const storedResponse = {
       uuid,
       items: cachedItems,
-      type: listType,
+      type: list.type,
       page,
-      max: LIST_MAX[listType],
-      entities: MemoryRetrieveAll()  
+      max: list.max,
+      $entities: cachedEntities  
     };
 
     if (cachedKeys.length >= (to-from)) {
@@ -102,5 +109,5 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
 export {
   GetListApi,
   determineListRange,
-  setUUID
+  setLatestUUID
 };
