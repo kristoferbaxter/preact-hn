@@ -16,6 +16,7 @@ const apiComments = require('./routes/api/comments.js');
 const defaultRoute = require('./routes/default-serverrender.js');
 const shellRoute = require('./routes/default.js');
 const staticRoute = require('./routes/static.js');
+const staticIconRoute = require('./routes/static-icons.js');
 const serviceWorkerRoute = require('./routes/serviceWorker.js');
 
 // Server Constants
@@ -43,6 +44,7 @@ server.get('/api/comments/:id', apiComments.route);
 server.get('/:type/:id', defaultRoute);
 server.get('/shell', shellRoute);
 server.get('/dist/:classification/:file', staticRoute);
+server.get('/static/icons/:file', staticIconRoute);
 server.get('/sw.js', serviceWorkerRoute);
 server.get('/.*', defaultRoute);
 
