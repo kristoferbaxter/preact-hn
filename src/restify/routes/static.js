@@ -33,9 +33,9 @@ function staticRoute(req, res, next) {
       res.writeHead(200, Object.assign({
         'Content-Type': 'text/javascript',
         'Cache-Control': 'public,max-age=31536000,immutable',
-        'timing-allow-origin': '*',
-        'access-control-allow-credentials': 'true',
-        'access-control-allow-origin': '*'
+        'Timing-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*'
       }, finalFormat ? {'Content-Encoding': finalFormat} : {}));
 
       res.end(data, 'binary');
