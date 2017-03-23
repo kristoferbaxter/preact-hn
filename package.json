@@ -63,6 +63,7 @@
     "style-loader": "^0.13.1",
     "uglify-js": "^2.8.14",
     "uglifyjs-webpack-plugin": "^0.3.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-cleanup-plugin": "^0.5.1"
   }
 }

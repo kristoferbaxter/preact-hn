@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
+const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -39,6 +40,7 @@ const BrotliCompression = IN_PRODUCTION ? new BrotliPlugin({
   mode: 0,
   quality: 11
 }) : {};
+const CleanupPlugin= new WebpackCleanupPlugin();
 
 const EntryPoints = {
   'application': './src/client.js'
@@ -92,5 +94,6 @@ module.exports = {
   BabelLoaderRule,
   CSSLoaderRule,
   ZopfliCompression,
-  BrotliCompression
+  BrotliCompression,
+  CleanupPlugin
 }

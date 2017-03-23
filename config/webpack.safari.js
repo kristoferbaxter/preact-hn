@@ -21,6 +21,7 @@ module.exports = {
     ]
   },
   plugins: [
+    CommonOptions.CleanupPlugin,
     new BabiliPlugin({'unsafe': false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression

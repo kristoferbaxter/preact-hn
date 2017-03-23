@@ -23,6 +23,7 @@ module.exports = {
     ]
   },
   plugins: [
+    CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),

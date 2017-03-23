@@ -27,6 +27,7 @@ module.exports = {
   },
   externals: nodeModules,
   plugins: [
+    CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
       {from: 'server/cert.pem'},
       {from: 'server/h2o.config.yaml'},

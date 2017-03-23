@@ -24,6 +24,7 @@ module.exports = {
     ]
   },
   plugins: [
+    CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
@@ -31,8 +32,14 @@ module.exports = {
     new OptimizeJsPlugin({sourceMap: false}),
     CommonOptions.ExtractCSSPlugin,
     new OfflinePlugin({
+      cacheMaps: [{
+        match: function(requestUrl) {
+          return new URL('/shell', location);
+        },
+        requestTypes: ['navigate']
+      }],
       caches: 'all',
-      externals: ['/'],
+      externals: ['/', '/shell'],
       excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
       autoUpdate: false,
       AppCache: false,
