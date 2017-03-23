@@ -12,18 +12,15 @@ function setRequestResources(resourcesList) {
     
     if (/\/item/.test(req.url)) {
       return routeResources && {
-        js: routeResources.ItemHome//.js,
-        //css: routeResources.ItemHome.css
+        js: routeResources.ItemHome
       };
     } else if (/\/user/.test(req.url)) {
       return routeResources && {
-        js: routeResources.UserHome//.js,
-        //css: routeResources.UserHome.css
+        js: routeResources.UserHome
       };
     }
     return routeResources && {
-      js: routeResources.ListHome//.js,
-      //css: routeResources.ListHome.css
+      js: routeResources.ListHome
     };
   }
 

@@ -15,7 +15,10 @@ function defaultRoute(req, res, next) {
     'Content-Type': 'text/html; charset=utf-8',
     'Connection': 'Transfer-Encoding',
     'Transfer-Encoding': 'chunked',
-    'Strict-Transport-Security': 'max-age=31557600; preload'
+    'Strict-Transport-Security': 'max-age=31557600; preload',
+    'Timing-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Origin': '*'
   });
 
   res.write(`<html>
