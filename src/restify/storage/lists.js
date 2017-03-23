@@ -19,14 +19,15 @@ const FETCH_LOCATIONS = {
   [LIST_TYPES['show']]: 'https://hacker-news.firebaseio.com/v0/showstories.json',
   [LIST_TYPES['ask']]: 'https://hacker-news.firebaseio.com/v0/askstories.json',
   [LIST_TYPES['jobs']]: 'https://hacker-news.firebaseio.com/v0/jobstories.json' 
-}
+};
+const UPDATE_TIMER = 600000;
 
 /*
  * log {BunyanLogger}
  */
 function init(log) {
-  const success = (type) => setTimeout(update, 600000, type, log, {success: success, error: error});
-  const error = (type) => setTimeout(update, 600000, type, log, {success: success, error: error});
+  const success = (type) => setTimeout(update, UPDATE_TIMER, type, log, {success: success, error: error});
+  const error = (type) => setTimeout(update, UPDATE_TIMER, type, log, {success: success, error: error});
 
   Object.keys(LIST_TYPES).forEach(function(type) {
     update(type, log, {success: success, error: error});
@@ -58,12 +59,12 @@ function update(type, log, callbacks) {
         items.store(item, log)
       });
       
-      callbacks.success();  
+      callbacks.success(type);  
     })
     .catch(function errorHandler(error) {
       log.error('unable to update data', error);
     
-      callbacks.error();
+      callbacks.error(type);
     });
 }
 
