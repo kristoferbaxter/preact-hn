@@ -29,18 +29,21 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
-const ZopfliCompression = IN_PRODUCTION ? new CompressionPlugin({
+const ZopfliCompression = new CompressionPlugin({
   asset: "[path].gzip[query]",
   algorithm: "zopfli",
   test: /\.(js|css)$/
-}) : {};
-const BrotliCompression = IN_PRODUCTION ? new BrotliPlugin({
+});
+const BrotliCompression = new BrotliPlugin({
   asset: '[path].br[query]',
   test: /\.(js|css)$/,
   mode: 0,
   quality: 11
-}) : {};
-const CleanupPlugin= new WebpackCleanupPlugin();
+});
+const CleanupPlugin= new WebpackCleanupPlugin({
+  exclude: ['webpack.json'],
+  quiet: true
+});
 
 const EntryPoints = {
   'application': './src/client.js'
