@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "bunyan": "^1.8.5",
+    "forever": "^0.15.3",
     "history": "^4.5.1",
     "jsonfile": "^2.4.0",
     "node-fetch": "^1.6.3",

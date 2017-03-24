@@ -39,7 +39,7 @@ module.exports = {
         requestTypes: ['navigate']
       }],
       caches: 'all',
-      externals: ['/', '/shell'],
+      externals: ['/shell'],
       excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
       autoUpdate: false,
       AppCache: false,
