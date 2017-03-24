@@ -7,3 +7,6 @@ yarn.lock
 
 # ignore vscode entries (best editor ever?!)
 .vscode/
+
+#Ignore filesystem items
+SERVER.md

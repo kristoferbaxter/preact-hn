@@ -27,6 +27,7 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false
     }),
     new CopyWebpackPlugin([

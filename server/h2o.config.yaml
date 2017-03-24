@@ -15,7 +15,7 @@ hosts:
         key-file: key.pem
     paths:
       "/":
-        proxy.reverse.url: http://localhost:8080/
+        proxy.reverse.url: http://localhost:22164/
         # proxy.preserve-host: ON     # to not rewrite the incoming host:port
         proxy.timeout.keepalive: 0  # to explicitly disable persistent connections to the application server
         header.unset: "link"

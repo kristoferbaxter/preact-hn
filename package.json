@@ -33,6 +33,7 @@
     "preact": "^7.2.0",
     "preact-render-to-string": "^3.6.0",
     "preact-router": "^2.4.1",
+    "promise-polyfill": "^6.0.2",
     "restify": "^4.3.0",
     "unfetch": "^2.1.2",
     "useragent": "^2.1.12",
