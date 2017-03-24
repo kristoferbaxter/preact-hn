@@ -5,7 +5,7 @@ function staticRoute(req, res, next) {
   const {file} = req.params;
 
   if (fs.existsSync(path.resolve('static', 'icons', file))) {
-    fs.readFile(path.resolve('dist', 'icons', file), 'binary', function(err, data) {
+    fs.readFile(path.resolve('static', 'icons', file), 'binary', function(err, data) {
       res.writeHead(200, {
         'Content-Type': file.indexOf('.ico') >= 0 ? 'image/x-icon' : 'image/png',
         'Cache-Control': 'public,max-age=31536000,immutable',
