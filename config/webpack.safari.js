@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const BabiliPlugin = require('babili-webpack-plugin');
 const CommonOptions = require('./common.js');
@@ -22,6 +23,9 @@ module.exports = {
   },
   plugins: [
     CommonOptions.CleanupPlugin,
+    new webpack.DefinePlugin({
+      POLYFILL_FETCH: true
+    }),
     new BabiliPlugin({'unsafe': false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression

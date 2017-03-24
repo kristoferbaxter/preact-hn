@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const BabiliPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -24,6 +25,9 @@ module.exports = {
   },
   plugins: [
     CommonOptions.CleanupPlugin,
+    new webpack.DefinePlugin({
+      POLYFILL_FETCH: false
+    }),
     new BabiliPlugin({unsafe: false}),
     new OptimizeJsPlugin({sourceMap: false}),
     CommonOptions.ExtractCSSPlugin,
