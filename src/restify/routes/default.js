@@ -29,7 +29,7 @@ function defaultRoute(req, res, next) {
       <style>${resources.inline}</style>
       ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
       ${supportsManifest ? '<link rel="manifest" href="dist/chrome/manifest.json" />' : ''}
-      <link rel="icon" href="/static/icon/favicon.ico">
+      <link rel="icon" href="/static/icons/favicon.ico">
     </head>
     <body>
       <div id="mount">`);
