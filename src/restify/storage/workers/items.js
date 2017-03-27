@@ -11,7 +11,7 @@ function handleSuccess(item) {
 
 function handleError(error) {
   // OH NOES!
-  console.log(error);
+  //console.log(error);
 }
 
 function retrieveItem(id, success=handleSuccess, error=handleError) {

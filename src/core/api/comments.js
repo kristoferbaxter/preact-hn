@@ -16,6 +16,7 @@ function GetComments({root}, callbacks) {
     .then(function handleJson(json) {
       MemoryStore(json.$entities);
 
+      //console.log(json.$entities);
       callbacks.complete(json.$entities);
     }).catch(function handleError(error) {
       callbacks.error(error);

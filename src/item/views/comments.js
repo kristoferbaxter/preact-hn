@@ -11,6 +11,7 @@ import styles from './comments.css';
 
 class Comment extends Component {
   render({root, data}) {
+    console.log('render comments', data);
     if (!data || data === null) {
       return <LoadingView />;
     }
