@@ -50,7 +50,7 @@ function defaultRoute(req, res, next) {
   let Route = <LoadingView />;
   let data = {};
 
-  const listType = req.params.type ? LIST_TYPES[req.params.type] : req.url = '/' ? LIST_TYPES['top'] : null;
+  const listType = req.params.type ? LIST_TYPES[req.params.type] : req.url === '/' ? LIST_TYPES['top'] : null;
   if (listType) {
     data = serverRoute(req, {type: listType});
     Route = <ListViewWithData data={data} />;
