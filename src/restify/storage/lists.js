@@ -30,7 +30,7 @@ function init(log) {
   const error = (type) => setTimeout(update, UPDATE_TIMER, type, log, {success: success, error: error});
 
   Object.keys(LIST_TYPES).forEach(function(type) {
-    update(type, log, {success: success, error: error});
+    update(type, log, {success, error});
   });
 }
 

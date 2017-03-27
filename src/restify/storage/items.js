@@ -6,8 +6,8 @@ const path = require('path');
 
 let ALL_ITEMS = {};
 
-function retrieveItem(id, log, callback) {
-  if (ALL_ITEMS[id]) {
+function retrieveItem(id, log, forceReload, callback) {
+  if (!forceReload && ALL_ITEMS[id]) {
     if (callback) {
       callback('success');
     }
@@ -39,20 +39,21 @@ function getItem(id, log) {
     return ALL_ITEMS[id];
   }
 
-  retrieveItem(id, log);
+  retrieveItem(id, log, false);
   return null;
 }
 
 function storeItemsAsync(id, log) {
   // This is pretty hacky... consider moving to Firebase client.
-  retrieveItem(id, log, (status) => {
+  retrieveItem(id, log, true, (status) => {
     if (status === 'success') {
       const item = ALL_ITEMS[id];
+      const kidsCount = item.kids && item.kids.length;
 
-      if (item.kids && item.kids.length > 0) {
+      if (kidsCount > 0) {
         item.kids.forEach((kid, index) => {
-          log.warn(`${id} stored, grabbing kid: ${kid}, index: ${index}`);  
-          storeItemsAsync(kid, log);
+          log.warn(`${id} stored, grabbing kid: ${kid}, remaining: ${kidsCount - index}`);  
+          storeItemsAsync(kid, log, true);
         });
       }
     }
