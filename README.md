@@ -1,8 +1,11 @@
 ## Preact Hacker News Example
 
 This is an example of a PWA built using Preact, Webpack, and some small opinions.
-*Please do not think of this as they way to build your application*. 
+
+*Please do not think of this as the way to build your application*. 
+
 Instead view this as an example of some concepts used in modern web applications (sw, h2, h2push).
+
 Made with _kindness_ in California.
 
 ## Installation
@@ -23,11 +26,12 @@ Made with _kindness_ in California.
 
 ## Details
 
-I've focused mostly on first initial load performance, with a small caveat. I'd like the route based code splitting to provide a extensible model for keeping initial view rendering costs low.
+I've focused mostly on first initial load performance, with the small caveat of using Webpack instead of Rollup. I'd like the route based code splitting to provide a extensible model for keeping initial view rendering costs low.
 
 In the future there are plenty of things to do:
 1. Move away from needlessly spamming the Firebase API (see src/restify/storage/*) and instead leverage the firebase client in the node server.
-2. Internationalization/Localization, including RTL layout.
-3. Support AppCache (even though it's kind of a jerk)
-4. Allow for posting comments!
-5. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!
+2. Write a Webpack plugin to allow for split css files based on packages.
+3. Internationalization/Localization, including RTL layout.
+4. Support AppCache (even though it's kind of a jerk)
+5. Allow for posting comments!
+6-1000. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!
