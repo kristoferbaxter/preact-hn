@@ -34,7 +34,6 @@ function retrieveItem(id, log, forceReload, callback) {
 }
 
 function getItem(id, log) {
-  log.warn('getItem', id);
   if (ALL_ITEMS[id]) {
     return ALL_ITEMS[id];
   }
@@ -44,7 +43,7 @@ function getItem(id, log) {
 }
 
 function storeItemsAsync(id, log) {
-  // This is pretty hacky... consider moving to Firebase client.
+  // This is pretty hacky... move to Firebase client.
   retrieveItem(id, log, true, (status) => {
     if (status === 'success') {
       const item = ALL_ITEMS[id];

@@ -44,7 +44,7 @@ function init(log) {
 function update(type, log, callbacks) {
   fetch(FETCH_LOCATIONS[type])
     .then(response => response.json())
-    .then(function handleUpdatedData(json) {
+    .then((json) => {
       const thisUpdateUUID = uuid();
 
       IN_MEMORY_DATA[thisUpdateUUID] = json;
@@ -61,7 +61,7 @@ function update(type, log, callbacks) {
       
       callbacks.success(type);  
     })
-    .catch(function errorHandler(error) {
+    .catch((error) => {
       log.error('unable to update data', error);
     
       callbacks.error(type);
