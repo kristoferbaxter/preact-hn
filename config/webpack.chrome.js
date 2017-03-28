@@ -33,8 +33,8 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
-    new BabiliPlugin({unsafe: false}),
-    new OptimizeJsPlugin({sourceMap: false}),
+    //new BabiliPlugin({unsafe: false}),
+    //new OptimizeJsPlugin({sourceMap: false}),
     CommonOptions.ExtractCSSPlugin,
     new OfflinePlugin({
       cacheMaps: [{

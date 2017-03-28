@@ -29,8 +29,7 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
-      {from: 'static', to: 'static'},
-      {from: 'server/logs', to: 'logs'}
+      {from: 'static', to: 'static'}
     ], {copyUnmodified: true}),
     CommonOptions.ExtractCSSPlugin
   ]

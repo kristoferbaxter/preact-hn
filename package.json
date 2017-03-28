@@ -13,7 +13,7 @@
     "start:node:prod-after-bundle": "yarn run bundle:prod; yarn run start:node",
     "bundle:dev": "cross-env BUNDLE_ENV=dev yarn run bundle:chrome; yarn run bundle:server",
     "bundle:all": "yarn run bundle:chrome; yarn run bundle:safari; yarn run bundle:edge; yarn run bundle:firefox; yarn run bundle:fallback; yarn run bundle:server",
-    "bundle:chrome": "BABEL_ENV=chrome node_modules/.bin/webpack --config config/webpack.chrome.js --json > dist/chrome/webpack.json",
+    "bundle:chrome": "BABEL_ENV=build.chrome node_modules/.bin/webpack --config config/webpack.chrome.js --json > dist/chrome/webpack.json",
     "bundle:safari": "BABEL_ENV=safari node_modules/.bin/webpack --config config/webpack.safari.js --json > dist/safari/webpack.json",
     "bundle:edge": "BABEL_ENV=edge node_modules/.bin/webpack --config config/webpack.edge.js --json > dist/edge/webpack.json",
     "bundle:firefox": "BABEL_ENV=firefox node_modules/.bin/webpack --config config/webpack.firefox.js --json > dist/firefox/webpack.json",
