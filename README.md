@@ -34,4 +34,4 @@ In the future there are plenty of things to do:
 3. Internationalization/Localization, including RTL layout.
 4. Support AppCache (even though it's kind of a jerk)
 5. Allow for posting comments!
-6-1000. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!
+6. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!
