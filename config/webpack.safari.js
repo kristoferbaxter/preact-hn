@@ -25,7 +25,8 @@ module.exports = {
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       POLYFILL_PROMISES: false,
-      POLYFILL_FETCH: true
+      POLYFILL_FETCH: true,
+      ALLOW_OFFLINE: false
     }),
     new BabiliPlugin({'unsafe': false}),
     CommonOptions.ExtractCSSPlugin,

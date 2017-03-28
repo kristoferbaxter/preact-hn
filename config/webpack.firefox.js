@@ -27,7 +27,8 @@ module.exports = {
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       POLYFILL_PROMISES: false,
-      POLYFILL_FETCH: false
+      POLYFILL_FETCH: false,
+      ALLOW_OFFLINE: false
     }),
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}

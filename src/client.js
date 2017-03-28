@@ -14,4 +14,8 @@ if (POLYFILL_FETCH) {
 import './reset.css';
 
 render(<Routes />, null, document.getElementById('mount'));
-require('offline-plugin/runtime').install();
+
+if (ALLOW_OFFLINE) {
+  // This is supplied by WebpackConfiguration.
+  require('offline-plugin/runtime').install();
+}

@@ -1,10 +1,12 @@
-1. You'll need to install Brotli CLI and Zopfli for compression to production.
-   - Typically just use 'brew', 'brew update; brew install brotli; brew install zopfli'
-   - https://github.com/google/brotli
-   - https://github.com/google/zopfli
-2. Chrome doesn't allow for self-signed certs for ServiceWorkers. 
-   To work around the issue, you'll need to launch ignoring certs.
-   open /Applications/Google\ Chrome\ Canary.app --args --allow-insecure-localhost
-3. yarn install
-4. yarn run start
-5. Access http://localhost:22164 to see the application running in your browser.
+## Installation
+
+1. Install Brotli and Zopfli CLI
+* Typically just use 'brew', 'brew update; brew install brotli; brew install zopfli'
+* https://github.com/google/brotli
+* https://github.com/google/zopfli
+2. Install Yarn Dependencies
+* yarn install
+3. Run Locally
+* yarn run start (chrome only)
+* yarn run start:prod (all browsers)
+4. Access using your favorite browser
