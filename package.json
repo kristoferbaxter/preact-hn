@@ -20,7 +20,7 @@
     "bundle:fallback": "node_modules/.bin/webpack --config config/webpack.fallback.js --json > dist/fallback/webpack.json",
     "bundle:server": "BABEL_ENV=server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
     "bundle:prod": "cross-env NODE_ENV=production yarn run bundle:all;",
-    "test:lighthouse": "lighthouse https://localhost/"
+    "test:lighthouse": "lighthouse http://localhost:22164/"
   },
   "dependencies": {
     "bunyan": "^1.8.5",
@@ -55,6 +55,7 @@
     "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta",
+    "lighthouse": "^1.6.3",
     "nodemon": "^1.11.0",
     "offline-plugin": "^4.6.1",
     "optimize-js-plugin": "^0.0.4",
