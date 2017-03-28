@@ -8,5 +8,8 @@ yarn.lock
 # ignore vscode entries (best editor ever?!)
 .vscode/
 
+# oh .DS_Store you friendly awesome foe
+.DS_Store
+
 #Ignore filesystem items
 SERVER.md
