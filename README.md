@@ -1,12 +1,12 @@
 ## Preact Hacker News Example
 
+See this application live at: https://hn.kristoferbaxter.com
+
 This is an example of a PWA built using Preact, Webpack, and some small opinions.
-
 *Please do not think of this as the way to build your application*. 
+Instead, view this as an example of some concepts used in modern web applications (sw, h2, h2push).
 
-Instead view this as an example of some concepts used in modern web applications (sw, h2, h2push).
-
-Made with _kindness_ in California.
+Made with _kindness_ in California. 🏄
 
 ## Installation
 
