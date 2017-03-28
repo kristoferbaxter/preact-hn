@@ -29,9 +29,6 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
-      {from: 'server/cert.pem'},
-      {from: 'server/h2o.config.yaml'},
-      {from: 'server/key.pem'},
       {from: 'static', to: 'static'},
       {from: 'server/logs', to: 'logs'}
     ], {copyUnmodified: true}),

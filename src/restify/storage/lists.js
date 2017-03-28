@@ -29,7 +29,7 @@ function init(log) {
   const success = (type) => setTimeout(update, UPDATE_TIMER, type, log, {success: success, error: error});
   const error = (type) => setTimeout(update, UPDATE_TIMER, type, log, {success: success, error: error});
 
-  Object.keys(LIST_TYPES).forEach(function(type) {
+  Object.keys(LIST_TYPES).forEach(function(type) { 
     update(type, log, {success, error});
   });
 }

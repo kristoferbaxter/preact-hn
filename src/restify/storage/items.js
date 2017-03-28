@@ -52,7 +52,7 @@ function storeItemsAsync(id, log) {
 
       if (kidsCount > 0) {
         item.kids.forEach((kid, index) => {
-          log.warn(`${id} stored, grabbing kid: ${kid}, remaining: ${kidsCount - index}`);  
+          log.warn(`${id} stored, grabbing kid: ${kid}, remaining: ${(kidsCount-1) - index}`);  
           storeItemsAsync(kid, log, true);
         });
       }

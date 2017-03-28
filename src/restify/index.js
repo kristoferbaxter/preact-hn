@@ -7,7 +7,6 @@ const ListData = require('./storage/lists.js');
 // Restify Plugins
 const classifyBrowser = require('./plugins/classifyBrowser.js');
 const setRequestResources = require('./plugins/setRequestResources.js');
-const preloads = require('./plugins/preloads.js');
 
 // Routes
 const apiList = require('./routes/api/list.js');
