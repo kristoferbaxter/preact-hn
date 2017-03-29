@@ -41,7 +41,7 @@ const BrotliCompression = new BrotliPlugin({
   quality: 11
 });
 const CleanupPlugin= new WebpackCleanupPlugin({
-  exclude: ['webpack.json'],
+  exclude: ['webpack.json', '.gitignore'],
   quiet: true
 });
 
