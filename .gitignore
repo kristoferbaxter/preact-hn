@@ -1,5 +1,10 @@
 # ignore all dist files
-dist/
+dist/chrome/*
+dist/safari/*
+dist/edge/*
+dist/firefox/*
+dist/server/*
+dist/fallback/*
 
 # ignore node_modules and yarn lock
 node_modules/
