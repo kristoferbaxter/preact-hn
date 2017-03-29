@@ -5,8 +5,9 @@
 
   visibility: hidden;
   animation-name: showLoader;
-  animation-duration: 02s;
+  visibility: hidden;
   animation-delay: 0.2s;
+  animation-fill-mode: forwards;
 }
 
 @keyframes showLoader {
