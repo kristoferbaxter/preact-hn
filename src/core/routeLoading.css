@@ -2,4 +2,18 @@
   display: flex;
   justify-content: center;
   padding-top: 3rem;
+
+  visibility: hidden;
+  animation-name: showLoader;
+  animation-duration: 02s;
+  animation-delay: 0.2s;
+}
+
+@keyframes showLoader {
+  0% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
 }
