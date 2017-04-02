@@ -1,16 +1,18 @@
 
 
 .comment {
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem;
 }
 .header {
   margin: 0 0 1rem 0;
 }
-.text {
-  line-height: 1.15;
+.userLink {
+  color: #666;
 }
-.text p {
-  margin: 0 0 1rem 0;
+.ago {
+  padding-left: .5rem;
+  color: #666;
+  font-size: .85rem;
 }
 .kids {
   padding: 0 0 0 1rem;

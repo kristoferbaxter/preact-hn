@@ -6,25 +6,31 @@ import timeFormat from '../../core/time.js';
 import {GetComments} from '../../core/api/comments.js';
 import withData from '../../core/withData.hoc.js';
 import LoadingView from '../../core/loadingView.js';
+import Text from './text.js';
 
 import styles from './comments.css';
 
 class Comment extends Component {
-  render({root, data}) {
+  render({root, data, kidsOnly}) {
     //console.log('render comments', data);
     if (!data || data === null) {
       return <LoadingView />;
+    }
+
+    if (kidsOnly) {
+      const {kids} = data[root];
+      return <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>;
     }
 
     const {by, time, text, kids} = data[root];
     return (
       <article class={styles.comment}>
         <header class={styles.header}>
-          <a href={`/user/${by}`}>{by}</a>
-          <span>{timeFormat(time)} ago</span>
+          <a href={`/user/${by}`} class={styles.userLink}>{by}</a>
+          <span class={styles.ago}>{timeFormat(time)} ago</span>
         </header>
-        {text && <div class={styles.text} dangerouslySetInnerHTML={{__html: text}} />}
-        {kids && <div class={styles.kids}>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>}
+        <Text text={text} isComment={true} />
+        {kids && <div class={styles.kids}>{Object.values(kids).map((kid) => <Comment root={kid} data={data} kidsOnly={false} />)}</div>}
       </article>
     );
   }
@@ -36,7 +42,7 @@ export default class Comments extends Component {
 
     return (
       <section>
-        <CommentWithData root={root} />  
+        <CommentWithData root={root} kidsOnly={true} />  
       </section>
     );
   }

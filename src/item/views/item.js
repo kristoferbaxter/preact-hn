@@ -3,6 +3,7 @@ import withData from '../../core/withData.hoc.js';
 import {GetItems} from '../../core/api/items.js';
 import LoadingView from '../../core/loadingView.js';
 import Comments from './comments.js';
+import Text from './text';
 
 import styles from './item.css';
 
@@ -13,16 +14,17 @@ class ItemView extends Component {
     }
 
     const thisId = parseInt(id, 10);
-    const {url, title, score, by, descendants} = data[thisId];
+    const {url, title, score, by, descendants, text} = data[thisId];
     return (
       <div class={styles.wrapper}>
         <article class={styles.article}>
           <h1><a href={url} class={styles.outboundLink}>{title}</a></h1>
           {url && <small class={styles.hostname}>({new URL(url).hostname})</small>}
-          <p>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
+          <p class={styles.byline}>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
+          <Text text={text} />
         </article>
         <div class={styles.comments}>
-          <h2>{descendants} comments</h2>
+          <h2 class={styles.numberOfComments}>{descendants} comments</h2>
           <Comments root={thisId} />
         </div>
       </div>

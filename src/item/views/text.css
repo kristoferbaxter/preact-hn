@@ -1,0 +1,11 @@
+.text {
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.comment {
+  border-bottom: 1px solid #ececec;
+  padding-bottom: 1rem;
+}
+.text p {
+  margin: 1rem 0 0;
+}
