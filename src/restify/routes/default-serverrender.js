@@ -59,7 +59,6 @@ function defaultRoute(req, res, next) {
   const RoutedViewComponent = render(
     <RoutedView
       url={req.url}
-      logger={req.log.info.bind(req.log)}
       delay={0}>
       {Route}
     </RoutedView>

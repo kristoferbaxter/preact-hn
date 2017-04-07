@@ -1,20 +1,17 @@
 import {h, Component} from 'preact';
-
 import Header from '../header/header.js';
 
-const DELAY = 200;
 import styles from './routedView.css';
 
 export default class RoutedView extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.logger = props.logger ? props.logger : console.log;
     this.lazyLoadedRoutes = {};
   }
 
   loader() {
-    const {load, path, delay=DELAY} = this.props;
+    const {load, path, delay=200} = this.props;
     let timeout = null;
 
     if (delay > 0) {
@@ -54,10 +51,7 @@ export default class RoutedView extends Component {
   }
 
   render(props, {child, pastDelay}) {
-    this.context = Object.assign(this.context, {
-      url: props.url,
-      logger: this.logger
-    });
+    this.context.url=props.url;
 
     const renderChild = props.child || child || null;
     return (
