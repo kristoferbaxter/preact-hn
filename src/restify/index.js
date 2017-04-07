@@ -7,6 +7,7 @@ const ListData = require('./storage/lists.js');
 // Restify Plugins
 const classifyBrowser = require('./plugins/classifyBrowser.js');
 const setRequestResources = require('./plugins/setRequestResources.js');
+const shrinkRay = require('shrink-ray');
 
 // Routes
 const apiList = require('./routes/api/list.js');
@@ -23,7 +24,6 @@ const APPLICATION_NAME = 'hn-web';
 const logger = bunyan.createLogger({
   name: APPLICATION_NAME
 });
-const browserResources = WebpackResources(logger);
 
 const server = restify.createServer({
   name: APPLICATION_NAME,
@@ -32,8 +32,9 @@ const server = restify.createServer({
 server.use(restify.requestLogger());
 server.use(restify.bodyParser());
 server.use(restify.queryParser());
+server.use(shrinkRay());
 server.use(classifyBrowser());
-server.use(setRequestResources(browserResources));
+server.use(setRequestResources(WebpackResources(logger)));
 
 // TODO: Do not duplicate route definitions...
 // Programatically derive from a single source of truth.
