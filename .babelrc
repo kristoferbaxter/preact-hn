@@ -7,7 +7,6 @@
             "chrome": 52
           },
           "modules": false,
-          "debug": false,
           "loose": true
         }]
       ]
@@ -19,7 +18,6 @@
             "edge": 14
           },
           "modules": false,
-          "debug": false,
           "loose": true
         }]
       ]  
@@ -31,7 +29,6 @@
             "safari": 10
           },
           "modules": false,
-          "debug": false,
           "loose": true
         }]
       ]  
@@ -43,7 +40,6 @@
             "edge": 51
           },
           "modules": false,
-          "debug": false,
           "loose": true
         }]
       ]  
@@ -52,22 +48,24 @@
       "presets": [
         ["env", {
           "targets": {
-            "node": "0.12"
+            "node": 6
           },
-          "modules": false,
-          "debug": false,
-          "loose": true
+          "loose": false
         }]
       ]
+    },
+    "build.fallback": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "browsers": ["last 2 versions", "safari >= 7"]
+          },
+          "modules": false,
+          "loose": true
+        }]
+      ]  
     }
   },
-  "presets": [
-    ["env", {
-      "targets": {
-        "browsers": ["last 2 versions", "safari >= 7"]
-      }
-    }]
-  ],
   "plugins": [
     ["transform-react-jsx", { "pragma":"h" }]
   ]
