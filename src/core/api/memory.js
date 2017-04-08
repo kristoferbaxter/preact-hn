@@ -3,9 +3,6 @@ let ENTITIES = {};
 function MemoryRetrieve(item) {
   return ENTITIES[item];
 }
-function MemoryRetrieveAll() {
-  return ENTITIES;
-}
 function MemoryStore(items) {
   ENTITIES = Object.assign(ENTITIES, items);
 }
@@ -17,6 +14,5 @@ function MemoryStore(items) {
 
 export {
   MemoryRetrieve,
-  MemoryRetrieveAll,
   MemoryStore
 };

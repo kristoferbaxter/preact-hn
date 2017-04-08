@@ -1,6 +1,6 @@
 'use strict';
 
-import {MemoryRetrieveAll, MemoryRetrieve, MemoryStore} from './memory.js';
+import {MemoryRetrieve, MemoryStore} from './memory.js';
 import {ITEMS_PER_PAGE, LIST_TYPES} from '../../lists/constants.js';
 
 let LATEST_UUID = {};
