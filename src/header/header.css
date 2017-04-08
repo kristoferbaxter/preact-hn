@@ -20,6 +20,9 @@
 .logo {
   margin-right: .6rem;
 }
+.item {
+  height: 100%;
+}
 .item:last-child {
   flex-grow: 1;
   text-align: right;
