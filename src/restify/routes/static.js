@@ -28,23 +28,40 @@ function staticRoute(req, res, next) {
 
   if (['chrome', 'safari', 'firefox', 'edge', 'fallback'].indexOf(classification) >= 0) {
     const {finalFormat, finalFile} = fileValues(file, classification);
+    const resolvedPath = path.resolve('dist', classification, finalFile);
+    let stream = fs.createReadStream(resolvedPath);
 
-    fs.readFile(path.resolve('dist', classification, finalFile), 'binary', function(err, data) {
-      res.writeHead(200, Object.assign({
+    stream.on('error', (error) => {
+      res.writeHead(404, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("file not found");
+      req.log.warn(`${resolvedPath} file not found.`);
+      next();
+    });
+    stream.on('open', () => {
+      res.writeHead(200, {
         'Content-Type': 'text/javascript',
         'Cache-Control': 'public,max-age=31536000,immutable',
         'Timing-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Origin': '*'
-      }, finalFormat ? {'Content-Encoding': finalFormat} : {}));
-
-      res.end(data, 'binary');
+        'Access-Control-Allow-Origin': '*',
+        'Content-Encoding': finalFormat
+      });
+      stream.pipe(res);
+    });
+    stream.on('end', () => {
+      req.log.info(`${resolvedPath} file delivered.`);
       next();
     });
   } else {
-    res.writeHead(404);
-    
-    res.end();
+    res.writeHead(404, {
+      'Content-Type': 'text/plain'
+    });
+
+    res.end("file not found");
+    req.log.warn(`${resolvedPath} file not found.`);
     next();
   }
 }
