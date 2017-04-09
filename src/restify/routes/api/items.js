@@ -1,6 +1,6 @@
 'use strict';
 
-const ItemsData = require('../../storage/items.js');
+const {getItem} = require('../../storage/foreground.js');
 
 function apiItemsRoute(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
@@ -9,7 +9,7 @@ function apiItemsRoute(req, res, next) {
 
   res.send({
     '$entities': ItemsToRetrieve.reduce(function(acc, cur, index) {
-      const item = ItemsData.get(cur, req.log);
+      const item = getItem(cur, req.log);
       acc[item.id] = item;
       return acc;
     }, {})

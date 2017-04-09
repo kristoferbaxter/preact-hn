@@ -3,11 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 import {determineListRange} from '../../../core/api/list.js';
-const ListData = require('../../storage/lists.js');
-const ItemsData = require('../../storage/items.js');
+const ForegroundData = require('../../storage/foreground.js');
 
 function generateJSON(req, {type, from, to, uuid}) {
-  const latestNewItems = ListData.latest(type);
+  const latestNewItems = ForegroundData.latest(type);
   const rangedItems = latestNewItems.slice(from,to);
 
   return {
@@ -21,7 +20,7 @@ function generateJSON(req, {type, from, to, uuid}) {
       return acc;
     }, {}),
     '$entities': rangedItems.reduce(function(acc, cur, index) {
-      const item = ItemsData.get(cur, req.log);
+      const item = ForegroundData.getItem(cur, req.log);
       if (item) {
         acc[item.id] = item;
       }
@@ -36,7 +35,7 @@ function apiListRoute(req, res, next) {
   const type = req.params.type;
   const from = parseInt(req.query.from || 0, 10);
   const to = parseInt(req.query.to || 20, 10);
-  const uuid = req.query.uuid || ListData.uuid(type);
+  const uuid = req.query.uuid || ForegroundData.uuid(type);
   
   res.send(generateJSON(req, {type, from, to, uuid}));
 
@@ -46,7 +45,7 @@ function apiListRoute(req, res, next) {
 function serverListRoute(req, {type}) {
   const page = req.params.id || 1;
   const {from, to} = determineListRange(page);
-  let json = generateJSON(req, {type, from, to, uuid: ListData.uuid(type)});
+  let json = generateJSON(req, {type, from, to, uuid: ForegroundData.uuid(type)});
 
   json.page = page;
   return json;

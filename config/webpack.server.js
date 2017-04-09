@@ -11,12 +11,13 @@ fs.readdirSync('node_modules')
 
 module.exports = {
   entry: {
-    'server': './src/restify/index.js'
+    'server': './src/restify/index.js',
+    'background': './src/restify/storage/background.js'
   },
   target: 'node',
   output: {
     path: path.join(__dirname, '..', 'dist', 'server'),
-    filename: 'restify.server.js'
+    filename: 'restify.[name].js'
   },
   stats: CommonOptions.WebpackStats,
   module: {

@@ -1,6 +1,6 @@
 'use strict';
 
-const ItemsData = require('../../storage/items.js');
+const {getItem} = require('../../storage/foreground.js');
 
 /*
  * storage {Object}
@@ -36,7 +36,7 @@ const ItemsData = require('../../storage/items.js');
  */
 
 function getComments(res, acc, id, log) {
-  const item = ItemsData.get(id, log);
+  const item = getItem(id, log);
 
   res.$entities[id] = item;
   if (item.kids && item.kids.length > 0) {

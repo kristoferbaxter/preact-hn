@@ -1,8 +1,7 @@
 const restify = require('restify');
-const path = require('path');
 const bunyan = require('bunyan');
 const WebpackResources = require('./resources.js');
-const ListData = require('./storage/lists.js');
+const ForegroundData = require('./storage/foreground.js');
 
 // Restify Plugins
 const classifyBrowser = require('./plugins/classifyBrowser.js');
@@ -49,7 +48,7 @@ server.get('/sw.js', serviceWorkerRoute);
 server.get('/.*', defaultRoute);
 
 // Prefetch Data for API.
-ListData.init(logger);
+ForegroundData.init();
 
 server.listen(22164, function() {
   console.log('%s listening at %s', server.name, server.url);
