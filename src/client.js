@@ -13,7 +13,8 @@ if (POLYFILL_FETCH) {
 }
 import './reset.css';
 
-render(<Routes />, null, document.getElementById('mount'));
+const mountEl = document.getElementById('mount');
+render(<Routes />, mountEl.parentNode, mountEl);
 
 if (ALLOW_OFFLINE) {
   // This is supplied by WebpackConfiguration.
