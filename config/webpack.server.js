@@ -30,7 +30,10 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
-      {from: 'static', to: 'static'}
+      {from: 'static', to: 'static'},
+      {from: 'proxy/cert.pem'},
+      {from: 'proxy/h2o.config.yaml'},
+      {from: 'proxy/key.pem'}
     ], {copyUnmodified: true}),
     CommonOptions.ExtractCSSPlugin
   ]

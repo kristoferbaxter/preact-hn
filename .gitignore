@@ -18,3 +18,5 @@ yarn.lock
 
 #Ignore filesystem items
 SERVER.md
+proxy/cert.pem
+proxy/key.pem

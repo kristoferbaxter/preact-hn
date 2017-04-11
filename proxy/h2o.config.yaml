@@ -1,0 +1,27 @@
+hosts:
+  "localhost:5080":
+    listen:
+      port: 5080
+    paths:
+      "/":
+        redirect: 
+          status: 301
+          url: "https://localhost:5443/"
+  "localhost:5443":
+    listen:
+      port: 5443
+      ssl:
+        certificate-file: cert.pem
+        key-file: key.pem
+    paths:
+      "/":
+        proxy.reverse.url: http://localhost:22164/
+        # proxy.preserve-host: ON     # to not rewrite the incoming host:port
+        proxy.timeout.keepalive: 0  # to explicitly disable persistent connections to the application server
+        header.unset: "link"
+#access-log: ./logs/h2o/access
+#error-log: ./logs/h2o/error
+#pid-file: ./h2o.pid
+http2-reprioritize-blocking-assets: OFF   # performance tuning option
+http2-push-preload: ON
+compress: OFF # Enable Brotli and Gzip compression

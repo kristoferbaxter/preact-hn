@@ -12,17 +12,20 @@ Made with _kindness_ in California. 🏄
 
 1. Install yarn
     * https://yarnpkg.com/en/docs/install
-1. Install Brotli and Zopfli CLI
-    * Typically just use 'brew', 'brew update; brew install brotli; brew install zopfli'
+2. Install h2o Proxy (to allow for local h2 and h2 push)
+    * Depends on your OS. Tend to use 'brew' on MacOS -- 'brew update; brew install h2o'
+    * Put some self-signed certs in the 'proxy' folder (http://stackoverflow.com/questions/10175812/how-to-create-a-self-signed-certificate-with-openssl)
+3. Install Brotli and Zopfli CLI
+    * Again, depends on your OS. Typically just use 'brew', 'brew update; brew install brotli; brew install zopfli'
     * https://github.com/google/brotli
     * https://github.com/google/zopfli
-2. Install Yarn Dependencies
+4. Install Yarn Dependencies
     * yarn install
-3. Run Locally
+5. Run Locally
     * yarn run start (chrome only)
     * yarn run start:prod (all browsers)
-4. Access using your favorite browser
-    * http://localhost:22164
+6. Access using your favorite browser
+    * https://localhost:22164
 
 ## Details
 

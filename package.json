@@ -7,10 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node_modules/.bin/nodemon -e js,css --config nodemon.config.json --exec 'yarn' start:node:dev-after-bundle",
-    "start:prod": "node_modules/.bin/nodemon -e js,css --config nodemon.config.json --exec 'yarn' start:node:prod-after-bundle",
     "start:node": "node dist/server/restify.server.js | ./node_modules/.bin/bunyan",
     "start:node:dev-after-bundle": "yarn run bundle:dev; yarn run start:node",
-    "start:node:prod-after-bundle": "yarn run bundle:prod; yarn run start:node",
+    "start:h2o": "cd dist/server && h2o -c h2o.config.yaml",
     "bundle:dev": "BUNDLE_ENV=dev yarn run bundle:chrome; yarn run bundle:server",
     "bundle:all": "yarn run bundle:chrome; yarn run bundle:safari; yarn run bundle:edge; yarn run bundle:firefox; yarn run bundle:fallback; yarn run bundle:server",
     "bundle:chrome": "BABEL_ENV=build.chrome node_modules/.bin/webpack --config config/webpack.chrome.js --json > dist/chrome/webpack.json",
@@ -20,7 +19,8 @@
     "bundle:fallback": "BABEL_ENV=build.fallback node_modules/.bin/webpack --config config/webpack.fallback.js --json > dist/fallback/webpack.json",
     "bundle:server": "BABEL_ENV=build.server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
     "bundle:prod": "cross-env NODE_ENV=production yarn run bundle:all;",
-    "test:lighthouse": "lighthouse http://localhost:22164/"
+    "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml",
+    "test:lighthouse": "lighthouse https://localhost:5443/"
   },
   "dependencies": {
     "bunyan": "^1.8.5",
