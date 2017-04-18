@@ -31,14 +31,5 @@ module.exports = {
     new BabiliPlugin({'unsafe': false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
-  ],
-  resolve: {
-    modules: ['node_modules'],
-    extensions: [
-      '.js',
-    ],
-    mainFields: [
-      'jsnext:main'
-    ],
-  },
+  ]
 };

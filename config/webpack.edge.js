@@ -34,14 +34,5 @@ module.exports = {
     new OptimizeJsPlugin({sourceMap: false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
-  ],
-  resolve: {
-    modules: ['node_modules'],
-    extensions: [
-      '.js',
-    ],
-    mainFields: [
-      'jsnext:main'
-    ],
-  },
+  ]
 };

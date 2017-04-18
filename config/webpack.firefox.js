@@ -38,14 +38,5 @@ module.exports = {
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression,
     CommonOptions.BrotliCompression
-  ],
-  resolve: {
-    modules: ['node_modules'],
-    extensions: [
-      '.js',
-    ],
-    mainFields: [
-      'jsnext:main'
-    ],
-  }
+  ]
 };
