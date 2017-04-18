@@ -23,7 +23,7 @@ Made with _kindness_ in California. 🏄
     * yarn install
 5. Run Locally
     * yarn run start (chrome only)
-    * yarn run start:prod (all browsers)
+    * yarn run bundle:prod; yarn run start (all browsers)
 6. Access using your favorite browser
     * https://localhost:22164
 
