@@ -1,6 +1,7 @@
 module.exports = function(context) {
   const env = context.cache(() => process.env.BABEL_ENV);
   const isServer = env === "build.server";
+  const isFallback = env === "build.fallback";
 
   let targets = {
     "build.chrome": { chrome: 52 },
@@ -23,9 +24,12 @@ module.exports = function(context) {
       }]
     ],
     plugins: [
+      ["transform-es2015-block-scoping", {
+        "throwIfClosureRequired": true
+      }],
       ["transform-react-jsx", {
         pragma: "h",
-        useBuiltIns: true
+        useBuiltIns: isFallback ? false : true
       }]
     ]
   };
