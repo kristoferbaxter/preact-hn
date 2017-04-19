@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const BabiliPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OptimizeJsPlugin = require("optimize-js-plugin");
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'firefox';
@@ -33,8 +31,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
-    new BabiliPlugin({unsafe: false}),
-    new OptimizeJsPlugin({sourceMap: false}),
+    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression,
     CommonOptions.BrotliCompression

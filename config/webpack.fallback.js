@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const BabiliPlugin = require('babili-webpack-plugin');
-const OptimizeJsPlugin = require("optimize-js-plugin");
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'fallback';
@@ -29,7 +28,6 @@ module.exports = {
       ALLOW_OFFLINE: false
     }),
     new BabiliPlugin({unsafe: false}),
-    new OptimizeJsPlugin({sourceMap: false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
   ]

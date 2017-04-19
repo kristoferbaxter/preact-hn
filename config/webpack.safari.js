@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const BabiliPlugin = require('babili-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'safari';
@@ -28,7 +27,7 @@ module.exports = {
       POLYFILL_FETCH: true,
       ALLOW_OFFLINE: false
     }),
-    new BabiliPlugin({'unsafe': false}),
+    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
   ]

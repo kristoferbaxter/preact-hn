@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const BabiliPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OptimizeJsPlugin = require("optimize-js-plugin");
 const OfflinePlugin = require('offline-plugin');
 const CommonOptions = require('./common.js');
 
@@ -34,8 +32,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
-    new BabiliPlugin(),
-    new OptimizeJsPlugin({sourceMap: false}),
+    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
     new OfflinePlugin({
       cacheMaps: [{

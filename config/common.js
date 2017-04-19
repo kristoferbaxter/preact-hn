@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
@@ -29,6 +30,7 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
+const BabiliMinification = new BabiliPlugin();
 const ZopfliCompression = new CompressionPlugin({
   asset: "[path].gzip[query]",
   algorithm: "zopfli",
@@ -96,6 +98,7 @@ module.exports = {
   WebpackStats,
   BabelLoaderRule,
   CSSLoaderRule,
+  BabiliMinification,
   ZopfliCompression,
   BrotliCompression,
   CleanupPlugin
