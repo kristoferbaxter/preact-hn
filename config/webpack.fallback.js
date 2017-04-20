@@ -23,11 +23,14 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      POLYFILL_OBJECT_ASSIGN: true,
+      POLYFILL_OBJECT_VALUES: true,
       POLYFILL_PROMISES: true,
       POLYFILL_FETCH: true,
+      POLYFILL_URL: true,
       ALLOW_OFFLINE: false
     }),
-    new BabiliPlugin({unsafe: false}),
+    //new BabiliPlugin({unsafe: false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
   ]

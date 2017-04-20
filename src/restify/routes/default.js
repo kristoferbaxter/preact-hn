@@ -21,7 +21,8 @@ function defaultRoute(req, res, next) {
     'Access-Control-Allow-Origin': '*'
   });
 
-  res.write(`<html>
+  res.write(`<!DOCTYPE html>
+    <html>
     <head>
       <title>Preact Hacker News</title>
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />

@@ -48,7 +48,7 @@ const CleanupPlugin= new WebpackCleanupPlugin({
 });
 
 const EntryPoints = {
-  'application': './src/client.js'
+  'application': './src/bootstrap.js'
 };
 
 const WebpackStats = {
@@ -74,7 +74,12 @@ const WebpackStats = {
 const BabelLoaderRule = {
   test: /\.js$/,
   exclude: /node_modules/,
-  use: 'babel-loader'
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true
+    }
+  }
 };
 const CSSLoaderRule = (browsers) => {
   return {

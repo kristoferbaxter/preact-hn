@@ -23,8 +23,11 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      POLYFILL_OBJECT_ASSIGN: false,
+      POLYFILL_OBJECT_VALUES: false,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: true,
+      POLYFILL_URL: false,
       ALLOW_OFFLINE: false
     }),
     CommonOptions.BabiliMinification,

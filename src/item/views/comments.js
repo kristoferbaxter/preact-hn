@@ -19,7 +19,7 @@ class Comment extends Component {
 
     if (kidsOnly) {
       const {kids} = data[root];
-      return <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>;
+      return kids ? <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div> : null;
     }
 
     const {by, time, text, kids} = data[root];
