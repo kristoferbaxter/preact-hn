@@ -53,7 +53,7 @@ function defaultRoute(req, res, next) {
 
   const listType = req.params.type ? LIST_TYPES[req.params.type] : req.url === '/' ? LIST_TYPES['top'] : null;
   if (listType) {
-    data = serverRoute(req, {type: listType});
+    data = Object.assign(serverRoute(req, {type: listType}), {route: 'list'});
     Route = <ListViewWithData data={data} />;
   }
 
@@ -73,8 +73,7 @@ function defaultRoute(req, res, next) {
         ${RoutedViewComponent}
         </div>
         <script>window.seed=${JSON.stringify(data)};</script>
-        <script src="${resources.js}"></script>
-        <script src="${resources.route.js}"></script>
+        <script src="${resources.js}" async></script>
       </body>
     </html>`);
 
