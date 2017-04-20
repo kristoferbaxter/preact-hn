@@ -30,7 +30,7 @@ module.exports = {
       POLYFILL_URL: true,
       ALLOW_OFFLINE: false
     }),
-    //new BabiliPlugin({unsafe: false}),
+    new BabiliPlugin({unsafe: false}),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.ZopfliCompression
   ]
