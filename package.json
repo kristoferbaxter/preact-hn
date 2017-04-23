@@ -24,12 +24,12 @@
   },
   "dependencies": {
     "bunyan": "^1.8.5",
-    "classnames": "^2.2.5",
     "forever": "^0.15.3",
     "history": "^4.5.1",
     "iltorb": "^1.2.1",
     "jsonfile": "^2.4.0",
     "node-fetch": "^1.6.3",
+    "obj-str": "^1.0.0",
     "object-assign-polyfill": "^0.1.0",
     "preact": "8.1.0",
     "preact-render-to-string": "^3.6.0",

@@ -1,5 +1,5 @@
 import {h, Component} from 'preact';
-import classnames from 'classnames';
+import objstr from 'obj-str';
 import LoadingView from '../core/loadingView.js';
 import ListItem from './item.js';
 import {ITEMS_PER_PAGE} from './constants.js';
@@ -12,9 +12,9 @@ const Pagination = ({data: {page, max, type}}) => {
 
   return (
     <p class={styles.pagination}>
-      <a href={`/${type}/${parsedPage-1}`} class={classnames(styles.navigate, parsedPage <= 1 && styles.disabled)}>&lt; prev</a>
+      <a href={`/${type}/${parsedPage-1}`} class={objstr({[styles.navigate]: true, [styles.disabled]: parsedPage <= 1})}>&lt; prev</a>
       <span class={styles.pages}>{page}/{maxPages}</span>
-      <a href={`/${type}/${parsedPage+1}`} class={classnames(styles.navigate, parsedPage >= maxPages && styles.disabled)}>next &gt;</a>
+      <a href={`/${type}/${parsedPage+1}`} class={objstr({[styles.navigate]: true, [styles.disabled]: parsedPage >= maxPages})}>next &gt;</a>
     </p>
   );  
 }

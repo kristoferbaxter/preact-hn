@@ -1,6 +1,6 @@
 import {h, Component} from 'preact';
 import {Link} from 'preact-router';
-import classnames from 'classnames';
+import objstr from 'obj-str';
 
 import Logo from '../icons/logo.js';
 
@@ -11,7 +11,7 @@ const Item = ({href, text}, {url}) => {
 
   return (
     <li class={styles.item}>
-      <Link href={href} class={classnames(styles.link, hrefRegex.test(url) && styles.active)}>{text}</Link>
+      <Link href={href} class={objstr({[styles.link]: true,[styles.active]: hrefRegex.test(url)})}>{text}</Link>
     </li>
   );
 };
