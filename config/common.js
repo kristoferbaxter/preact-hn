@@ -48,7 +48,7 @@ const CleanupPlugin= new WebpackCleanupPlugin({
 });
 
 const EntryPoints = {
-  'application': './src/bootstrap.js'
+  'application': './src/client.js'
 };
 
 const WebpackStats = {

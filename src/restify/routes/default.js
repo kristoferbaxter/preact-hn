@@ -47,6 +47,7 @@ function defaultRoute(req, res, next) {
         ${RoutedViewComponent}
         </div>
         <script src="${resources.js}"></script>
+        <script src="${resources.route.js}"></script>
       </body>
     </html>`);
 

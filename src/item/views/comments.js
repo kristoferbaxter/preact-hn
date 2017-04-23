@@ -3,7 +3,7 @@ import {h, Component} from 'preact';
 //TODO: Investigate switching over to Markup. <div><Markup markup={text} /></div> 
 
 import timeFormat from '../../core/time.js';
-import {GetComments} from '../../core/api/comments.js';
+import GetComments from '../../core/api/comments.js';
 import withData from '../../core/withData.hoc.js';
 import LoadingView from '../../core/loadingView.js';
 import Text from './text.js';
@@ -12,14 +12,13 @@ import styles from './comments.css';
 
 class Comment extends Component {
   render({root, data, kidsOnly}) {
-    //console.log('render comments', data);
     if (!data || data === null) {
       return <LoadingView />;
     }
 
     if (kidsOnly) {
       const {kids} = data[root];
-      return kids ? <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div> : null;
+      return kids && <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>;
     }
 
     const {by, time, text, kids} = data[root];
@@ -36,7 +35,7 @@ class Comment extends Component {
   }
 }
 
-export default class Comments extends Component {
+export default class extends Component {
   render({root}) {
     const CommentWithData = withData(Comment, {fetchDataFunction: GetComments, properties: {root: root}});
 

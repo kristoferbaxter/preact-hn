@@ -4,9 +4,7 @@ import timeFormat from '../core/time.js';
 import styles from './item.css';
 
 const Comments = ({entity: {descendants, id}}) => {
-  const commentText = descendants > 1 ? `${descendants} comments` : 'discuss';
-
-  return <span> | <a href={`/item/${id}`} class={styles.link}>{commentText}</a></span>;
+  return <span> | <a href={`/item/${id}`} class={styles.link}>{descendants > 1 ? `${descendants} comments` : 'discuss'}</a></span>;
 }
 
 export default function ListItem({index, entity}) {

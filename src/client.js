@@ -1,44 +1,35 @@
 import {h, render} from 'preact';
-import {Routes, ROUTE_BUNDLE} from './routes.js';
-import {MemoryStore} from './core/api/memory.js';
-import {setLatestUUID} from './core/api/list.js';
+import Routes from './routes.js';
+import './core/api/memory.js';
+import {storeListData} from './core/api/list.js';	
 
 import './reset.css';
 
-function clientStart() {
-  const mountEl = document.getElementById('mount');
-  render(<Routes />, mountEl.parentNode, mountEl);
-
-  if (ALLOW_OFFLINE) {
-    // This is supplied by WebpackConfiguration.
-    require('offline-plugin/runtime').install();
-  }
+if (POLYFILL_OBJECT_ASSIGN) {
+  // This is supplied by WebpackConfiguration.
+  require('object-assign-polyfill');
+}
+if (POLYFILL_OBJECT_VALUES) {
+  // This is supplied by WebpackConfiguration.
+  require('object.values').shim();
+}
+if (POLYFILL_PROMISES) {
+  // This is supplied by WebpackConfiguration.
+  window.Promise = require('promise-polyfill');
+}
+if (POLYFILL_FETCH) {
+  // This is supplied by WebpackConfiguration.
+  require('unfetch/polyfill');
+}
+if (POLYFILL_URL) {
+  require('url-polyfill');
 }
 
-if (window.seed !== undefined) {
-  // When window seed is present.
-  // 1. We are booting the application fresh from network.
-  // 2. The first data response is inline in the document as the 'seed'
+window.seed && storeListData(window.seed);
+const mountEl = document.getElementById('mount');
+render(<Routes />, mountEl.parentNode, mountEl);
 
-  const {uuid, items, $entities, max, type, route} = window.seed;
-
-  MemoryStore({
-    [uuid]: {
-      items,
-      max,
-      type
-    }
-  });
-  MemoryStore($entities);
-  setLatestUUID(type, uuid);
-
-  if (route !== undefined) {
-    ROUTE_BUNDLE[route]((file) => {
-      clientStart();
-    }); 
-  } else {
-    clientStart();
-  }
-} else {
-  clientStart(); 
+if (ALLOW_OFFLINE) {
+  // This is supplied by WebpackConfiguration.
+  require('offline-plugin/runtime').install();
 }

@@ -9,14 +9,14 @@ return {
   error: function()
 }
 */
-function GetItems({keys}, callbacks) {
+export default function({keys}, callbacks) {
   // Keys are from entities table.
   let resolved = {};
   let anyResolved = false;
   let unresolved = {};
   let anyUnresolved = false;
 
-  keys.forEach(function(key) {
+  keys.forEach((key) => {
     const entity = MemoryRetrieve(key);
 
     if (entity) {
@@ -39,13 +39,9 @@ function GetItems({keys}, callbacks) {
 
   // Fetch the missing values.
   fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)
-    .then(response => response.json())
-    .then((json) => {
-      MemoryStore(json.$entities);
-      callbacks.complete(Object.assign(resolved, json.$entities));
-    }).catch((error) => callbacks.error(error));
+  .then(response => response.json())
+  .then((json) => {
+    MemoryStore(json.$entities);
+    callbacks.complete(Object.assign(resolved, json.$entities));
+  }).catch((error) => callbacks.error(error));
 }
-
-export {
-  GetItems
-};

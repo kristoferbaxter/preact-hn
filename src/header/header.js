@@ -11,12 +11,15 @@ const Item = ({href, text}, {url}) => {
 
   return (
     <li class={styles.item}>
-      <Link href={href} class={objstr({[styles.link]: true,[styles.active]: hrefRegex.test(url)})}>{text}</Link>
+      <Link href={href} class={objstr({
+        [styles.link]: true,
+        [styles.active]: hrefRegex.test(url)
+      })}>{text}</Link>
     </li>
   );
 };
 
-export default class Header extends Component {
+export default class extends Component {
   render(props, state, {url}) {
     return (
       <nav class={styles.header}>

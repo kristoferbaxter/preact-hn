@@ -1,6 +1,6 @@
 import {h, Component} from 'preact';
 import withData from '../../core/withData.hoc.js';
-import {GetItems} from '../../core/api/items.js';
+import GetItems from '../../core/api/items.js';
 import LoadingView from '../../core/loadingView.js';
 import Comments from './comments.js';
 import Text from './text';

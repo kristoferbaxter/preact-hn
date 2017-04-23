@@ -31,7 +31,9 @@ const server = restify.createServer({
 server.use(restify.requestLogger());
 server.use(restify.bodyParser());
 server.use(restify.queryParser());
-//server.use(shrinkRay());
+server.use(shrinkRay({filter: function(req) {
+  return !/.js|.css/.test(req.url);
+}}));
 server.use(classifyBrowser());
 server.use(setRequestResources(WebpackResources(logger)));
 

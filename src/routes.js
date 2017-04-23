@@ -11,7 +11,7 @@ const ROUTE_BUNDLE = {
   user: require('bundle-loader?lazy&name=UserHome!./lists/views/user.js')
 };
 
-const Routes = (props) => {
+export default function(props) {
   return (
     <Router>
       <RoutedView
@@ -99,8 +99,3 @@ const Routes = (props) => {
     </Router>
   );
 }
-
-export {
-  ROUTE_BUNDLE,
-  Routes
-};

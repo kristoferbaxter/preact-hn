@@ -27,9 +27,9 @@ export default class RoutedView extends Component {
         timeout && clearTimeout(timeout);        
         this.setState({
           child: file.default
-        }, function() {
+        }, () => {
           this.lazyLoadedRoutes[path] = file.default;
-        }.bind(this));
+        });
       });
     }
   }
@@ -44,8 +44,8 @@ export default class RoutedView extends Component {
 
       this.setState({
         child: nextChild
-      }, function() {
-        nextChild === undefined ? this.loader() : null;
+      }, () => {
+        nextChild === undefined && this.loader();
       });
     }
   }

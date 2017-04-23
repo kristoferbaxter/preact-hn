@@ -19,19 +19,22 @@ function determineListRange(page) {
   };
 }
 
+function storeListData({uuid, items, max, type, $entities}) {
+  MemoryStore(Object.assign({
+    [uuid]: {
+      items,
+      max,
+      type
+    }
+  }, $entities));
+  setLatestUUID(type, uuid);  
+}
+
 function deriveResponse({type, to, from, page}, json) {
   const {uuid, items, max, $entities} = json;
   const stored = MemoryRetrieve(uuid);
 
-  setLatestUUID(type, uuid);
-  MemoryStore({
-    [uuid]: {
-      items: Object.assign(stored && stored.items || {}, items),
-      max,
-      type
-    }
-  });
-  MemoryStore($entities);
+  storeListData({uuid, items: Object.assign(stored && stored.items || {}, items), max, type, $entities});
 
   return {
     uuid,
@@ -60,6 +63,7 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
   const list = MemoryRetrieve(uuid);
   const stored = uuid && list;
   const {from, to} = determineListRange(page);
+  let fetchUrl = `/api/list/${listType}?from=${from}&to=${to}`;
 
   if (stored) {
     // The memory store has data for this uuid, filter the data for the range requested (from->to).
@@ -69,7 +73,7 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
     // This allows the UI to have at least a partial response.
     let cachedItems = {};
     let cachedEntities = {}
-    cachedKeys.forEach(function insert(key) {
+    cachedKeys.forEach((key) => {
       const entityId = stored.items[key];
       cachedItems[key] = entityId;
       cachedEntities[entityId] = MemoryRetrieve(entityId);
@@ -88,26 +92,26 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
       // has a length equal to the length between from and to...
       // then all the items are present in the cachedKeys.
       callbacks.complete(storedResponse);
+      return;
     } else {
       // Give the UI the partial response before we fetch the remainder.
       callbacks.partial(storedResponse);
 
-      // Fetch the missing values.
-      fetch(`/api/list/${listType}?uuid=${uuid}&from=${from}&to=${to}`)
-        .then(response => response.json())
-        .then(json => callbacks.complete(deriveResponse({type: listType, to, from, page}, json)))
-        .catch(error => callbacks.error(error));
+      // Change the fetch url to include the active UUID.
+      // This means we will get results for a known uuid.
+      fetchUrl = `/api/list/${listType}?uuid=${uuid}&from=${from}&to=${to}`;
     }
-  } else {
-    fetch(`/api/list/${listType}?from=${from}&to=${to}`)
-      .then(response => response.json())
-      .then(json => callbacks.complete(deriveResponse({type: listType, to, from, page}, json)))
-      .catch(error => callbacks.error(error));
   }
+
+  fetch(fetchUrl)
+  .then(response => response.json())
+  .then(json => callbacks.complete(deriveResponse({type: listType, to, from, page}, json)))
+  .catch(error => callbacks.error(error));
 }
 
 export {
   GetListApi,
   determineListRange,
-  setLatestUUID
+  setLatestUUID,
+  storeListData
 };
