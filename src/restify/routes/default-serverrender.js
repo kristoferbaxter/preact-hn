@@ -10,6 +10,8 @@ import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
 import ListViewWithData from '../../lists/list.js';
 
+import styles from '../../core/routedView.css';
+
 function defaultRoute(req, res, next) {
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
@@ -54,8 +56,7 @@ function defaultRoute(req, res, next) {
       <script>window.seed=${JSON.stringify(data)}</script>
       <script src='${resources.js}' async defer></script>
     </head>
-    <body>
-      <div id="mount">`);
+    <body>`);
 
   const RoutedViewComponent = render(
     <RoutedView url={req.url} delay={0}>
@@ -70,7 +71,6 @@ function defaultRoute(req, res, next) {
 
   res.write(`
         ${RoutedViewComponent}
-        </div>
       </body>
     </html>`);
 
