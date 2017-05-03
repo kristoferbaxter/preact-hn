@@ -24,7 +24,7 @@ export default class RoutedView extends Component {
 
     if (load) {
       load((file) => {
-        timeout && clearTimeout(timeout);        
+        timeout && clearTimeout(timeout);
         this.setState({
           child: file.default
         }, () => {

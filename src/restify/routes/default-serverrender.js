@@ -6,7 +6,6 @@ import {LIST_TYPES} from '../../lists/constants.js';
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 // UI Components
-import Routes from '../../routes.js';
 import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
 import ListViewWithData from '../../lists/list.js';
@@ -17,7 +16,8 @@ function defaultRoute(req, res, next) {
 
   if (resources) {
     let linkHeaderValue = '';
-    [resources.js, resources.route.js].forEach((preloadResource) => {
+    const toPush = resources.route && resources.route.js ? [resources.js, resources.route.js] : [resources.js];
+    toPush.forEach((preloadResource) => {
       linkHeaderValue += `<${preloadResource}>; rel=preload; as=script,`;
     });
     res.setHeader('Link', linkHeaderValue);
@@ -33,21 +33,6 @@ function defaultRoute(req, res, next) {
     'Access-Control-Allow-Origin': '*'
   });
 
-  res.write(`<!DOCTYPE html>
-    <html>
-    <head>
-      <title>Preact Hacker News</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
-      ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
-      <style>${resources.inline}</style>
-      ${resources.inline === null && resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
-      ${resources.route.css ? `<link rel="stylesheet" href="${resources.route.css}" />` : ''}
-      ${supportsManifest ? '<link rel="manifest" href="dist/chrome/manifest.json" />' : ''}
-      <link rel="icon" href="/static/icons/favicon.ico">
-    </head>
-    <body>
-      <div id="mount">`);      
-
   let Route = <LoadingView />;
   let data = {};
 
@@ -57,13 +42,27 @@ function defaultRoute(req, res, next) {
     Route = <ListViewWithData data={data} />;
   }
 
+  res.write(`<!DOCTYPE html>
+    <html>
+    <head>
+      <title>Preact Hacker News</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+      ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
+      ${resources.inline !== null ? `<style>${resources.inline}</style>` : resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
+      ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
+      <link rel="icon" href="/static/icons/favicon.ico">
+      <script>window.seed=${JSON.stringify(data)}</script>
+      <script src='${resources.js}' async defer></script>
+    </head>
+    <body>
+      <div id="mount">`);
+
   const RoutedViewComponent = render(
-    <RoutedView
-      url={req.url}
-      delay={0}>
+    <RoutedView url={req.url} delay={0}>
       {Route}
     </RoutedView>
   );
+
   /*
    * TODO: Move to use same router on server and client.
    * <Routes url={req.url} delay={0} child={<ListViewWithData data={serverRoute(req, {type: listType})} />} />
@@ -72,9 +71,6 @@ function defaultRoute(req, res, next) {
   res.write(`
         ${RoutedViewComponent}
         </div>
-        <script>window.seed=${JSON.stringify(data)};</script>
-        <script src="${resources.js}"></script>
-        <script src="${resources.route.js}"></script>
       </body>
     </html>`);
 

@@ -25,13 +25,11 @@ export default function withData(WrappedComponent, {fetchDataFunction, propertie
       if (properties.uuid !== completeData.uuid) {
         this.props.handleUUIDChange(completeData.uuid);
       }
-      //console.log('setting data state', completeData);
       this.setState({
         data: completeData
       });
     }
     handleErrorData(error) {
-      //console.log('error', error);
       // TODO: Handle Errors better!
     }
 

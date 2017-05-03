@@ -20,7 +20,7 @@ const Item = ({href, text}, {url}) => {
 };
 
 export default class extends Component {
-  render(props, state, {url}) {
+  render(props, state) {
     return (
       <nav class={styles.header}>
         <ol class={styles.links}>

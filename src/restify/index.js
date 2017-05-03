@@ -12,6 +12,7 @@ const shrinkRay = require('shrink-ray');
 const apiList = require('./routes/api/list.js');
 const apiItems = require('./routes/api/items.js');
 const apiComments = require('./routes/api/comments.js');
+const insecureRedirect = require('./routes/insecure.js');
 const defaultRoute = require('./routes/default-serverrender.js');
 const shellRoute = require('./routes/default.js');
 const staticRoute = require('./routes/static.js');
@@ -42,12 +43,12 @@ server.use(setRequestResources(WebpackResources(logger)));
 server.get('/api/list/:type', apiList.route);
 server.get('/api/items', apiItems.route);
 server.get('/api/comments/:id', apiComments.route);
-server.get('/:type/:id', defaultRoute);
+server.get('/:type/:id', insecureRedirect, defaultRoute);
 server.get('/shell', shellRoute);
 server.get('/dist/:classification/:file', staticRoute);
 server.get('/static/icons/:file', staticIconRoute);
 server.get('/sw.js', serviceWorkerRoute);
-server.get('/.*', defaultRoute);
+server.get('/.*', insecureRedirect, defaultRoute);
 
 // Prefetch Data for API.
 ForegroundData.init();

@@ -10,17 +10,28 @@ function setRequestResources(resourcesList) {
   function routeBundle(req, resources) {
     const routeResources = resources && resources.routes;
     
-    if (/\/item/.test(req.url)) {
-      return routeResources && {
-        js: routeResources.ItemHome
-      };
-    } else if (/\/user/.test(req.url)) {
-      return routeResources && {
-        js: routeResources.UserHome
-      };
+    if (routeResources) {
+      if (/\/item/.test(req.url)) {
+        return {
+          js: routeResources.ItemHome
+        };
+      }
+
+      if (/\/about/.test(req.url)) {
+        return {
+          js: routeResources.AboutHome
+        };
+      }
+      
+      if (/\/user/.test(req.url)) {
+        return {
+          js: routeResources.UserHome
+        };
+      }
     }
-    return routeResources && {
-      js: routeResources.ListHome
+
+    return {
+      js: null
     };
   }
 
