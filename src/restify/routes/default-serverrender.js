@@ -10,8 +10,6 @@ import RoutedView from '../../core/routedView.js';
 import LoadingView from '../../core/loadingView.js';
 import ListViewWithData from '../../lists/list.js';
 
-import styles from '../../core/routedView.css';
-
 function defaultRoute(req, res, next) {
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
