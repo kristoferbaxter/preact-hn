@@ -30,7 +30,7 @@ function defaultRoute(req, res, next) {
       <style>${resources.inline}</style>
       ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
-      <link rel="icon" href="/static/icons/favicon.ico">
+      <link rel="icon" href="/static/icons/favicon.png">
       <script src='${resources.js}' async defer></script>
     </head>
     <body>

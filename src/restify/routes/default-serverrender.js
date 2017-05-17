@@ -50,7 +50,7 @@ function defaultRoute(req, res, next) {
       ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
       ${resources.inline !== null ? `<style>${resources.inline}</style>` : resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
-      <link rel="icon" href="/static/icons/favicon.ico">
+      <link rel="icon" href="/static/icons/favicon.png">
       <script>window.seed=${JSON.stringify(data)}</script>
       <script src='${resources.js}' async defer></script>
     </head>
