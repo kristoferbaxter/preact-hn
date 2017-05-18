@@ -25,7 +25,7 @@ export default class extends Component {
       <nav class={styles.header}>
         <ol class={styles.links}>
           <li class={styles.logo}>
-            <Link href='/'>
+            <Link href='/' aria-label="Home">
               <Logo />
             </Link>
           </li>
