@@ -46,7 +46,7 @@ function defaultRoute(req, res, next) {
     <html lang="en">
     <head>
       <title>Preact Hacker News</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
       ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
       ${resources.inline !== null ? `<style>${resources.inline}</style>` : resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
