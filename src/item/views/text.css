@@ -9,3 +9,6 @@
 .text p {
   margin: 1rem 0 0;
 }
+.text pre {
+  white-space: pre-wrap;
+}
