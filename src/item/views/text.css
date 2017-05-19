@@ -8,6 +8,7 @@
 }
 .text p {
   margin: 1rem 0 0;
+  word-break: break-word;
 }
 .text pre {
   white-space: pre-wrap;
