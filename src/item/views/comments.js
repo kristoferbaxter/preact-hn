@@ -21,7 +21,7 @@ function Comment({root, data, kidsOnly}) {
   }
 
   const {by, time, text, kids} = data[root];
-  return (
+  return text ? (
     <article class={styles.comment}>
       <header class={styles.header}>
         <a href={`/user/${by}`} class={styles.userLink}>{by}</a>
@@ -30,7 +30,7 @@ function Comment({root, data, kidsOnly}) {
       <Text text={text} isComment={true} />
       {kids && <div class={styles.kids}>{Object.values(kids).map((kid) => <Comment root={kid} data={data} kidsOnly={false} />)}</div>}
     </article>
-  );
+  ) : null;
 }
 
 export default ({root}) => {
