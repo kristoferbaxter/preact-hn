@@ -31,15 +31,13 @@ function defaultRoute(req, res, next) {
       ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icons/favicon.png">
-      <script src='${resources.js}' async defer></script>
+      <script src='${resources.js}' defer></script>
     </head>
     <body>
       <div id="mount">`);
 
   const RoutedViewComponent = render(
-    <RoutedView url={req.url} delay={0}>
-      <LoadingView/>
-    </RoutedView>
+    <RoutedView url={req.url} delay={0} />
   );
 
   res.write(`

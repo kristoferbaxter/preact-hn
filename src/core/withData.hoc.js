@@ -2,7 +2,7 @@ import {h, Component} from 'preact';
 
 // This is a Higher Order Component.
 // DataComponent(WrappedComponent, { method, properties })
-export default function withData(WrappedComponent, {fetchDataFunction, properties}) {
+export default (WrappedComponent, {fetchDataFunction, properties}) => {
   return class extends Component {
     constructor(props) {
       super(props);

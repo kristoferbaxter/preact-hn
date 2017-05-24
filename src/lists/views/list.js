@@ -3,7 +3,7 @@ import {GetListApi} from '../../core/api/list.js';
 import withData from '../../core/withData.hoc.js';
 import ListView from '../list.js';
 
-export default class ListHome extends Component {
+export default class extends Component {
   constructor(props) {
     super(props);
 

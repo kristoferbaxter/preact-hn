@@ -52,7 +52,8 @@ function defaultRoute(req, res, next) {
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icons/favicon.png">
       <script>window.seed=${JSON.stringify(data)}</script>
-      <script src='${resources.js}' async defer></script>
+      <script src='${resources.js}' defer></script>
+      ${resources.route && resources.route.js ? `<script src='${resources.route.js}' defer></script>` : ''}
     </head>
     <body>`);
 
@@ -62,18 +63,10 @@ function defaultRoute(req, res, next) {
     </RoutedView>
   );
 
-  /*
-   * TODO: Move to use same router on server and client.
-   * <Routes url={req.url} delay={0} child={<ListViewWithData data={serverRoute(req, {type: listType})} />} />
-   */
-
   res.write(`
         ${RoutedViewComponent}
       </body>
     </html>`);
-
-    // TODO: <script>window.seed=${JSON.stringify(data)};</script>
-    // TODO: More research on why these scripts cannot be loaded async.
 
   res.end();
 

@@ -2,7 +2,7 @@ const nearest = (count, units) => {
   return count = ~~count, 1 !== count && (units += "s"), count + " " + units;
 };
 
-export default function timeFormat(time) {
+export default (time) => {
   const delta = Date.now()/1000 - time;
 
   if (delta < 3600) {

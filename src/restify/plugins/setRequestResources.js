@@ -28,6 +28,10 @@ function setRequestResources(resourcesList) {
           js: routeResources.UserHome
         };
       }
+
+      return {
+        js: routeResources.ListHome ? routeResources.ListHome : null
+      };
     }
 
     return {

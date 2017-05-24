@@ -1,6 +1,6 @@
 import {h} from 'preact';
 
-export default function({width=30, height=30}) {
+export default ({width=30, height=30}) => {
   return (
     <svg width={width} height={height} viewBox="-256 -256 512 512">
       <path d="M0,-256 221.7025033688164,-128 221.7025033688164,128 0,256 -221.7025033688164,128 -221.7025033688164,-128z" fill="white"></path>

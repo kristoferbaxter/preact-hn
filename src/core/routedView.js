@@ -1,5 +1,6 @@
 import {h, Component} from 'preact';
 import Header from '../header/header.js';
+import LoadingView from './loadingView.js';
 
 import styles from './routedView.css';
 
@@ -53,12 +54,12 @@ export default class RoutedView extends Component {
   render(props, {child, pastDelay}) {
     this.context.url=props.url;
 
-    const renderChild = props.child || child || null;
+    const usableChild = props.child || child || null;
     return (
       <div id="mount" class={styles.viewHasHeader}>
         <Header />
         <div class={styles.mainView}>
-          {renderChild ? h(renderChild, props) : (pastDelay || props.delay === 0 ? props.children : null)}
+          {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? (props.children || <LoadingView />) : null)}
         </div>
       </div>
     );

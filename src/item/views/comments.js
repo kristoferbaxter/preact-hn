@@ -1,4 +1,4 @@
-import {h, Component} from 'preact';
+import {h} from 'preact';
 //import Markup from 'preact-markup';
 //TODO: Investigate switching over to Markup. <div><Markup markup={text} /></div> 
 
@@ -10,39 +10,35 @@ import Text from './text.js';
 
 import styles from './comments.css';
 
-class Comment extends Component {
-  render({root, data, kidsOnly}) {
-    if (!data || data === null) {
-      return <LoadingView />;
-    }
-
-    if (kidsOnly) {
-      const {kids} = data[root];
-      return kids && <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>;
-    }
-
-    const {by, time, text, kids} = data[root];
-    return (
-      <article class={styles.comment}>
-        <header class={styles.header}>
-          <a href={`/user/${by}`} class={styles.userLink}>{by}</a>
-          <span class={styles.ago}>{timeFormat(time)} ago</span>
-        </header>
-        <Text text={text} isComment={true} />
-        {kids && <div class={styles.kids}>{Object.values(kids).map((kid) => <Comment root={kid} data={data} kidsOnly={false} />)}</div>}
-      </article>
-    );
+function Comment({root, data, kidsOnly}) {
+  if (!data || data === null) {
+    return <LoadingView />;
   }
+
+  if (kidsOnly) {
+    const {kids} = data[root];
+    return kids && <div>{Object.values(kids).map((kid) => <Comment root={kid} data={data} />)}</div>;
+  }
+
+  const {by, time, text, kids} = data[root];
+  return (
+    <article class={styles.comment}>
+      <header class={styles.header}>
+        <a href={`/user/${by}`} class={styles.userLink}>{by}</a>
+        <span class={styles.ago}>{timeFormat(time)} ago</span>
+      </header>
+      <Text text={text} isComment={true} />
+      {kids && <div class={styles.kids}>{Object.values(kids).map((kid) => <Comment root={kid} data={data} kidsOnly={false} />)}</div>}
+    </article>
+  );
 }
 
-export default class extends Component {
-  render({root}) {
-    const CommentWithData = withData(Comment, {fetchDataFunction: GetComments, properties: {root: root}});
+export default ({root}) => {
+  const CommentWithData = withData(Comment, {fetchDataFunction: GetComments, properties: {root: root}});
 
-    return (
-      <section>
-        <CommentWithData root={root} kidsOnly={true} />  
-      </section>
-    );
-  }
+  return (
+    <section>
+      <CommentWithData root={root} kidsOnly={true} />  
+    </section>
+  );
 }

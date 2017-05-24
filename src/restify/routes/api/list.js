@@ -34,7 +34,7 @@ function apiListRoute(req, res, next) {
 
   const type = req.params.type;
   const from = parseInt(req.query.from || 0, 10);
-  const to = parseInt(req.query.to || 20, 10);
+  const to = parseInt(req.query.to || 29, 10);
   const uuid = req.query.uuid || ForegroundData.uuid(type);
   
   res.send(generateJSON(req, {type, from, to, uuid}));

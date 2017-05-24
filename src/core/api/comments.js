@@ -9,7 +9,7 @@ return {
   error: function()
 }
 */
-export default function({root}, callbacks) {
+export default ({root}, callbacks) => {
   // Fetch the missing values.
   fetch(`/api/comments/${root}`)
   .then(response => response.json())

@@ -2,7 +2,7 @@ import {h} from 'preact';
 
 import styles from './about.css';
 
-export default function() {
+export default _ => {
   return (
     <article class={styles.about}>
       <h1 class={styles.header}>Simple Hacker News Clone</h1>

@@ -3,11 +3,11 @@ import timeFormat from '../core/time.js';
 
 import styles from './item.css';
 
-const Comments = ({entity: {descendants, id}}) => {
+function Comments({entity: {descendants, id}}) {
   return <span> | <a href={`/item/${id}`} class={styles.link}>{descendants > 1 ? `${descendants} comments` : 'discuss'}</a></span>;
 }
 
-export default function ListItem({index, entity}) {
+export default ({index, entity}) => {
   if (!entity) return null;
   
   const {url, title, score, by, time} = entity;

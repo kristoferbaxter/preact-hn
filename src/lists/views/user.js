@@ -1,8 +1,6 @@
-'use strict';
-
 import {h} from 'preact';
 
-export default function UserHome() {
+export default _ => {
   return (
     <div>UserHome</div>
   );

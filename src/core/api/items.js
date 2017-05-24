@@ -9,7 +9,7 @@ return {
   error: function()
 }
 */
-export default function({keys}, callbacks) {
+export default ({keys}, callbacks) => {
   // Keys are from entities table.
   let resolved = {};
   let anyResolved = false;
