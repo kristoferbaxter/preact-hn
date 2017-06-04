@@ -10,22 +10,24 @@ function generateJSON(req, {type, from, to, uuid}) {
   const rangedItems = latestNewItems.slice(from,to);
 
   return {
-    'uuid': uuid,
-    'type': type,
-    'from': from,
-    'to': to,
-    'max': latestNewItems.length,
-    'items': rangedItems.reduce(function(acc, cur, index) {
-      acc[index+from] = cur;
-      return acc;
-    }, {}),
-    '$entities': rangedItems.reduce(function(acc, cur, index) {
-      const item = ForegroundData.getItem(cur, req.log);
-      if (item) {
-        acc[item.id] = item;
-      }
-      return acc;
-    }, {})
+    current: {
+      'uuid': uuid,
+      'type': type,
+      'from': from,
+      'to': to,
+      'max': latestNewItems.length,
+      'items': rangedItems.reduce(function(acc, cur, index) {
+        acc[index+from] = cur;
+        return acc;
+      }, {}),
+      '$entities': rangedItems.reduce(function(acc, cur, index) {
+        const item = ForegroundData.getItem(cur, req.log);
+        if (item) {
+          acc[item.id] = item;
+        }
+        return acc;
+      }, {})
+    }
   }
 }
 

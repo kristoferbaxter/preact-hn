@@ -29,7 +29,8 @@ module.exports = {
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: true,
-      ALLOW_OFFLINE: false
+      ALLOW_OFFLINE: false,
+      IS_SERVER: false
     }),
     CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,

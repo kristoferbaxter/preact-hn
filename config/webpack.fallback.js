@@ -28,7 +28,8 @@ module.exports = {
       POLYFILL_PROMISES: true,
       POLYFILL_FETCH: true,
       POLYFILL_URL: true,
-      ALLOW_OFFLINE: false
+      ALLOW_OFFLINE: false,
+      IS_SERVER: false
     }),
     new BabiliPlugin({unsafe: false}),
     CommonOptions.ExtractCSSPlugin,

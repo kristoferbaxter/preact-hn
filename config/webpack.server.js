@@ -29,6 +29,9 @@ module.exports = {
   externals: nodeModules,
   plugins: [
     CommonOptions.CleanupPlugin,
+    new webpack.DefinePlugin({
+      IS_SERVER: true
+    }),
     new CopyWebpackPlugin([
       {from: 'static', to: 'static'},
       {from: 'proxy/cert.pem'},

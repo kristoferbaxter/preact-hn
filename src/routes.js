@@ -5,7 +5,7 @@ import ListView from './lists/views/list.js';
 import LoadingView from './core/loadingView.js';
 import {LIST_TYPES} from './lists/constants.js';
 
-export default (props) => {
+export default _ => {
   return (
     <Router>
       <RoutedView path='/top/:page' default listType={LIST_TYPES.top} child={ListView} delay={0} />
@@ -17,9 +17,9 @@ export default (props) => {
       <RoutedView path='/ask/:page' listType={LIST_TYPES.ask} child={ListView} delay={0} />
       <RoutedView path='/jobs' listType={LIST_TYPES.jobs} child={ListView} delay={0}  />
       <RoutedView path='/jobs/:page' listType={LIST_TYPES.jobs} child={ListView} delay={0} />
-      <RoutedView path='/about' load={require('bundle-loader?lazy&name=AboutHome!./about/views/about.js')} {...props} />
-      <RoutedView path='/item/:id' load={require('bundle-loader?lazy&name=ItemHome!./item/views/item.js')} {...props} />
-      <RoutedView path='/user/:id' load={require('bundle-loader?lazy&name=UserHome!./lists/views/user.js')} {...props} />
+      <RoutedView path='/about' load={require('bundle-loader?lazy&name=AboutHome!./about/views/about.js')} />
+      <RoutedView path='/item/:id' load={require('bundle-loader?lazy&name=ItemHome!./item/views/item.js')} />
+      <RoutedView path='/user/:id' load={require('bundle-loader?lazy&name=UserHome!./lists/views/user.js')} />
     </Router>
   );
 }

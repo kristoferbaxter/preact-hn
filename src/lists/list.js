@@ -6,7 +6,7 @@ import {ITEMS_PER_PAGE} from './constants.js';
 
 import styles from './list.css';
 
-function Pagination({data: {page, max, type}}) {
+function Pagination({data: {current: {page, max, type}}}) {
   const maxPages = Math.ceil(parseInt(max, 10)/ITEMS_PER_PAGE);
   const parsedPage = parseInt(page, 10);
 
@@ -20,18 +20,44 @@ function Pagination({data: {page, max, type}}) {
 }
 
 export default ({data}) => {
+  console.log('list', data);
+  /*
   if (!data || data === null) {
     return <LoadingView />;
   }
+  */
+  const {
+    current: {items, $entities, page}
+  } = data;
 
-  const {items, $entities} = data;
+  console.log('l2', data.previous, page, data.previous !== undefined && (page > data.previous.page), data.previous !== undefined && (page < data.previous.page));
+
+  const previousListClasses = objstr({
+    [styles.previousList]: true,
+    [styles.animateList]: true,
+    [styles.animatePreviousForward]: data.previous !== undefined && (page > data.previous.page),
+    [styles.animatePreviousBackward]: data.previous !== undefined && (page < data.previous.page)
+  });
+  const currentListClasses = objstr({
+    [styles.animateList]: data.previous !== undefined,
+    [styles.animateForward]: data.previous !== undefined && (page > data.previous.page),
+    [styles.animateBackward]: data.previous !== undefined && (page < data.previous.page)
+  });
   return (
-    <main>
+    <main style='position: relative'>
       <Pagination data={data} />
-      {Object.keys(items).map(item => {
-        const itemAsInt = parseInt(item, 10);
-        return <ListItem index={itemAsInt+1} entity={$entities[items[itemAsInt]]} />;
-      })}
+      {data.previous && data.previous.items && <div class={previousListClasses} aria-role="presentation">
+        {Object.keys(data.previous.items).map(item => {
+          const itemAsInt = parseInt(item, 10);
+          return <ListItem index={itemAsInt+1} entity={data.previous.$entities[data.previous.items[itemAsInt]]} />;
+        })}
+      </div>}
+      <div class={currentListClasses}>
+        {Object.keys(items).map(item => {
+          const itemAsInt = parseInt(item, 10);
+          return <ListItem index={itemAsInt+1} entity={$entities[items[itemAsInt]]} />;
+        })}
+      </div>
     </main>
   );
 }

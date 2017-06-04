@@ -12,9 +12,10 @@ import ListViewWithData from '../../lists/list.js';
 
 function defaultRoute(req, res, next) {
   const supportsManifest = req.userAgentClassifiction === 'chrome';
+  //const allowH2Push = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
 
-  if (resources) {
+  if (resources) { // && allowH2Push) {
     let linkHeaderValue = '';
     const toPush = resources.route && resources.route.js ? [resources.js, resources.route.js] : [resources.js];
     toPush.forEach((preloadResource) => {

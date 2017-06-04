@@ -42,6 +42,7 @@ export default (WrappedComponent, {fetchDataFunction, properties}) => {
     }
 
     render(props, {data}) {
+      console.log('render withData', data, props);
       return <WrappedComponent data={data} {...props} />;
     }
   }

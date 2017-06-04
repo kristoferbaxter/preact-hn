@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 .pages {
   margin: 0 1rem;
@@ -22,4 +23,71 @@
 .disabled {
   color: #666;
   pointer-events: none;
+}
+
+.animateList {
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+.animateForward {
+  animation-name: currentListForward;
+}
+.animateBackward {
+  animation-name: currentListBackward;
+}
+@keyframes currentListForward {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes currentListBackward {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.previousList {
+  position: absolute;
+  top: 0;
+}
+.animatePreviousForward {
+  animation-name: previousListForward;
+}
+.animatePreviousBackward {
+  animation-name: previousListBackward;
+}
+
+@keyframes previousListForward {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+@keyframes previousListBackward {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
 }

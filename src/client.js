@@ -25,7 +25,7 @@ if (POLYFILL_URL) {
   require('url-polyfill');
 }
 
-window.seed && storeListData(window.seed);
+window.seed && window.seed.current && storeListData(window.seed.current);
 const mountEl = document.getElementById('mount');
 render(<Routes />, mountEl.parentNode, mountEl);
 
