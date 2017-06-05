@@ -69,7 +69,7 @@
     "postcss-modules": "^0.6.4",
     "style-loader": "^0.16.1",
     "url-polyfill": "^1.0.4",
-    "webpack": "^2.4.1",
+    "webpack": "^3.0.0",
     "webpack-cleanup-plugin": "^0.5.1"
   }
 }
