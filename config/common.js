@@ -1,6 +1,8 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin");
+const ButternutWebpackPlugin = require('butternut-webpack-plugin').default;
+const CompressionPlugin = require('compression-webpack-plugin');
+const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -26,11 +28,15 @@ const POSTCSS_LOADER_OPTIONS = (browsers=["last 3 versions"]) => {
   }; 
 };
 
+const OptimizeJS = new OptimizeJsPlugin({
+  sourceMap: false
+});
 const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
 const BabiliMinification = new BabiliPlugin();
+const ButternutMinification = new ButternutWebpackPlugin();
 const ZopfliCompression = new CompressionPlugin({
   asset: "[path].gzip[query]",
   algorithm: "zopfli",
@@ -103,7 +109,9 @@ module.exports = {
   WebpackStats,
   BabelLoaderRule,
   CSSLoaderRule,
+  OptimizeJS,
   BabiliMinification,
+  ButternutMinification,
   ZopfliCompression,
   BrotliCompression,
   CleanupPlugin

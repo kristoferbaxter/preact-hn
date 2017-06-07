@@ -57,7 +57,7 @@ export default class RoutedView extends Component {
     const usableChild = props.child || child || null;
     return (
       <div id="mount" class={styles.viewHasHeader}>
-        <Header />
+        <Header {...props} />
         <div class={styles.mainView}>
           {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? (props.children || <LoadingView />) : null)}
         </div>

@@ -35,8 +35,9 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
-    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
+    CommonOptions.OptimizeJS,
+    CommonOptions.BabiliMinification,
     new OfflinePlugin({
       cacheMaps: [{
         match: function(requestUrl) {

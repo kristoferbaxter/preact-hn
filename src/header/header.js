@@ -1,4 +1,4 @@
-import {h} from 'preact';
+import {h, Component} from 'preact';
 import {Link} from 'preact-router';
 import objstr from 'obj-str';
 
@@ -19,22 +19,28 @@ function Item({href, text}, {url}) {
   );
 };
 
-export default _ => {
-  return (
-    <nav class={styles.header}>
-      <ol class={styles.links}>
-        <li class={styles.logo}>
-          <Link href='/' aria-label="Home">
-            <Logo />
-          </Link>
-        </li>
-        <Item href='/' text='top'/>
-        <Item href='/new' text='new'/>
-        <Item href='/show' text='show'/>
-        <Item href='/ask' text='ask'/>
-        <Item href='/jobs' text='jobs'/>
-        <Item href='/about' text='about'/>
-      </ol>
-    </nav>
-  );
+export default class extends Component {
+  shouldComponentUpdate({listType}) {
+    return listType !== this.props.listType;
+  }
+
+  render() {
+    return (
+      <nav class={styles.header}>
+        <ol class={styles.links}>
+          <li class={styles.logo}>
+            <Link href='/' aria-label="Home">
+              <Logo />
+            </Link>
+          </li>
+          <Item href='/' text='top'/>
+          <Item href='/new' text='new'/>
+          <Item href='/show' text='show'/>
+          <Item href='/ask' text='ask'/>
+          <Item href='/jobs' text='jobs'/>
+          <Item href='/about' text='about'/>
+        </ol>
+      </nav>
+    );
+  }
 }
