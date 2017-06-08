@@ -30,3 +30,9 @@
 .link {
   color: #666;
 }
+.commentCount {
+  color: #666;
+  padding-left: .5rem;
+  margin-left: .5em;
+  border-left: 1px solid #ccc;
+}

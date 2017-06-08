@@ -4,7 +4,7 @@ import timeFormat from '../core/time.js';
 import styles from './item.css';
 
 function Comments({entity: {descendants, id}}) {
-  return <span> | <a href={`/item/${id}`} class={styles.link}>{descendants > 1 ? `${descendants} comments` : 'discuss'}</a></span>;
+  return <a href={`/item/${id}`} class={styles.commentCount}>{descendants > 1 ? `${descendants} comments` : 'discuss'}</a>;
 }
 
 export default ({index, entity}) => {
