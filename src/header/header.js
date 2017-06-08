@@ -34,11 +34,11 @@ export default class extends Component {
             </Link>
           </li>
           <Item href='/' text='top'/>
-          <Item href='/new' text='new'/>
-          <Item href='/show' text='show'/>
-          <Item href='/ask' text='ask'/>
-          <Item href='/jobs' text='jobs'/>
-          <Item href='/about' text='about'/>
+          <Item href='/new/1' text='new'/>
+          <Item href='/show/1' text='show'/>
+          <Item href='/ask/1' text='ask'/>
+          <Item href='/jobs/1' text='jobs'/>
+          <Item href='/about/1' text='about'/>
         </ol>
       </nav>
     );
