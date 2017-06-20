@@ -1,6 +1,6 @@
 import {h, Component} from 'preact';
 import {GetListApi} from '../../core/api/list.js';
-import withData from '../../core/withData.hoc.js';
+import WithData from '../../core/withData.fcc.js';
 import ListView from '../list.js';
 
 export default class extends Component {
@@ -17,15 +17,16 @@ export default class extends Component {
     this.state.uuid = null;
   }
   
-  render({matches: {page=1}, listType}, {uuid}) {
-    const ViewWithData = withData(ListView, {
-      fetchDataFunction: GetListApi,
-      properties: Object.assign({
-        page: page,
-        listType: listType
-      }, uuid ? {uuid: uuid} : {})
-    });
+  render(props, {uuid}) {
+    const values = Object.assign({
+      page: parseInt(props.matches.page || 1, 10),
+      listType: props.listType
+    }, uuid ? {uuid: uuid} : {});
 
-    return <ViewWithData handleUUIDChange={this.handleUUIDChange} />
+    return (
+      <WithData source={GetListApi} values={values} handleUUIDChange={this.handleUUIDChange}>
+        { (data) => <ListView {...props} data={data} /> } 
+      </WithData>
+    );
   }
 }

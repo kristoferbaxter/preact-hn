@@ -16,7 +16,7 @@ export default class RoutedView extends Component {
     let timeout = null;
 
     if (delay > 0) {
-      timeout = setTimeout(() => {
+      timeout = setTimeout(_ => {
         this.setState({
           pastDelay: true
         });
@@ -28,7 +28,7 @@ export default class RoutedView extends Component {
         timeout && clearTimeout(timeout);
         this.setState({
           child: file.default
-        }, () => {
+        }, _ => {
           this.lazyLoadedRoutes[path] = file.default;
         });
       });
@@ -59,7 +59,7 @@ export default class RoutedView extends Component {
       <div id="mount" class={styles.viewHasHeader}>
         <Header {...props} />
         <div class={styles.mainView}>
-          {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? (props.children || <LoadingView />) : null)}
+          {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? <LoadingView /> : null)}
         </div>
       </div>
     );

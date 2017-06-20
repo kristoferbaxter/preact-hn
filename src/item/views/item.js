@@ -1,5 +1,5 @@
 import {h} from 'preact';
-import withData from '../../core/withData.hoc.js';
+import WithData from '../../core/withData.fcc.js';
 import GetItems from '../../core/api/items.js';
 import LoadingView from '../../core/loadingView.js';
 import Comments from './comments.js';
@@ -31,7 +31,9 @@ function ItemView({matches: {id}, data}) {
 }
 
 export default (props) => {
-  const ItemViewWithData = withData(ItemView, {fetchDataFunction: GetItems, properties: {keys: [props.matches.id]}});
-
-  return <ItemViewWithData {...props} />;
+  return (
+    <WithData source={GetItems} values={{keys: [props.matches.id]}}>
+      { (data) => <ItemView data={data} {...props} /> } 
+    </WithData>
+  );
 }

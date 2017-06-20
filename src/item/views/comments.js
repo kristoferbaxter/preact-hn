@@ -4,7 +4,7 @@ import {h} from 'preact';
 
 import timeFormat from '../../core/time.js';
 import GetComments from '../../core/api/comments.js';
-import withData from '../../core/withData.hoc.js';
+import WithData from '../../core/withData.fcc.js';
 import LoadingView from '../../core/loadingView.js';
 import Text from './text.js';
 
@@ -34,11 +34,11 @@ function Comment({root, data, kidsOnly}) {
 }
 
 export default ({root}) => {
-  const CommentWithData = withData(Comment, {fetchDataFunction: GetComments, properties: {root: root}});
-
   return (
     <section>
-      <CommentWithData root={root} kidsOnly={true} />  
+      <WithData source={GetComments} values={{root}}>
+        { (data) => <Comment root={root} data={data} kidsOnly={true} /> } 
+      </WithData> 
     </section>
   );
 }

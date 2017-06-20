@@ -33,13 +33,11 @@ function defaultRoute(req, res, next) {
     'Access-Control-Allow-Origin': '*'
   });
 
-  let Route = <LoadingView />;
   let data = {};
 
   const listType = req.params.type ? LIST_TYPES[req.params.type] : req.url === '/' ? LIST_TYPES['top'] : null;
   if (listType) {
     data = serverRoute(req, {type: listType});
-    Route = <ListViewWithData data={data} />;
   }
 
   res.write(`<!DOCTYPE html>
@@ -58,9 +56,7 @@ function defaultRoute(req, res, next) {
     <body>`);
 
   const RoutedViewComponent = render(
-    <RoutedView url={req.url} delay={0}>
-      {Route}
-    </RoutedView>
+    <RoutedView url={req.url} delay={0} child={listType ? ListViewWithData : LoadingView} data={data} />
   );
 
   res.write(`

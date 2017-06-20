@@ -6,6 +6,9 @@
   border-bottom: 1px solid #ececec;
   padding-bottom: 1rem;
 }
+.comment a {
+  word-break: break-all;
+}
 .text p {
   margin: 1rem 0 0;
   word-break: break-word;
