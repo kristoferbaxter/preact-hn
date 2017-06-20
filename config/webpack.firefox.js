@@ -34,9 +34,9 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.ZopfliCompression,
     CommonOptions.BrotliCompression
   ]
 };

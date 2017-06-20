@@ -1,7 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
 const ButternutWebpackPlugin = require('butternut-webpack-plugin').default;
-const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
@@ -37,11 +36,6 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
 });
 const BabiliMinification = new BabiliPlugin();
 const ButternutMinification = new ButternutWebpackPlugin();
-const ZopfliCompression = new CompressionPlugin({
-  asset: "[path].gzip[query]",
-  algorithm: "zopfli",
-  test: /\.(js|css)$/
-});
 const BrotliCompression = new BrotliPlugin({
   asset: '[path].br[query]',
   test: /\.(js|css)$/,
@@ -112,7 +106,6 @@ module.exports = {
   OptimizeJS,
   BabiliMinification,
   ButternutMinification,
-  ZopfliCompression,
   BrotliCompression,
   CleanupPlugin
 }

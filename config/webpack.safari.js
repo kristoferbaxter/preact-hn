@@ -30,8 +30,8 @@ module.exports = {
       POLYFILL_URL: false,
       ALLOW_OFFLINE: false
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.BabiliMinification,
-    CommonOptions.ExtractCSSPlugin,
-    CommonOptions.ZopfliCompression
+    CommonOptions.ExtractCSSPlugin
   ]
 };

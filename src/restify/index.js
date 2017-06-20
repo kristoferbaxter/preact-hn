@@ -6,7 +6,6 @@ const ForegroundData = require('./storage/foreground.js');
 // Restify Plugins
 const classifyBrowser = require('./plugins/classifyBrowser.js');
 const setRequestResources = require('./plugins/setRequestResources.js');
-const shrinkRay = require('shrink-ray');
 
 // Routes
 const apiList = require('./routes/api/list.js');
@@ -32,9 +31,6 @@ const server = restify.createServer({
 server.use(restify.requestLogger());
 server.use(restify.bodyParser());
 server.use(restify.queryParser());
-server.use(shrinkRay({filter: function(req) {
-  return !/.js|.css/.test(req.url);
-}}));
 server.use(classifyBrowser());
 server.use(setRequestResources(WebpackResources(logger)));
 
