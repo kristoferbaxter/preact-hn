@@ -38,7 +38,7 @@ export default class extends Component {
           <Item href='/show/1' text='show'/>
           <Item href='/ask/1' text='ask'/>
           <Item href='/jobs/1' text='jobs'/>
-          <Item href='/about/1' text='about'/>
+          <Item href='/about' text='about'/>
         </ol>
       </nav>
     );
