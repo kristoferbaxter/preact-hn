@@ -25,7 +25,7 @@ Made with _kindness_ in California. 🏄
     * yarn run start (chrome only)
     * yarn run bundle:prod; yarn run start (all browsers)
 6. Access using your favorite browser
-    * https://localhost:22164
+    * https://localhost:5443
 
 ## Details
 
