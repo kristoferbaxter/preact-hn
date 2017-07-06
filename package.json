@@ -54,7 +54,7 @@
     "butternut-webpack-plugin": "^0.0.6",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.1.4",
-    "css-loader": "^0.28.0",
+    "css-loader": "^0.28.4",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "2.1.2",
     "nodemon": "^1.11.0",

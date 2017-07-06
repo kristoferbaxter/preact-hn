@@ -10,9 +10,9 @@ const IN_PRODUCTION = process.env.NODE_ENV === 'production';
 const IN_DEVELOPER_MODE = process.env.BUNDLE_ENV === 'dev'; // New!
 const CSS_LOADER_OPTIONS = {
   modules: true,
-  localIdentName: '[hash:base64:8]',
+  localIdentName: '[hash:base64:3]',
   minimize: true,
-  camelCase: false,
+  camelCase: 'only',
   importLoaders: 1
 };
 const POSTCSS_LOADER_OPTIONS = (browsers=["last 3 versions"]) => {
