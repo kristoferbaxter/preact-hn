@@ -10,8 +10,6 @@
 }
 
 .links {
-  display: flex;
-  align-items: center;
   height: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -21,14 +19,16 @@
 }
 
 .logo {
-  margin-right: .6rem;
+  margin: 9px .6rem 0 0; /* 9px = (header height - logo height)/2 */
+  display: block;
+  float: left;
 }
 .item {
   height: 100%;
+  display: inline-block;
 }
 .item:last-child {
-  flex-grow: 1;
-  text-align: right;
+  float: right;
 }
 
 .link {
