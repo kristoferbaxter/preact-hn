@@ -23,9 +23,9 @@ function ItemView({matches: {id}, data}) {
         <p class={styles.byline}>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
         <Text text={text} />
       </article>
-      {decendants > 0 && (
+      {descendants > 0 && (
         <div class={styles.comments}>
-          <h2 class={styles.numberOfComments}>{`${decendants} comment${descendants > 1 && "s"}`}</h2>
+          <h2 class={styles.numberOfComments}>{`${descendants} comment${descendants > 1 && "s"}`}</h2>
           <Comments root={thisId} />
         </div>
       )}
