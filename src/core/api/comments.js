@@ -16,7 +16,5 @@ export default ({root}, callbacks) => {
   .then((json) => {
     MemoryStore(json.$entities);
     callbacks.complete(json.$entities);
-  }).catch((error) => {
-    callbacks.error(error);
-  });
+  }).catch((error) => callbacks.error(error));
 }

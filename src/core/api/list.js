@@ -9,7 +9,7 @@ Object.keys(LIST_TYPES).forEach(function(list) {
   LATEST_UUID[list] = null;
 });
 
-function determineListRange(page) {
+export function determineListRange(page) {
   const from = (page-1) * ITEMS_PER_PAGE;
   const to = from + ITEMS_PER_PAGE;
   
@@ -19,7 +19,7 @@ function determineListRange(page) {
   };
 }
 
-function storeListData({uuid, items, max, type, $entities}) {
+export function storeListData({uuid, items, max, type, $entities}) {
   MemoryStore(Object.assign({
     [uuid]: {
       items,
@@ -30,11 +30,16 @@ function storeListData({uuid, items, max, type, $entities}) {
   setLatestUUID(type, uuid);  
 }
 
-function deriveResponse({type, to, from, page}, json) {
-  const {uuid, items, max, $entities} = json;
+function deriveResponse({type, to, from, page}, {uuid, items, max, $entities}) {
   const stored = MemoryRetrieve(uuid);
 
-  storeListData({uuid, items: Object.assign(stored && stored.items || {}, items), max, type, $entities});
+  storeListData({
+    uuid,
+    items: Object.assign(stored && stored.items || {}, items),
+    max,
+    type,
+    $entities
+  });
 
   return {
     uuid,
@@ -48,7 +53,7 @@ function deriveResponse({type, to, from, page}, json) {
   };
 }
 
-function setLatestUUID(type, uuid) {
+export function setLatestUUID(type, uuid) {
   LATEST_UUID[type] = uuid;
 }
 
@@ -59,7 +64,7 @@ return {
   error: function()
 }
 */
-function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
+export function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
   const list = MemoryRetrieve(uuid);
   const stored = uuid && list;
   const {from, to} = determineListRange(page);
@@ -108,10 +113,3 @@ function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
   .then(json => callbacks.complete(deriveResponse({type: listType, to, from, page}, json)))
   .catch(error => callbacks.error(error));
 }
-
-export {
-  GetListApi,
-  determineListRange,
-  setLatestUUID,
-  storeListData
-};

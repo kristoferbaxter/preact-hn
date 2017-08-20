@@ -1,9 +1,9 @@
 let ENTITIES = {};
 
-function MemoryRetrieve(item) {
+export function MemoryRetrieve(item) {
   return ENTITIES[item];
 }
-function MemoryStore(items) {
+export function MemoryStore(items) {
   ENTITIES = Object.assign(ENTITIES, items);
 }
 
@@ -11,8 +11,3 @@ function MemoryStore(items) {
 //if (typeof window !== 'undefined') {
 //  window.peek = ENTITIES;
 //}
-
-export {
-  MemoryRetrieve,
-  MemoryStore
-};
