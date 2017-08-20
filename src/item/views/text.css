@@ -16,3 +16,8 @@
 .text pre {
   white-space: pre-wrap;
 }
+.text code {
+  white-space: pre-line;
+  display: block;
+  overflow-y: scroll;
+}
