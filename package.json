@@ -18,7 +18,7 @@
     "bundle:firefox": "BABEL_ENV=build.firefox node_modules/.bin/webpack --config config/webpack.firefox.js --json > dist/firefox/webpack.json",
     "bundle:fallback": "BABEL_ENV=build.fallback node_modules/.bin/webpack --config config/webpack.fallback.js --json > dist/fallback/webpack.json",
     "bundle:server": "BABEL_ENV=build.server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
-    "bundle:prod": "cross-env NODE_ENV=production yarn run bundle:all;",
+    "bundle:prod": "NODE_ENV=production yarn run bundle:all;",
     "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml"
   },
   "dependencies": {
