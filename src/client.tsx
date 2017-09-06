@@ -1,7 +1,15 @@
-import {h, render} from 'preact';
+declare var POLYFILL_OBJECT_ASSIGN: boolean;
+declare var POLYFILL_OBJECT_VALUES: boolean;
+declare var POLYFILL_PROMISES: boolean;
+declare var POLYFILL_FETCH: boolean;
+declare var POLYFILL_URL: boolean;
+declare var ALLOW_OFFLINE: boolean;
+
+import {render} from 'preact';
 import Routes from './routes.js';
 import './core/api/memory.js';
-import {storeListData} from './core/api/list.js';	
+import {storeListData} from './core/api/list.js';
+import GoogleAnalytics from './core/analytics';
 
 import './reset.css';
 
@@ -33,3 +41,5 @@ if (ALLOW_OFFLINE) {
   // This is supplied by WebpackConfiguration.
   require('offline-plugin/runtime').install();
 }
+
+const ga = new GoogleAnalytics({tid:'UA-XXXXXXXX-X'});

@@ -23,12 +23,14 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      DO_NOT_TRACK: 'window.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
       POLYFILL_OBJECT_VALUES: true,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: true,
       POLYFILL_URL: false,
-      ALLOW_OFFLINE: false
+      ALLOW_OFFLINE: false,
+      IS_CLIENT: true,
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.BabiliMinification,

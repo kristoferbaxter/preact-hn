@@ -71,8 +71,15 @@ const WebpackStats = {
   warnings: false
 };
 
+const TSLoaderRule = {
+  test: /\.(ts|tsx)?$/,
+  exclude: /node_modules/,
+  use: {
+    loader: 'ts-loader'
+  }
+};
 const BabelLoaderRule = {
-  test: /\.js$/,
+  test: /\.(js|ts|tsx)$/,
   exclude: /node_modules/,
   use: {
     loader: 'babel-loader',
@@ -101,6 +108,7 @@ module.exports = {
   ExtractCSSPlugin,
   EntryPoints,
   WebpackStats,
+  TSLoaderRule,
   BabelLoaderRule,
   CSSLoaderRule,
   OptimizeJS,

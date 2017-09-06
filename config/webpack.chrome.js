@@ -18,6 +18,7 @@ module.exports = {
   stats: CommonOptions.WebpackStats,
   module: {
     rules: [
+      CommonOptions.TSLoaderRule,
       CommonOptions.BabelLoaderRule,
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
@@ -25,12 +26,14 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      DO_NOT_TRACK: 'navigator.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
       POLYFILL_OBJECT_VALUES: false,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,
-      ALLOW_OFFLINE: true
+      ALLOW_OFFLINE: true,
+      IS_CLIENT: true,
     }),
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
@@ -38,7 +41,7 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.OptimizeJS,
-    CommonOptions.BabiliMinification,
+    //CommonOptions.BabiliMinification,
     new OfflinePlugin({
       cacheMaps: [{
         match: function(requestUrl) {

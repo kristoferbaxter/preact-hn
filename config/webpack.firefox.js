@@ -24,12 +24,14 @@ module.exports = {
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      DO_NOT_TRACK: 'navigator.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
       POLYFILL_OBJECT_VALUES: true,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,
-      ALLOW_OFFLINE: false
+      ALLOW_OFFLINE: false,
+      IS_CLIENT: true,
     }),
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}

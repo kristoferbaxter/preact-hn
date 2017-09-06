@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/ts-out",
+    "sourceMap": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
