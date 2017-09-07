@@ -31,7 +31,6 @@ interface BaseOptions extends InitializationOptions {
 export interface RequestOptions {
   dr?: string,
   // Which referral source brought traffic to a website.
-
 }
 
 export default class {
