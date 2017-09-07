@@ -72,14 +72,17 @@ const WebpackStats = {
 };
 
 const TSLoaderRule = {
-  test: /\.(ts|tsx)?$/,
+  test: /\.ts?$/,
   exclude: /node_modules/,
   use: {
-    loader: 'ts-loader'
+    loader: 'ts-loader',
+    options: {
+      silent: true,
+    }
   }
 };
 const BabelLoaderRule = {
-  test: /\.(js|ts|tsx)$/,
+  test: /\.(js)$/,
   exclude: /node_modules/,
   use: {
     loader: 'babel-loader',

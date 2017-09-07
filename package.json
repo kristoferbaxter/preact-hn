@@ -56,6 +56,7 @@
     "css-loader": "^0.28.5",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "3.0.0",
+    "file-loader": "^0.11.2",
     "nodemon": "^1.11.0",
     "object.values": "^1.0.4",
     "offline-plugin": "^4.8.3",
@@ -63,6 +64,8 @@
     "postcss-loader": "^2.0.6",
     "postcss-modules": "^0.8.0",
     "style-loader": "^0.16.1",
+    "ts-loader": "^2.3.5",
+    "typescript": "^2.5.2",
     "url-polyfill": "^1.0.4",
     "webpack": "3.5.5",
     "webpack-cleanup-plugin": "^0.5.1"

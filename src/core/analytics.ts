@@ -1,4 +1,3 @@
-// Graciously borrowed from https://github.com/lukeed/ganalytics
 declare var DO_NOT_TRACK: string;
 declare var IS_CLIENT: boolean;
 
