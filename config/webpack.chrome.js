@@ -41,7 +41,7 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.OptimizeJS,
-    //CommonOptions.BabiliMinification,
+    CommonOptions.BabiliMinification,
     new OfflinePlugin({
       cacheMaps: [{
         match: function(requestUrl) {

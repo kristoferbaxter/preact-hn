@@ -1,13 +1,4 @@
-/*
-declare var POLYFILL_OBJECT_ASSIGN: boolean;
-declare var POLYFILL_OBJECT_VALUES: boolean;
-declare var POLYFILL_PROMISES: boolean;
-declare var POLYFILL_FETCH: boolean;
-declare var POLYFILL_URL: boolean;
-declare var ALLOW_OFFLINE: boolean;
-*/
-
-import {render} from 'preact';
+import {h, render} from 'preact';
 import Routes from './routes.js';
 import './core/api/memory.js';
 import {storeListData} from './core/api/list.js';
@@ -44,4 +35,4 @@ if (ALLOW_OFFLINE) {
   require('offline-plugin/runtime').install();
 }
 
-const ga = new GoogleAnalytics({tid:'UA-XXXXXXXX-X'});
+window.addEventListener('load', _ => new GoogleAnalytics({tid:'UA-XXXXXXXX-X'}));

@@ -72,7 +72,7 @@ const WebpackStats = {
 };
 
 const TSLoaderRule = {
-  test: /\.ts?$/,
+  test: /\.(ts|tsx)?$/,
   exclude: /node_modules/,
   use: {
     loader: 'ts-loader',
@@ -82,7 +82,7 @@ const TSLoaderRule = {
   }
 };
 const BabelLoaderRule = {
-  test: /\.(js)$/,
+  test: /\.(js|ts|tsx)$/,
   exclude: /node_modules/,
   use: {
     loader: 'babel-loader',
