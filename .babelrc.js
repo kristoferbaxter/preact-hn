@@ -1,14 +1,14 @@
 module.exports = function(context) {
   const env = context.cache(() => process.env.BABEL_ENV);
-  const isServer = env === "build.server";
+  const isServer = env === "server";
 
   let targets = {
-    "build.chrome": { chrome: 52 },
-    "build.edge": { edge: 14 },
-    "build.safari": { safari: 10 },
-    "build.firefox": { firefox: 45 },
-    "build.server": { node: 6 },
-    "build.fallback": {
+    "chrome": { chrome: 52 },
+    "edge": { edge: 14 },
+    "safari": { safari: 10 },
+    "firefox": { firefox: 55 },
+    "server": { node: 6 },
+    "fallback": {
       browsers: ["last 2 versions", "ie >= 11", "safari >= 7"]
     },
   };
@@ -18,7 +18,7 @@ module.exports = function(context) {
       ["env", {
         targets: targets[env],
         modules: isServer ? "commonjs" : false,
-        loose: isServer ? false : true,
+        loose: !isServer,
         // debug: true,
       }]
     ],

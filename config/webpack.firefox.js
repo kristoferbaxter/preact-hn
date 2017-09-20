@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'firefox';
-const BROWSER_MIN_SUPPORTED_VERSION = 50;
+const BROWSER_MIN_SUPPORTED_VERSION = 55;
 
 module.exports = {
   entry: CommonOptions.EntryPoints,
@@ -25,7 +25,7 @@ module.exports = {
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       POLYFILL_OBJECT_ASSIGN: false,
-      POLYFILL_OBJECT_VALUES: true,
+      POLYFILL_OBJECT_VALUES: false,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,

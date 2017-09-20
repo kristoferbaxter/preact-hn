@@ -20,7 +20,7 @@ function classifyBrowser(opts) {
       req.userAgentClassifiction='chrome';
     } else if (lowerCaseFamily === 'safari' || lowerCaseFamily === 'safari mobile' && major >= 10) {
       req.userAgentClassifiction='safari';
-    } else if (lowerCaseFamily === 'firefox' && major >= 51) {
+    } else if (lowerCaseFamily === 'firefox' && major >= 55) {
       req.userAgentClassifiction='firefox';
     } else if (lowerCaseFamily === 'edge' && major >= 15) {
       req.userAgentClassifiction='edge';

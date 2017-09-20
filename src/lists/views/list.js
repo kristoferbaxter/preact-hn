@@ -21,7 +21,7 @@ export default class extends Component {
     const values = Object.assign({
       page: parseInt(props.matches.page || 1, 10),
       listType: props.listType
-    }, uuid ? {uuid: uuid} : {});
+    }, uuid ? {uuid} : {});
 
     return (
       <WithData source={GetListApi} values={values} handleUUIDChange={this.handleUUIDChange}>

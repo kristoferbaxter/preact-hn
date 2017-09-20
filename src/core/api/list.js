@@ -64,9 +64,10 @@ return {
   error: function()
 }
 */
-export function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callbacks) {
-  const list = MemoryRetrieve(uuid);
-  const stored = uuid && list;
+export function GetListApi({listType, page=1, uuid}, callbacks) {
+  const usableUUID = uuid || LATEST_UUID[listType];
+  const list = MemoryRetrieve(usableUUID);
+  const stored = usableUUID && list;
   const {from, to} = determineListRange(page);
   let fetchUrl = `/api/list/${listType}?from=${from}&to=${to}`;
 
@@ -78,13 +79,13 @@ export function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callb
     // This allows the UI to have at least a partial response.
     let cachedItems = {};
     let cachedEntities = {}
-    cachedKeys.forEach((key) => {
+    cachedKeys.forEach(key => {
       const entityId = stored.items[key];
       cachedItems[key] = entityId;
       cachedEntities[entityId] = MemoryRetrieve(entityId);
     });
     const storedResponse = {
-      uuid,
+      uuid: usableUUID,
       items: cachedItems,
       type: list.type,
       page,
@@ -104,7 +105,7 @@ export function GetListApi({listType, page=1, uuid=LATEST_UUID[listType]}, callb
 
       // Change the fetch url to include the active UUID.
       // This means we will get results for a known uuid.
-      fetchUrl = `/api/list/${listType}?uuid=${uuid}&from=${from}&to=${to}`;
+      fetchUrl = `/api/list/${listType}?uuid=${usableUUID}&from=${from}&to=${to}`;
     }
   }
 
