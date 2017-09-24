@@ -23,6 +23,7 @@ module.exports = function(context) {
       }]
     ],
     plugins: [
+      ["transform-class-properties"],
       ["transform-es2015-block-scoping", {
         "throwIfClosureRequired": true
       }],

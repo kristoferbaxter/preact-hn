@@ -3,23 +3,17 @@ import {h, Component} from 'preact';
 export default class extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       data: null
     };
-
-    this.handlePartialData = this.handlePartialData.bind(this);
-    this.handleCompleteData = this.handleCompleteData.bind(this);
-    this.handleErrorData = this.handleErrorData.bind(this);
-    this.fetch = this.fetch.bind(this);
   }
 
-  handlePartialData(partialData) {
+  handlePartialData = partialData => {
     this.setState({
       data: partialData
     });
   }
-  handleCompleteData(completeData) {
+  handleCompleteData = completeData => {
     if (this.props.values.uuid !== completeData.uuid) {
       this.props.handleUUIDChange(completeData.uuid);
     }
@@ -27,11 +21,11 @@ export default class extends Component {
       data: completeData
     });
   }
-  handleErrorData(error) {
+  handleErrorData = error => {
     // TODO: Handle Errors better!
   }
 
-  fetch(values) {
+  fetch = values => {
     this.props.source(values, {
       partial: this.handlePartialData,
       complete: this.handleCompleteData,

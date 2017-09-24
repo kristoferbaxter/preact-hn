@@ -5,34 +5,25 @@ import LoadingView from './loadingView.js';
 import styles from './routedView.css';
 
 export default class RoutedView extends Component {
-  constructor(props, context) {
-    super(props, context);
+  lazyLoadedRoutes = {};
 
-    this.lazyLoadedRoutes = {};
-  }
-
-  loader() {
+  loader = _ => {
     const {load, path, delay=200} = this.props;
-    let timeout = null;
-
-    if (delay > 0) {
-      timeout = setTimeout(_ => {
+    const timeout = delay === 0 ? null :
+      setTimeout(_ => {
         this.setState({
           pastDelay: true
         });
       }, delay);
-    }
 
-    if (load) {
-      load((file) => {
-        timeout && clearTimeout(timeout);
-        this.setState({
-          child: file.default
-        }, _ => {
-          this.lazyLoadedRoutes[path] = file.default;
-        });
+    load && load(file => {
+      timeout && clearTimeout(timeout);
+      this.setState({
+        child: file.default
+      }, _ => {
+        this.lazyLoadedRoutes[path] = file.default;
       });
-    }
+    });
   }
   
   componentWillMount() {
@@ -45,14 +36,14 @@ export default class RoutedView extends Component {
 
       this.setState({
         child: nextChild
-      }, () => {
+      }, _ => {
         nextChild === undefined && this.loader();
       });
     }
   }
 
-  render(props, {child, pastDelay}) {
-    this.context.url=props.url;
+  render(props, {child, pastDelay}, {url}) {
+    url = props.url;
 
     const usableChild = props.child || child || null;
     return (

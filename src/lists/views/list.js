@@ -4,17 +4,9 @@ import WithData from '../../core/withData.fcc.js';
 import ListView from '../list.js';
 
 export default class extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleUUIDChange = this.handleUUIDChange.bind(this);
-  }
-
-  handleUUIDChange(uuid) {
-    this.state.uuid = uuid;
-  }
+  handleUUIDChange = uuid => this.state.uuid = uuid;
   componentWillReceiveProps() {
-    this.state.uuid = null;
+    this.handleUUIDChange(null);
   }
   
   render(props, {uuid}) {

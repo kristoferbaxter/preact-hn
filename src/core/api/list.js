@@ -64,7 +64,7 @@ return {
   error: function()
 }
 */
-export function GetListApi({listType, page=1, uuid}, callbacks) {
+export async function GetListApi({listType, page=1, uuid}, callbacks) {
   const usableUUID = uuid || LATEST_UUID[listType];
   const list = MemoryRetrieve(usableUUID);
   const stored = usableUUID && list;
@@ -109,8 +109,10 @@ export function GetListApi({listType, page=1, uuid}, callbacks) {
     }
   }
 
-  fetch(fetchUrl)
-  .then(response => response.json())
-  .then(json => callbacks.complete(deriveResponse({type: listType, to, from, page}, json)))
-  .catch(error => callbacks.error(error));
+  try {
+    const json = (await fetch(fetchUrl)).json();
+    callbacks.complete(deriveResponse({type: listType, to, from, page}, json));
+  } catch(error) {
+    callbacks.error(error);
+  }
 }

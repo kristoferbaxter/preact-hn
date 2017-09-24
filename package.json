@@ -22,6 +22,7 @@
     "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml"
   },
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "bunyan": "^1.8.12",
     "forever": "^0.15.3",
     "history": "^4.7.2",

@@ -9,12 +9,13 @@ return {
   error: function()
 }
 */
-export default ({root}, callbacks) => {
+export default async ({root}, callbacks) => {
   // Fetch the missing values.
-  fetch(`/api/comments/${root}`)
-  .then(response => response.json())
-  .then((json) => {
-    MemoryStore(json.$entities);
-    callbacks.complete(json.$entities);
-  }).catch((error) => callbacks.error(error));
+  try {
+    const {$entities} = (await fetch(`/api/comments/${root}`)).json();
+    MemoryStore($entities);
+    callbacks.complete($entities);
+  } catch(error) {
+    callbacks.error(error);
+  }
 }

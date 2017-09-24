@@ -5,7 +5,7 @@ const OfflinePlugin = require('offline-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
-const BROWSER_MIN_SUPPORTED_VERSION = 52;
+const BROWSER_MIN_SUPPORTED_VERSION = 59;
 
 module.exports = {
   entry: CommonOptions.EntryPoints,
