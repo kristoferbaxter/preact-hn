@@ -3,7 +3,7 @@ const path = require('path');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'safari';
-const BROWSER_MIN_SUPPORTED_VERSION = 10;
+const BROWSER_MIN_SUPPORTED_VERSION = 11;
 
 module.exports = {
   entry: CommonOptions.EntryPoints,
@@ -32,6 +32,7 @@ module.exports = {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.BabiliMinification,
-    CommonOptions.ExtractCSSPlugin
+    CommonOptions.ExtractCSSPlugin,
+    CommonOptions.BrotliCompression
   ]
 };

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 function fileValues(file, classification) {
-  const format = ['chrome', 'firefox'].indexOf(classification) >= 0 ? ['br', 'gzip'] : ['gzip'];
+  const format = ['chrome', 'firefox', 'safari'].indexOf(classification) >= 0 ? ['br', 'gzip'] : ['gzip'];
   let returnValue = {
     finalFormat: null,
     finalFile: file
