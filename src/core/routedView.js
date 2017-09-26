@@ -42,8 +42,8 @@ export default class RoutedView extends Component {
     }
   }
 
-  render(props, {child, pastDelay}, {url}) {
-    url = props.url;
+  render(props, {child, pastDelay}) {
+    this.context.url = props.url;
 
     const usableChild = props.child || child || null;
     return (
