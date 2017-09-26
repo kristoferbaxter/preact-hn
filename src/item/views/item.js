@@ -1,5 +1,5 @@
-import {h} from 'preact';
-import WithData from '../../core/withData.fcc.js';
+import {h, Component} from 'preact';
+import WithData from '../../core/withData.js';
 import GetItems from '../../core/api/items.js';
 import LoadingView from '../../core/loadingView.js';
 import Comments from './comments.js';
@@ -33,10 +33,7 @@ function ItemView({matches: {id}, data}) {
   );
 }
 
-export default (props) => {
-  return (
-    <WithData source={GetItems} values={{keys: [props.matches.id]}}>
-      { (data) => <ItemView data={data} {...props} /> } 
-    </WithData>
-  );
+export default class extends Component {
+  ItemViewWithData = data => <ItemView data={data} {...this.props} />;
+  render = ({matches}) => <WithData source={GetItems} values={{keys: [matches.id]}} render={this.ItemViewWithData} />;
 }

@@ -38,7 +38,7 @@ export default async ({keys}, callbacks) => {
   }
 
   try {
-    const {$entities} = (await fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)).json();
+    const {$entities} = await (await fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)).json();
     MemoryStore($entities);
     callbacks.complete(Object.assign(resolved, $entities));
   } catch(error) {

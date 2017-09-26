@@ -1,12 +1,9 @@
 import {h, Component} from 'preact';
 
 export default class extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null
-    };
-  }
+  state = {
+    data: null
+  };
 
   handlePartialData = partialData => {
     this.setState({
@@ -25,7 +22,7 @@ export default class extends Component {
     // TODO: Handle Errors better!
   }
 
-  fetch = values => {
+  retrieve = values => {
     this.props.source(values, {
       partial: this.handlePartialData,
       complete: this.handleCompleteData,
@@ -33,13 +30,12 @@ export default class extends Component {
     });  
   }
   componentWillMount() {
-    this.fetch(this.props.values);
+    this.retrieve(this.props.values);
   }
   componentWillReceiveProps({values}) {
-    this.fetch(values);
+    this.state.data = null;
+    this.retrieve(values);
   }
 
-  render({children}, {data}) {
-    return children[0](data);
-  }
+  render = ({render: propRender}, {data}) => propRender(data);
 }

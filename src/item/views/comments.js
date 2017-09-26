@@ -1,10 +1,10 @@
-import {h} from 'preact';
+import {h, Component} from 'preact';
 //import Markup from 'preact-markup';
 //TODO: Investigate switching over to Markup. <div><Markup markup={text} /></div> 
 
 import timeFormat from '../../core/time.js';
 import GetComments from '../../core/api/comments.js';
-import WithData from '../../core/withData.fcc.js';
+import WithData from '../../core/withData.js';
 import LoadingView from '../../core/loadingView.js';
 import Text from './text.js';
 
@@ -33,12 +33,13 @@ function Comment({root, data, kidsOnly}) {
   );
 }
 
-export default ({root}) => {
-  return (
+
+export default class extends Component {
+  CommentWithData = data => <Comment root={this.props.root} data={data} kidsOnly={true} />;
+  
+  render = ({root}) => (
     <section>
-      <WithData source={GetComments} values={{root}}>
-        { (data) => <Comment root={root} data={data} kidsOnly={true} /> } 
-      </WithData> 
+      <WithData source={GetComments} values={{root}} render={this.CommentWithData} /> 
     </section>
   );
 }

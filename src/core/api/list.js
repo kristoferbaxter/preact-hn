@@ -110,7 +110,7 @@ export async function GetListApi({listType, page=1, uuid}, callbacks) {
   }
 
   try {
-    const json = (await fetch(fetchUrl)).json();
+    const json = await (await fetch(fetchUrl)).json();
     callbacks.complete(deriveResponse({type: listType, to, from, page}, json));
   } catch(error) {
     callbacks.error(error);

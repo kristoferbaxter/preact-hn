@@ -12,7 +12,7 @@ return {
 export default async ({root}, callbacks) => {
   // Fetch the missing values.
   try {
-    const {$entities} = (await fetch(`/api/comments/${root}`)).json();
+    const {$entities} = await (await fetch(`/api/comments/${root}`)).json();
     MemoryStore($entities);
     callbacks.complete($entities);
   } catch(error) {
