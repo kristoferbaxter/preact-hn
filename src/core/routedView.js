@@ -5,9 +5,14 @@ import LoadingView from './loadingView.js';
 import styles from './routedView.css';
 
 export default class RoutedView extends Component {
-  lazyLoadedRoutes = {};
+  constructor(props) {
+    super(props);
 
-  loader = _ => {
+    this.lazyLoadedRoutes = {};
+    this.loader = this.loader.bind(this);
+  }
+
+  loader() {
     const {load, path, delay=200} = this.props;
     const timeout = delay === 0 ? null :
       setTimeout(_ => {

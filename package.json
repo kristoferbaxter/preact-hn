@@ -43,7 +43,6 @@
     "babel-cli": "v7.0.0-beta.1",
     "babel-core": "v7.0.0-beta.1",
     "babel-loader": "^7.1.2",
-    "babel-plugin-transform-class-properties": "v7.0.0-beta.1",
     "babel-plugin-transform-es2015-block-scoping": "v7.0.0-beta.1",
     "babel-plugin-transform-react-jsx": "v7.0.0-beta.1",
     "babel-preset-env": "2.0.0-beta.1",

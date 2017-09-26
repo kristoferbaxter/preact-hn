@@ -35,11 +35,21 @@ function Comment({root, data, kidsOnly}) {
 
 
 export default class extends Component {
-  CommentWithData = data => <Comment root={this.props.root} data={data} kidsOnly={true} />;
+  constructor(props) {
+    super(props);
+
+    this.CommentWithData = this.CommentWithData.bind(this);
+  }
+
+  CommentWithData(data) {
+    return <Comment root={this.props.root} data={data} kidsOnly={true} />;
+  } 
   
-  render = ({root}) => (
-    <section>
-      <WithData source={GetComments} values={{root}} render={this.CommentWithData} /> 
-    </section>
-  );
+  render({root}) {
+    return (
+      <section>
+        <WithData source={GetComments} values={{root}} render={this.CommentWithData} /> 
+      </section>
+    );
+  }
 }

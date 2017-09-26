@@ -34,6 +34,17 @@ function ItemView({matches: {id}, data}) {
 }
 
 export default class extends Component {
-  ItemViewWithData = data => <ItemView data={data} {...this.props} />;
-  render = ({matches}) => <WithData source={GetItems} values={{keys: [matches.id]}} render={this.ItemViewWithData} />;
+  constructor(props) {
+    super(props);
+
+    this.ItemViewWithData = this.ItemViewWithData.bind(this);
+  }
+  
+  ItemViewWithData(data) {
+    return <ItemView data={data} {...this.props} />;  
+  }
+
+  render({matches}) {
+    return <WithData source={GetItems} values={{keys: [matches.id]}} render={this.ItemViewWithData} />;
+  }
 }

@@ -4,10 +4,22 @@ import WithData from '../../core/withData.js';
 import ListView from '../list.js';
 
 export default class extends Component {
-  ListViewWithData = data => <ListView {...this.props} data={data} />;
-  handleUUIDChange = uuid => this.state.uuid = uuid;
+  constructor(props) {
+    super(props);
+
+    this.handleUUIDChange = this.handleUUIDChange.bind(this);
+    this.ListViewWithData = this.ListViewWithData.bind(this);
+  }
+  
+  handleUUIDChange(uuid) {
+    this.state.uuid = uuid;
+  }
   componentWillReceiveProps() {
     this.handleUUIDChange(null);
+  }
+
+  ListViewWithData(data) {
+    return <ListView {...this.props} data={data} />;
   }
   
   render({matches, listType}, {uuid={}}) {
