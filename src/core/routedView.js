@@ -43,8 +43,6 @@ export default class RoutedView extends Component {
   }
 
   render(props, {child, pastDelay}) {
-    this.context.url = props.url;
-
     const usableChild = props.child || child || null;
     return (
       <div id="mount" class={styles.viewHasHeader}>

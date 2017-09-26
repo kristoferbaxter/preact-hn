@@ -6,7 +6,7 @@ import Logo from '../icons/logo.js';
 
 import styles from './header.css';
 
-function Item({href, text}, {url}) {
+function Item({href, text, url}) {
   const hrefRegex = href === '/' ? /(\/$|\/top)/ : new RegExp(href);
 
   return (
@@ -24,21 +24,21 @@ export default class extends Component {
     return listType !== this.props.listType;
   }
 
-  render() {
+  render({url}) {
     return (
       <nav class={styles.header}>
         <ol class={styles.links}>
           <li class={styles.logo}>
-            <Link href='/' aria-label="Home">
+            <Link href='/' aria-label="Home" url={url}>
               <Logo />
             </Link>
           </li>
-          <Item href='/' text='top'/>
-          <Item href='/new/1' text='new'/>
-          <Item href='/show/1' text='show'/>
-          <Item href='/ask/1' text='ask'/>
-          <Item href='/jobs/1' text='jobs'/>
-          <Item href='/about' text='about'/>
+          <Item href='/' text='top' url={url}/>
+          <Item href='/new/1' text='new' url={url}/>
+          <Item href='/show/1' text='show' url={url}/>
+          <Item href='/ask/1' text='ask' url={url}/>
+          <Item href='/jobs/1' text='jobs' url={url}/>
+          <Item href='/about' text='about' url={url}/>
         </ol>
       </nav>
     );
