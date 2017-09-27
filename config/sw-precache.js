@@ -15,5 +15,8 @@ module.exports = {
   },{
     urlPattern: /\/api\/comments\//,
     handler: 'networkFirst'
+  },{
+    urlPattern: /\/api\/items\//,
+    handler: 'networkFirst'
   }],
 }
