@@ -3,9 +3,10 @@ const fs = require('fs');
 const UglifyJS = require("uglify-es");
 const {execSync} = require("child_process");
 
-// calling pattern `node uglify.js {classification} {prod}`
+// calling pattern `node uglify.js {classification} {worker}`
 // process.argv=['node', 'uglify.js', classification]
 const classification = process.argv[2];
+const interpretServiceWorker = process.argv[3] === "true";
 const {assets} = JSON.parse(fs.readFileSync(path.resolve('dist', classification, 'webpack.json'), "utf8"));
 const jsFiles = assets.filter(asset => asset.name.endsWith('.js'));
 const applicationJsFile = jsFiles.filter(asset => asset.name.includes('bundle.application'));
@@ -52,9 +53,13 @@ function optimizeFileDelivery(name) {
 }
 
 (function() {
-  optimizeFileDelivery(applicationJsFile[0].name);
-  
-  routeJsFiles.forEach(routeFile => {
-    optimizeFileDelivery(routeFile.name);
-  });
+  if (!interpretServiceWorker) {
+    optimizeFileDelivery(applicationJsFile[0].name);
+    
+    routeJsFiles.forEach(routeFile => {
+      optimizeFileDelivery(routeFile.name);
+    });
+  } else if (classification === 'chrome') {
+    optimizeFileDelivery('service-worker.js');
+  }
 })();

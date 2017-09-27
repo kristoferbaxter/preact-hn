@@ -5,11 +5,13 @@ export default class extends Component {
     super(props);
 
     this.state = {
-      data: null
+      data: null,
+      error: false
     };
     this.handlePartialData = this.handlePartialData.bind(this);
     this.handleCompleteData = this.handleCompleteData.bind(this);
     this.handleErrorData = this.handleErrorData.bind(this);
+    this.handleNetworkChange = this.handleNetworkChange.bind(this);
     this.retrieve = this.retrieve.bind(this);
   }
 
@@ -27,7 +29,9 @@ export default class extends Component {
     });
   }
   handleErrorData(error) {
-    // TODO: Handle Errors better!
+    this.setState({
+      error: true
+    });
   }
 
   retrieve(values) {
@@ -45,7 +49,20 @@ export default class extends Component {
     this.retrieve(values);
   }
 
-  render({render: propRender}, {data}) {
-    return propRender(data);
+  handleNetworkChange() {
+    if (this.state.error && navigator.onLine) {
+      this.state.error = false;
+      this.retrieve(this.props.values);
+    }
+  }
+  componentDidMount() {
+    window.addEventListener('online', this.handleNetworkChange);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('online', this.handleNetworkChange);
+  }
+
+  render({render: propRender}, {data, error}) {
+    return propRender(data, error);
   }
 }

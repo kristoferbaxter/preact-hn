@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
+//const OfflinePlugin = require('offline-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
@@ -33,29 +34,13 @@ module.exports = {
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,
-      ALLOW_OFFLINE: true
+      ALLOW_OFFLINE: true,
     }),
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.OptimizeJS,
-    new OfflinePlugin({
-      cacheMaps: [{
-        match: function(requestUrl) {
-          return new URL('/shell', location);
-        },
-        requestTypes: ['navigate']
-      }],
-      caches: 'all',
-      externals: ['/shell'],
-      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
-      autoUpdate: false,
-      AppCache: false,
-      ServiceWorker: {
-        publicPath: '/sw.js'
-      }
-    })
+    CommonOptions.OptimizeJS
   ]
 };

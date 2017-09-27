@@ -33,23 +33,28 @@ function Comment({root, data, kidsOnly}) {
   );
 }
 
+const Error = _ => navigator.onLine && <Text text={'Unable to load comments.'} />;
 
 export default class extends Component {
   constructor(props) {
     super(props);
 
-    this.CommentWithData = this.CommentWithData.bind(this);
+    this.CommentsWithData = this.CommentsWithData.bind(this);
   }
 
-  CommentWithData(data) {
-    return <Comment root={this.props.root} data={data} kidsOnly={true} />;
+  CommentsWithData(data, error) {
+    return (
+      <div class={styles.comments}>
+        {!error && <h2 class={styles.numberOfComments}>{`${this.props.descendants} comment${this.props.descendants > 1 && "s"}`}</h2>}
+        {error && <Error />}
+        {!error && <section>
+          <Comment root={this.props.root} data={data} kidsOnly={true} />
+        </section>}
+      </div>
+    );
   } 
   
   render({root}) {
-    return (
-      <section>
-        <WithData source={GetComments} values={{root}} render={this.CommentWithData} /> 
-      </section>
-    );
+    return <WithData source={GetComments} values={{root}} render={this.CommentsWithData} />;
   }
 }

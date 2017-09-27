@@ -31,5 +31,6 @@ render(<Routes />, mountEl.parentNode, mountEl);
 
 if (ALLOW_OFFLINE) {
   // This is supplied by WebpackConfiguration.
-  require('offline-plugin/runtime').install();
+  navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js');
+  //require('offline-plugin/runtime').install();
 }

@@ -43,7 +43,7 @@ server.get('/:type/:id', insecureRedirect, defaultRoute);
 server.get('/shell', shellRoute);
 server.get('/dist/:classification/:file', staticRoute);
 server.get('/static/icons/:file', staticIconRoute);
-server.get('/sw.js', serviceWorkerRoute);
+server.get('/service-worker.js', serviceWorkerRoute);
 server.get('/.*', insecureRedirect, defaultRoute);
 
 // Prefetch Data for API.

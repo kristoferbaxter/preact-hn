@@ -14,7 +14,6 @@ function ItemView({matches: {id}, data}) {
 
   const thisId = parseInt(id, 10);
   const {url, title, score, by, descendants=0, text} = data[thisId];
-  const commentText = descendants > 1 ? 'comments' : 'comment';
   return (
     <div class={styles.wrapper}>
       <article class={styles.article}>
@@ -23,12 +22,7 @@ function ItemView({matches: {id}, data}) {
         <p class={styles.byline}>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
         <Text text={text} />
       </article>
-      {descendants > 0 && (
-        <div class={styles.comments}>
-          <h2 class={styles.numberOfComments}>{`${descendants} comment${descendants > 1 && "s"}`}</h2>
-          <Comments root={thisId} />
-        </div>
-      )}
+      <Comments descendants={descendants} root={thisId} />
     </div>
   );
 }

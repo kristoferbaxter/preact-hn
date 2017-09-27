@@ -20,13 +20,40 @@ function Item({href, text, url}) {
 };
 
 export default class extends Component {
-  shouldComponentUpdate({listType}) {
-    return listType !== this.props.listType;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      online: true
+    };
+
+    this.handleNetworkChange = this.handleNetworkChange.bind(this);
   }
 
-  render({url}) {
+  shouldComponentUpdate({listType}, {online}) {
+    return listType !== this.props.listType || online !== this.state.online;
+  }
+
+  handleNetworkChange() {
+    this.setState({
+      online: navigator.onLine
+    });
+  }
+  componentDidMount() {
+    window.addEventListener('online', this.handleNetworkChange);
+    window.addEventListener('offline', this.handleNetworkChange);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('online', this.handleNetworkChange);
+    window.removeEventListener('offline', this.handleNetworkChange);
+  }
+
+  render({url}, {online}) {
     return (
-      <nav class={styles.header}>
+      <nav class={objstr({
+        [styles.header]: true,
+        [styles.offline]: !online
+      })}>
         <ol class={styles.links}>
           <li class={styles.logo}>
             <Link href='/' aria-label="Home" url={url}>

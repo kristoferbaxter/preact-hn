@@ -7,6 +7,10 @@
   padding: 0 16px;
   box-sizing: border-box;
   background-color: #673ab8;
+  transition: background-color 350ms linear;
+}
+.offline {
+  background-color: #4d4756;
 }
 
 .links {
