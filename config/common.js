@@ -1,9 +1,10 @@
+const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
-const ButternutWebpackPlugin = require('butternut-webpack-plugin').default;
 const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -35,7 +36,7 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
 const BabiliMinification = new BabiliPlugin();
-const ButternutMinification = new ButternutWebpackPlugin();
+const UglifyMinification = new UglifyJSPlugin();
 const BrotliCompression = new BrotliPlugin({
   asset: '[path].br[query]',
   test: /\.(js|css)$/,
@@ -71,9 +72,16 @@ const WebpackStats = {
   warnings: false
 };
 
+const ResolveAliases = {
+  'preact-router$': 'preact-router/src'
+};
+
 const BabelLoaderRule = {
   test: /\.js$/,
-  exclude: /node_modules/,
+  include: [
+    fs.realpathSync('./src'),
+    fs.realpathSync('./node_modules/preact-router')
+  ],
   use: {
     loader: 'babel-loader',
     options: {
@@ -84,7 +92,9 @@ const BabelLoaderRule = {
 const CSSLoaderRule = (browsers) => {
   return {
     test: /\.css$/,
-    exclude: /node_modules/,
+    include: [
+      fs.realpathSync('./src')
+    ],
     use: ExtractCSSPlugin.extract({
       fallback: 'style-loader',
       use: [
@@ -105,7 +115,8 @@ module.exports = {
   CSSLoaderRule,
   OptimizeJS,
   BabiliMinification,
-  ButternutMinification,
   BrotliCompression,
+  UglifyMinification,
+  ResolveAliases,
   CleanupPlugin
 }

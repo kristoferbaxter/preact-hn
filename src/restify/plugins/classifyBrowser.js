@@ -2,6 +2,23 @@
 
 const useragent = require('useragent');
 
+function canDecodeBrotli(classification, os) {  
+  if (classification === 'chrome' || classification === 'firefox') {
+    return true;
+  } else if (classification === 'safari') {
+    const osJson = os && os.toJSON();
+    const osFamily = osJson.family && osJson.family.toLowerCase();
+
+    if (osFamily === 'ios' && osJson.major >= 11) {
+      return true;
+    } else if (osFamily === 'mac os x' && osJson.minor >= 13) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Classify the browser based on user-agent
  * @public
@@ -10,23 +27,28 @@ const useragent = require('useragent');
  */
 function classifyBrowser(opts) {
   function userAgentClassification(req, res, next) {
-    const {family, major} = useragent.lookup(req.headers['user-agent']);
+    const {family, major, os} = useragent.lookup(req.headers['user-agent']);
     const lowerCaseFamily = family.toLowerCase();
+    let classification = 'fallback';
 
     req.log.info(`user-agent: ${req.headers['user-agent']}`);
     req.log.info(`user-agent parsed: ${lowerCaseFamily}, ${major}`);
     
     if (lowerCaseFamily === 'chrome' || lowerCaseFamily === 'chrome mobile' && major >= 59) {
-      req.userAgentClassifiction = 'chrome';
-    } else if (lowerCaseFamily === 'safari' || lowerCaseFamily === 'safari mobile' || lowerCaseFamily === 'mobile safari' && major >= 11) {
-      req.userAgentClassifiction = 'safari';
+      classification = 'chrome';
+    } else if (lowerCaseFamily === 'safari' || lowerCaseFamily === 'mobile safari' && major >= 11) {
+      classification = 'safari';
     } else if (lowerCaseFamily === 'firefox' && major >= 55) {
-      req.userAgentClassifiction = 'firefox';
+      classification = 'firefox';
     } else if (lowerCaseFamily === 'edge' && major >= 15) {
-      req.userAgentClassifiction = 'edge';
-    } else {
-      req.userAgentClassifiction = 'fallback';  
+      classification = 'edge';
     }
+
+    req.userAgentClassifiction = classification;
+
+    const brotliCapable = canDecodeBrotli(classification, os);
+    req.log.info(`user-agent canDecodeBrotli: ${brotliCapable}`);
+    req.canDecodeBrotli = brotliCapable;
     
     next();
   }

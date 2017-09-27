@@ -3,9 +3,9 @@ module.exports = function(context) {
   const isServer = env === "server";
 
   let targets = {
-    "chrome": { chrome: 52 },
+    "chrome": { chrome: 59 },
     "edge": { edge: 14 },
-    "safari": { safari: 10 },
+    "safari": { safari: 11 },
     "firefox": { firefox: 55 },
     "server": { node: 6 },
     "fallback": {

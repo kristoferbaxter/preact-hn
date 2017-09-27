@@ -31,7 +31,6 @@ module.exports = {
       ALLOW_OFFLINE: false
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new BabiliPlugin({unsafe: false}),
     CommonOptions.ExtractCSSPlugin
   ]
 };

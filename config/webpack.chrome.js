@@ -22,6 +22,9 @@ module.exports = {
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
   },
+  resolve: {
+    alias: CommonOptions.ResolveAliases
+  },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
@@ -38,7 +41,6 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
     CommonOptions.OptimizeJS,
-    CommonOptions.BabiliMinification,
     new OfflinePlugin({
       cacheMaps: [{
         match: function(requestUrl) {
@@ -48,13 +50,12 @@ module.exports = {
       }],
       caches: 'all',
       externals: ['/shell'],
-      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
+      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gz', '**/*.css', '**/*.css.br', '**/*.css.gz'],
       autoUpdate: false,
       AppCache: false,
       ServiceWorker: {
         publicPath: '/sw.js'
       }
-    }),
-    CommonOptions.BrotliCompression
+    })
   ]
 };

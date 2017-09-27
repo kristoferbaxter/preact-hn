@@ -31,8 +31,6 @@ module.exports = {
       ALLOW_OFFLINE: false
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.BrotliCompression
   ]
 };
