@@ -11,7 +11,7 @@ module.exports = {
   navigateFallback: '/shell',
   runtimeCaching: [{
     urlPattern: /\/api\/list\//,
-    handler: 'networkFirst'
+    handler: 'cacheFirst'
   },{
     urlPattern: /\/api\/comments\//,
     handler: 'networkOnly'
