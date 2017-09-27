@@ -50,7 +50,7 @@ module.exports = {
       }],
       caches: 'all',
       externals: ['/shell'],
-      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gz', '**/*.css', '**/*.css.br', '**/*.css.gz'],
+      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
       autoUpdate: false,
       AppCache: false,
       ServiceWorker: {

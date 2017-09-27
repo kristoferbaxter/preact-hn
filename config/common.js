@@ -1,10 +1,7 @@
 const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BabiliPlugin = require('babili-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
-const BrotliPlugin = require('brotli-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -34,14 +31,6 @@ const OptimizeJS = new OptimizeJsPlugin({
 const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
-});
-const BabiliMinification = new BabiliPlugin();
-const UglifyMinification = new UglifyJSPlugin();
-const BrotliCompression = new BrotliPlugin({
-  asset: '[path].br[query]',
-  test: /\.(js|css)$/,
-  mode: 0,
-  quality: 11
 });
 const CleanupPlugin= new WebpackCleanupPlugin({
   exclude: ['webpack.json', '.gitignore'],
@@ -114,9 +103,6 @@ module.exports = {
   BabelLoaderRule,
   CSSLoaderRule,
   OptimizeJS,
-  BabiliMinification,
-  BrotliCompression,
-  UglifyMinification,
   ResolveAliases,
   CleanupPlugin
 }

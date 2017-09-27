@@ -46,9 +46,6 @@
     "babel-plugin-transform-es2015-block-scoping": "v7.0.0-beta.1",
     "babel-plugin-transform-react-jsx": "v7.0.0-beta.1",
     "babel-preset-env": "2.0.0-beta.1",
-    "babili": "^0.1.4",
-    "babili-webpack-plugin": "^0.1.2",
-    "brotli-webpack-plugin": "^0.4.0",
     "browserslist": "^2.4.0",
     "bundle-loader": "^0.5.5",
     "copy-webpack-plugin": "^4.0.1",
@@ -63,7 +60,6 @@
     "postcss-modules": "^0.8.0",
     "style-loader": "^0.18.2",
     "uglify-es": "^3.1.2",
-    "uglifyjs-webpack-plugin": "^0.4.6",
     "url-polyfill": "^1.0.7",
     "webpack": "3.6.0",
     "webpack-cleanup-plugin": "^0.5.1"
