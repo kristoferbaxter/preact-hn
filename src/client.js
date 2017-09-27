@@ -30,7 +30,5 @@ const mountEl = document.getElementById('mount');
 render(<Routes />, mountEl.parentNode, mountEl);
 
 if (ALLOW_OFFLINE) {
-  // This is supplied by WebpackConfiguration.
   navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js');
-  //require('offline-plugin/runtime').install();
 }
