@@ -9,13 +9,11 @@ module.exports = {
     '/shell': jsFiles
   },
   navigateFallback: '/shell',
-  
   runtimeCaching: [{
     urlPattern: /\/api\/list\//,
-    handler: 'cacheFirst'
+    handler: 'networkFirst'
   },{
     urlPattern: /\/api\/comments\//,
     handler: 'networkOnly'
   }],
-  //logger: function() {}
 }
