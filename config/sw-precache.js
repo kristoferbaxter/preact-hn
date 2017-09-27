@@ -14,6 +14,6 @@ module.exports = {
     handler: 'networkFirst'
   },{
     urlPattern: /\/api\/comments\//,
-    handler: 'networkOnly'
+    handler: 'networkFirst'
   }],
 }
