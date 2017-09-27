@@ -27,6 +27,7 @@ module.exports = {
     ]
   },
   externals: nodeModules,
+  
   plugins: [
     CommonOptions.CleanupPlugin,
     new CopyWebpackPlugin([
@@ -35,6 +36,9 @@ module.exports = {
       {from: 'proxy/h2o.config.yaml'},
       {from: 'proxy/key.pem'}
     ], {copyUnmodified: true}),
+    new webpack.DefinePlugin({
+      IS_CLIENT: false,
+    }),
     CommonOptions.ExtractCSSPlugin
   ]
 }

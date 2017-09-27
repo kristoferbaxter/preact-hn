@@ -23,9 +23,16 @@ export default class extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      online: true
-    };
+    if (IS_CLIENT) {
+      this.state = {
+        online: navigator.onLine
+      };
+    }
+    if (!IS_CLIENT) {
+      this.state = {
+        online: true
+      };
+    }
 
     this.handleNetworkChange = this.handleNetworkChange.bind(this);
   }

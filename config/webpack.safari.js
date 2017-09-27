@@ -28,7 +28,8 @@ module.exports = {
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: true,
       POLYFILL_URL: false,
-      ALLOW_OFFLINE: false
+      ALLOW_OFFLINE: false,
+      IS_CLIENT: true,
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,

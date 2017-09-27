@@ -35,6 +35,7 @@ module.exports = {
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,
       ALLOW_OFFLINE: true,
+      IS_CLIENT: true,
     }),
     new CopyWebpackPlugin([
       {from: 'src/core/manifest.json'}
