@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const BabiliPlugin = require('babili-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'fallback';
