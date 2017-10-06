@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const BabiliPlugin = require('babili-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'fallback';
@@ -20,6 +19,10 @@ module.exports = {
       CommonOptions.CSSLoaderRule()
     ]
   },
+  resolve: {
+    extensions: CommonOptions.ResolveExtensions,
+    alias: CommonOptions.ResolveAliases
+  },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
@@ -33,7 +36,6 @@ module.exports = {
       IS_CLIENT: true,
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new BabiliPlugin({unsafe: false}),
     CommonOptions.ExtractCSSPlugin
   ]
 };

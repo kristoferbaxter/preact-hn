@@ -1,38 +1,34 @@
 import {h, Component} from 'preact';
-import Header from '../header/header.js';
-import LoadingView from './loadingView.js';
+import Header from 'components/Header';
+import LoadingView from 'components/LoadingView';
 
 import styles from './routedView.css';
 
 export default class RoutedView extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.lazyLoadedRoutes = {};
+    this.loader = this.loader.bind(this);
   }
 
   loader() {
     const {load, path, delay=200} = this.props;
-    let timeout = null;
-
-    if (delay > 0) {
-      timeout = setTimeout(_ => {
+    const timeout = delay === 0 ? null :
+      setTimeout(_ => {
         this.setState({
           pastDelay: true
         });
       }, delay);
-    }
 
-    if (load) {
-      load((file) => {
-        timeout && clearTimeout(timeout);
-        this.setState({
-          child: file.default
-        }, _ => {
-          this.lazyLoadedRoutes[path] = file.default;
-        });
+    load && load(file => {
+      timeout && clearTimeout(timeout);
+      this.setState({
+        child: file.default
+      }, _ => {
+        this.lazyLoadedRoutes[path] = file.default;
       });
-    }
+    });
   }
   
   componentWillMount() {
@@ -45,15 +41,13 @@ export default class RoutedView extends Component {
 
       this.setState({
         child: nextChild
-      }, () => {
+      }, _ => {
         nextChild === undefined && this.loader();
       });
     }
   }
 
   render(props, {child, pastDelay}) {
-    this.context.url=props.url;
-
     const usableChild = props.child || child || null;
     return (
       <div id="mount" class={styles.viewHasHeader}>

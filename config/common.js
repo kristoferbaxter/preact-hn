@@ -1,9 +1,8 @@
+const fs = require('fs');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BabiliPlugin = require('babili-webpack-plugin');
-const ButternutWebpackPlugin = require('butternut-webpack-plugin').default;
 const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
-const BrotliPlugin = require('brotli-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -34,14 +33,6 @@ const ExtractCSSPlugin = new ExtractTextPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   allChunks: true // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css. 
 });
-const BabiliMinification = new BabiliPlugin();
-const ButternutMinification = new ButternutWebpackPlugin();
-const BrotliCompression = new BrotliPlugin({
-  asset: '[path].br[query]',
-  test: /\.(js|css)$/,
-  mode: 0,
-  quality: 11
-});
 const CleanupPlugin= new WebpackCleanupPlugin({
   exclude: ['webpack.json', '.gitignore'],
   quiet: true
@@ -71,6 +62,15 @@ const WebpackStats = {
   warnings: false
 };
 
+const ResolveAliases = {
+  'preact-router$': 'preact-router/src',
+  components: path.resolve(__dirname, './src/components'),
+  api: path.resolve(__dirname, 'api'),
+  utils: path.resolve(__dirname, 'utils'),
+  routes: path.resolve(__dirname, "routes"),
+};
+const ResolveExtensions = ['.ts', '.tsx', '.js', '.jsx'];
+
 const TSLoaderRule = {
   test: /\.(ts|tsx)?$/,
   exclude: /node_modules/,
@@ -82,8 +82,11 @@ const TSLoaderRule = {
   }
 };
 const BabelLoaderRule = {
-  test: /\.(js|ts|tsx)$/,
-  exclude: /node_modules/,
+  test: /\.js$/,
+  include: [
+    fs.realpathSync('./src'),
+    fs.realpathSync('./node_modules/preact-router')
+  ],
   use: {
     loader: 'babel-loader',
     options: {
@@ -94,7 +97,9 @@ const BabelLoaderRule = {
 const CSSLoaderRule = (browsers) => {
   return {
     test: /\.css$/,
-    exclude: /node_modules/,
+    include: [
+      fs.realpathSync('./src')
+    ],
     use: ExtractCSSPlugin.extract({
       fallback: 'style-loader',
       use: [
@@ -115,8 +120,7 @@ module.exports = {
   BabelLoaderRule,
   CSSLoaderRule,
   OptimizeJS,
-  BabiliMinification,
-  ButternutMinification,
-  BrotliCompression,
+  ResolveExtensions,
+  ResolveAliases,
   CleanupPlugin
 }

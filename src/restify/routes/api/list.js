@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-import {determineListRange} from '../../../core/api/list.js';
+import {determineListRange} from '../../../core/api/list';
 const ForegroundData = require('../../storage/foreground.js');
 
 function generateJSON(req, {type, from, to, uuid}) {

@@ -1,14 +1,14 @@
 'use strict';
 
-import {serverRoute} from './api/list.js';
-import {LIST_TYPES} from '../../lists/constants.js';
+import {serverRoute} from './api/list';
+import {LIST_TYPES} from '../../lists/constants';
 // UI Imports
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 // UI Components
-import RoutedView from '../../core/routedView.js';
-import LoadingView from '../../core/loadingView.js';
-import ListViewWithData from '../../lists/list.js';
+import RoutedView from '../../core/routedView';
+import LoadingView from '../../core/loadingView';
+import ListViewWithData from '../../lists/list';
 
 function defaultRoute(req, res, next) {
   const supportsManifest = req.userAgentClassifiction === 'chrome';

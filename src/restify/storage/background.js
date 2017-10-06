@@ -2,7 +2,7 @@
 
 const uuid = require('uuid/v1');
 const fetch = require('node-fetch');
-import {LIST_TYPES} from '../../lists/constants.js';
+import {LIST_TYPES} from '../../lists/constants';
 
 let ALL_ITEMS = {};
 let LATEST_UUID = {};

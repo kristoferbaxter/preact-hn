@@ -21,6 +21,10 @@ module.exports = {
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
   },
+  resolve: {
+    extensions: CommonOptions.ResolveExtensions,
+    alias: CommonOptions.ResolveAliases
+  },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
@@ -34,7 +38,6 @@ module.exports = {
       IS_CLIENT: true,
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin
   ]
 };

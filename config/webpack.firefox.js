@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'firefox';
-const BROWSER_MIN_SUPPORTED_VERSION = 50;
+const BROWSER_MIN_SUPPORTED_VERSION = 55;
 
 module.exports = {
   entry: CommonOptions.EntryPoints,
@@ -21,12 +21,16 @@ module.exports = {
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
   },
+  resolve: {
+    extensions: CommonOptions.ResolveExtensions,
+    alias: CommonOptions.ResolveAliases
+  },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       DO_NOT_TRACK: 'navigator.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
-      POLYFILL_OBJECT_VALUES: true,
+      POLYFILL_OBJECT_VALUES: false,
       POLYFILL_PROMISES: false,
       POLYFILL_FETCH: false,
       POLYFILL_URL: false,
@@ -37,8 +41,6 @@ module.exports = {
       {from: 'src/core/manifest.json'}
     ], {copyUnmodified: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    CommonOptions.BabiliMinification,
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.BrotliCompression
   ]
 };

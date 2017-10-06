@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
+//const OfflinePlugin = require('offline-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
-const BROWSER_MIN_SUPPORTED_VERSION = 52;
+const BROWSER_MIN_SUPPORTED_VERSION = 59;
 
 module.exports = {
   entry: CommonOptions.EntryPoints,
@@ -22,6 +22,10 @@ module.exports = {
       CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
+  },
+  resolve: {
+    extensions: CommonOptions.ResolveExtensions,
+    alias: CommonOptions.ResolveAliases
   },
   plugins: [
     CommonOptions.CleanupPlugin,
@@ -40,24 +44,6 @@ module.exports = {
     ], {copyUnmodified: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.OptimizeJS,
-    CommonOptions.BabiliMinification,
-    new OfflinePlugin({
-      cacheMaps: [{
-        match: function(requestUrl) {
-          return new URL('/shell', location);
-        },
-        requestTypes: ['navigate']
-      }],
-      caches: 'all',
-      externals: ['/shell'],
-      excludes: ['**/.*', '**/*.map', '**/*.js.br', '**/*.js.gzip', '**/*.css', '**/*.css.br', '**/*.css.gzip'],
-      autoUpdate: false,
-      AppCache: false,
-      ServiceWorker: {
-        publicPath: '/sw.js'
-      }
-    }),
-    CommonOptions.BrotliCompression
+    CommonOptions.OptimizeJS
   ]
 };

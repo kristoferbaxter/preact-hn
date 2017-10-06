@@ -1,0 +1,8 @@
+.navigate {
+  text-decoration: none;
+  color: #000;
+}
+.disabled {
+  color: #666;
+  pointer-events: none;
+}

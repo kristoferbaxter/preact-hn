@@ -1,14 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
-function fileValues(file, classification) {
-  const format = ['chrome', 'firefox'].indexOf(classification) >= 0 ? ['br', 'gzip'] : ['gzip'];
+function fileValues(req, file, classification) {
+  const format = req.canDecodeBrotli ? ['br', 'gzip'] : ['gzip'];
   let returnValue = {
     finalFormat: null,
     finalFile: file
   };
 
-  format.some((formatValue) => {
+  format.some(formatValue => {
     const testFile = file.replace('.js', `.js.${formatValue}`);
     if (fs.existsSync(path.resolve('dist', classification, testFile))) {
       returnValue = {
@@ -27,7 +27,7 @@ function staticRoute(req, res, next) {
   const {classification, file} = req.params;
 
   if (['chrome', 'safari', 'firefox', 'edge', 'fallback'].indexOf(classification) >= 0) {
-    const {finalFormat, finalFile} = fileValues(file, classification);
+    const {finalFormat, finalFile} = fileValues(req, file, classification);
     const resolvedPath = path.resolve('dist', classification, finalFile);
     let stream = fs.createReadStream(resolvedPath);
 

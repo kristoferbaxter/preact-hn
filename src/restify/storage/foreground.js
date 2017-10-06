@@ -2,7 +2,7 @@
 
 const cp = require('child_process');
 const updateThread = cp.fork('dist/server/restify.background.js'); // TODO: FIX THIS PATH, USE require('path')
-import {LIST_TYPES} from '../../lists/constants.js';
+import {LIST_TYPES} from '../../lists/constants';
 
 const UPDATE_TIMER = 300000;
 let LATEST_UUID = {};

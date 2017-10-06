@@ -1,8 +1,7 @@
 import {h, render} from 'preact';
-import Routes from './routes.js';
-import './core/api/memory.js';
-import {storeListData} from './core/api/list.js';
-import GoogleAnalytics from './core/analytics.ts';
+import Routes from './routes';
+import 'src/api/memory';
+import {storeListData} from 'src/api/list';
 
 import './reset.css';
 
@@ -31,8 +30,5 @@ const mountEl = document.getElementById('mount');
 render(<Routes />, mountEl.parentNode, mountEl);
 
 if (ALLOW_OFFLINE) {
-  // This is supplied by WebpackConfiguration.
-  require('offline-plugin/runtime').install();
+  navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js');
 }
-
-window.addEventListener('load', _ => new GoogleAnalytics({tid:'UA-XXXXXXXX-X'}));

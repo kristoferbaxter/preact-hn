@@ -1,0 +1,25 @@
+.article {
+  margin-bottom: 1.5rem;
+  border-bottom: 2rem solid #f3f3f3;
+  padding: 1rem 1.5rem .5rem;
+}
+
+.outboundLink {
+  display: block;
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: #000;
+  margin-bottom: .75rem;
+}
+
+.link {
+  color: #666;
+}
+.byline {
+  margin-bottom: 1rem;
+}
+
+.hostname {
+  margin-bottom: .75rem;
+  display: block;
+}

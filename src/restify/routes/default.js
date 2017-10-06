@@ -4,8 +4,8 @@
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 // UI Components
-import RoutedView from '../../core/routedView.js';
-import LoadingView from '../../core/loadingView.js';
+import RoutedView from '../../core/routedView';
+import LoadingView from '../../core/loadingView';
 
 function defaultRoute(req, res, next) {  
   const supportsManifest = req.userAgentClassifiction === 'chrome';
