@@ -21,7 +21,7 @@ export default class extends Component<Props, State> {
 
     this.state = {
       data: null,
-      error: false
+      error: false,
     };
   }
 
@@ -46,34 +46,34 @@ export default class extends Component<Props, State> {
 
   private handlePartialData = (partialData): void => {
     this.setState({
-      data: partialData
+      data: partialData,
     });
-  }
+  };
   private handleCompleteData = (completeData): void => {
     if (this.props.values.uuid !== completeData.uuid) {
       this.props.handleUUIDChange(completeData.uuid);
     }
     this.setState({
-      data: completeData
+      data: completeData,
     });
-  }
+  };
   private handleErrorData = (error): void => {
     this.setState({
-      error: true
+      error: true,
     });
-  }
+  };
 
   private handleNetworkChange = (): void => {
     if (this.state.error && navigator.onLine) {
       this.state.error = false;
       this.retrieve(this.props.values);
     }
-  }
+  };
   private retrieve = (values): void => {
     this.props.source(values, {
       partial: this.handlePartialData,
       complete: this.handleCompleteData,
-      error: this.handleErrorData  
-    });  
-  }
+      error: this.handleErrorData,
+    });
+  };
 }

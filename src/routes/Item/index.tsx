@@ -19,13 +19,22 @@ function Details({matches: {id}, data}: DetailsViewProps): JSX.Element {
   }
 
   const thisId = parseInt(id, 10);
-  const {url, title, score, by, descendants=0, text} = data[thisId];
+  const {url, title, score, by, descendants = 0, text} = data[thisId];
   return (
     <div>
       <article class={styles.article}>
-        <h1><a href={url} class={styles.outboundLink}>{title}</a></h1>
+        <h1>
+          <a href={url} class={styles.outboundLink}>
+            {title}
+          </a>
+        </h1>
         {url && <small class={styles.hostname}>({new URL(url).hostname})</small>}
-        <p class={styles.byline}>{score} points by <a href={`/user/${by}`} class={styles.link}>{by}</a></p>
+        <p class={styles.byline}>
+          {score} points by{' '}
+          <a href={`/user/${by}`} class={styles.link}>
+            {by}
+          </a>
+        </p>
         <Text text={text} />
       </article>
       <Comment descendants={descendants} root={thisId} />
@@ -41,7 +50,7 @@ export default class extends Component<Props, null> {
     return <WithData source={getItems} values={{keys: [matches.id]}} render={this.ItemViewWithData} />;
   }
 
-  private ItemViewWithData = (data) => {
-    return <Details data={data} matches={this.props.matches} />;  
-  }
+  private ItemViewWithData = data => {
+    return <Details data={data} matches={this.props.matches} />;
+  };
 }

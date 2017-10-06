@@ -1,7 +1,7 @@
 import {h, render} from 'preact';
 import Routes from './routes';
-import 'src/api/memory';
-import {storeListData} from 'src/api/list';
+import 'api/memory';
+import {storeList} from 'api/list';
 
 import './reset.css';
 
@@ -25,7 +25,7 @@ if (POLYFILL_URL) {
   require('url-polyfill');
 }
 
-window.seed && storeListData(window.seed);
+window.seed && storeList(window.seed);
 const mountEl = document.getElementById('mount');
 render(<Routes />, mountEl.parentNode, mountEl);
 

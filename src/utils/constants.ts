@@ -5,4 +5,4 @@ export const enum LIST_TYPES {
   show = 'show',
   ask = 'ask',
   jobs = 'jobs',
-};
+}

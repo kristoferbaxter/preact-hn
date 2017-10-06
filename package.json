@@ -20,7 +20,8 @@
     "bundle:server": "BABEL_ENV=server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
     "bundle:prod": "NODE_ENV=production yarn run tcm; yarn run bundle:all;",
     "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml",
-    "tcm": "node_modules/typed-css-modules/lib/cli.js src/"
+    "tcm": "node_modules/typed-css-modules/lib/cli.js src/",
+    "prettier": "./node_modules/prettier/bin/prettier.js --config ./.prettierrc --write 'src/**/*.tsx' 'src/**/*.ts'"
   },
   "dependencies": {
     "bunyan": "^1.8.12",
