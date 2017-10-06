@@ -1,4 +1,4 @@
-import {h, Component} from 'preact';
+import {Component} from 'preact';
 
 interface APICallbacks {
   partial: (data: any) => void;

@@ -2,7 +2,7 @@
   "name": "preact-hn",
   "version": "0.0.1",
   "description": "Preact Hacker News",
-  "main": "client.js",
+  "main": "client.tsx",
   "author": "Kristofer Baxter",
   "license": "MIT",
   "scripts": {

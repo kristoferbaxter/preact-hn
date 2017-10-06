@@ -1,7 +1,7 @@
-import {h, render} from 'preact';
+import { h, render } from 'preact';
 import Routes from './routes';
 import 'api/memory';
-import {storeList} from 'api/list';
+import { storeList } from 'api/list';
 
 import './reset.css';
 
@@ -15,6 +15,7 @@ if (POLYFILL_OBJECT_VALUES) {
 }
 if (POLYFILL_PROMISES) {
   // This is supplied by WebpackConfiguration.
+  // (window as any)['Promise'] = require('promise-polyfill');
   window.Promise = require('promise-polyfill');
 }
 if (POLYFILL_FETCH) {

@@ -7,6 +7,7 @@ declare const POLYFILL_URL: boolean;
 declare const ALLOW_OFFLINE: boolean;
 declare const IS_CLIENT: boolean;
 
+declare var require: NodeRequire;
 declare interface NodeRequire {
   ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
 }
