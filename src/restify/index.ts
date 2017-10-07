@@ -21,12 +21,12 @@ import serviceWorkerRoute from './routes/serviceWorker';
 // Server Constants
 const APPLICATION_NAME = 'hn-web';
 const logger = bunyan.createLogger({
-  name: APPLICATION_NAME
+  name: APPLICATION_NAME,
 });
 
 const server = restify.createServer({
   name: APPLICATION_NAME,
-  log: logger
+  log: logger,
 });
 server.use(restify.requestLogger());
 server.use(restify.bodyParser());

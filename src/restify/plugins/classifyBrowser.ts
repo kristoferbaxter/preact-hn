@@ -1,6 +1,6 @@
 import useragent from 'useragent';
 
-function canDecodeBrotli(classification, os) {  
+function canDecodeBrotli(classification, os) {
   if (classification === 'chrome' || classification === 'firefox') {
     return true;
   } else if (classification === 'safari') {
@@ -31,10 +31,10 @@ export default function classifyBrowser() {
 
     req.log.info(`user-agent: ${req.headers['user-agent']}`);
     req.log.info(`user-agent parsed: ${lowerCaseFamily}, ${major}`);
-    
-    if (lowerCaseFamily === 'chrome' || lowerCaseFamily === 'chrome mobile' && major >= 59) {
+
+    if (lowerCaseFamily === 'chrome' || (lowerCaseFamily === 'chrome mobile' && major >= 59)) {
       classification = 'chrome';
-    } else if (lowerCaseFamily === 'safari' || lowerCaseFamily === 'mobile safari' && major >= 11) {
+    } else if (lowerCaseFamily === 'safari' || (lowerCaseFamily === 'mobile safari' && major >= 11)) {
       classification = 'safari';
     } else if (lowerCaseFamily === 'firefox' && major >= 55) {
       classification = 'firefox';
@@ -47,9 +47,9 @@ export default function classifyBrowser() {
     const brotliCapable = canDecodeBrotli(classification, os);
     req.log.info(`user-agent canDecodeBrotli: ${brotliCapable}`);
     req.canDecodeBrotli = brotliCapable;
-    
+
     next();
   }
 
-  return (userAgentClassification);
+  return userAgentClassification;
 }

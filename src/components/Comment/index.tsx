@@ -71,5 +71,5 @@ export default class Export extends Component<Props, null> {
         )}
       </div>
     );
-  };
+  }
 }

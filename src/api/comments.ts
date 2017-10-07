@@ -5,7 +5,7 @@ export default async ({root}: CommentRetrieve, callbacks: CommentCallbacks): Pro
   try {
     const {$entities}: Comments = await (await fetch(`/api/comments/${root}`)).json();
     callbacks.complete($entities);
-  } catch(error) {
+  } catch (error) {
     callbacks.error(error);
   }
-}
+};

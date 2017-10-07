@@ -32,7 +32,7 @@ export function latest(type) {
   return LATEST_DATA[type];
 }
 
-updateThread.on('message', (message) => {
+updateThread.on('message', message => {
   const {item, id, type, error, uuid, list} = message;
 
   if (!error) {
@@ -44,7 +44,7 @@ updateThread.on('message', (message) => {
         updateThread.send({type});
       }, UPDATE_TIMER);
     } else if (item) {
-      ALL_ITEMS[id] = item; 
+      ALL_ITEMS[id] = item;
     }
   }
 });

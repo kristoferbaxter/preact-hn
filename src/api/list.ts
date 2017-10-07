@@ -1,12 +1,12 @@
 'use strict';
 
-import { MemoryRetrieve, MemoryStore } from 'utils/memory';
-import { ITEMS_PER_PAGE, LIST_TYPES } from 'utils/constants';
-import { ListRange, List, PagedList, EntityId, EntityItemMap, EntityMap, ListRetrieve, ListCallbacks } from './api-types';
+import {MemoryRetrieve, MemoryStore} from 'utils/memory';
+import {ITEMS_PER_PAGE, LIST_TYPES} from 'utils/constants';
+import {ListRange, List, PagedList, EntityId, EntityItemMap, EntityMap, ListRetrieve, ListCallbacks} from './api-types';
 
 let LATEST_UUID = {};
 // Pre-populate based on how many list types are supported.
-Object.keys(LIST_TYPES).forEach(function (list) {
+Object.keys(LIST_TYPES).forEach(function(list) {
   LATEST_UUID[list] = null;
 });
 
@@ -16,41 +16,49 @@ export function listRange(page: number): ListRange {
 
   return {
     from,
-    to
+    to,
   };
 }
 
-export function storeList({ uuid, items, max, type, $entities }: List): void {
-  MemoryStore(Object.assign({
-    [uuid]: {
-      items,
-      max,
-      type
-    }
-  }, $entities));
+export function storeList({uuid, items, max, type, $entities}: List): void {
+  MemoryStore(
+    Object.assign(
+      {
+        [uuid]: {
+          items,
+          max,
+          type,
+        },
+      },
+      $entities,
+    ),
+  );
   setLatestUUID(type, uuid);
 }
 
-function deriveResponse({ type, to, from, page }, { uuid, items, max, $entities }): PagedList {
+function deriveResponse({type, to, from, page}, {uuid, items, max, $entities}): PagedList {
   const stored = MemoryRetrieve(uuid);
 
   storeList({
     uuid,
-    items: Object.assign(stored && stored.items || {}, items),
+    items: Object.assign((stored && stored.items) || {}, items),
     max,
     type,
-    $entities
+    $entities,
   });
 
   return {
     uuid,
-    items: Object.assign({}, ...Object.keys(items)
-      .filter(key => key >= from && key <= to)
-      .map(key => ({ [key]: items[key] }))),
+    items: Object.assign(
+      {},
+      ...Object.keys(items)
+        .filter(key => key >= from && key <= to)
+        .map(key => ({[key]: items[key]})),
+    ),
     type,
     page,
     max,
-    $entities
+    $entities,
   };
 }
 
@@ -58,10 +66,13 @@ export function setLatestUUID(type, uuid): void {
   LATEST_UUID[type] = uuid;
 }
 
-export async function getList({ listType, page = 1, uuid = LATEST_UUID[listType] }: ListRetrieve, callbacks: ListCallbacks): Promise<void> {
+export async function getList(
+  {listType, page = 1, uuid = LATEST_UUID[listType]}: ListRetrieve,
+  callbacks: ListCallbacks,
+): Promise<void> {
   const list = MemoryRetrieve(uuid) as List;
   const stored = uuid && list;
-  const { from, to } = listRange(page);
+  const {from, to} = listRange(page);
   let fetchUrl = `/api/list/${listType}?from=${from}&to=${to}`;
 
   if (stored) {
@@ -86,11 +97,11 @@ export async function getList({ listType, page = 1, uuid = LATEST_UUID[listType]
       type: list.type,
       page: Number(page),
       max: Number(list.max),
-      $entities: cachedEntities
+      $entities: cachedEntities,
     };
 
-    if (cachedKeys.length >= (to - from)) {
-      // If the filtered items (only ones within the range of from->to) 
+    if (cachedKeys.length >= to - from) {
+      // If the filtered items (only ones within the range of from->to)
       // has a length equal to the length between from and to...
       // then all the items are present in the cachedKeys.
       callbacks.complete(storedResponse);
@@ -107,7 +118,7 @@ export async function getList({ listType, page = 1, uuid = LATEST_UUID[listType]
 
   try {
     const json = await (await fetch(fetchUrl)).json();
-    callbacks.complete(deriveResponse({ type: listType, to, from, page }, json));
+    callbacks.complete(deriveResponse({type: listType, to, from, page}, json));
   } catch (error) {
     callbacks.error(error);
   }

@@ -5,7 +5,7 @@ function fileValues(req, file, classification) {
   const format = req.canDecodeBrotli ? ['br', 'gzip'] : ['gzip'];
   let returnValue = {
     finalFormat: null,
-    finalFile: file
+    finalFile: file,
   };
 
   format.some(formatValue => {
@@ -13,7 +13,7 @@ function fileValues(req, file, classification) {
     if (fs.existsSync(path.resolve('dist', classification, testFile))) {
       returnValue = {
         finalFormat: formatValue,
-        finalFile: testFile
+        finalFile: testFile,
       };
       return true;
     }
@@ -31,12 +31,12 @@ export default function staticRoute(req, res, next) {
     const resolvedPath = path.resolve('dist', classification, finalFile);
     let stream = fs.createReadStream(resolvedPath);
 
-    stream.on('error', (error) => {
+    stream.on('error', error => {
       res.writeHead(404, {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'text/plain',
       });
 
-      res.end("file not found");
+      res.end('file not found');
       req.log.warn(`${resolvedPath} file not found.`);
       next();
     });
@@ -47,7 +47,7 @@ export default function staticRoute(req, res, next) {
         'Timing-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
-        'Content-Encoding': finalFormat
+        'Content-Encoding': finalFormat,
       });
       stream.pipe(res);
     });
@@ -57,10 +57,10 @@ export default function staticRoute(req, res, next) {
     });
   } else {
     res.writeHead(404, {
-      'Content-Type': 'text/plain'
+      'Content-Type': 'text/plain',
     });
 
-    res.end("file not found");
+    res.end('file not found');
     next();
   }
 }

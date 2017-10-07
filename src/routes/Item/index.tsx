@@ -13,5 +13,5 @@ export default class extends Component<Props, null> {
 
   private ItemViewWithData(data) {
     return <Details data={data} matches={this.props.matches} />;
-  };
+  }
 }

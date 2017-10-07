@@ -4,7 +4,7 @@ import {getItem, uuid as ForegroundDataUUID, latest} from '../../storage/foregro
 
 function generateJSON(req, {type, from, to, uuid}): List & ListRange {
   const latestNewItems = latest(type);
-  const rangedItems = latestNewItems.slice(from,to);
+  const rangedItems = latestNewItems.slice(from, to);
 
   return {
     uuid,
@@ -13,7 +13,7 @@ function generateJSON(req, {type, from, to, uuid}): List & ListRange {
     to,
     max: latestNewItems.length,
     items: rangedItems.reduce(function(acc, cur, index) {
-      acc[index+from] = cur;
+      acc[index + from] = cur;
       return acc;
     }, {}),
     $entities: rangedItems.reduce(function(acc, cur, index) {
@@ -22,20 +22,22 @@ function generateJSON(req, {type, from, to, uuid}): List & ListRange {
         acc[item.id] = item;
       }
       return acc;
-    }, {})
-  }
+    }, {}),
+  };
 }
 
 export function route(req, res, next): void {
   res.setHeader('content-type', 'application/json; charset=utf-8');
 
-  const {type, from=0, to=29, uuid} = req.query;
-  res.send(generateJSON(req, {
-    type,
-    from: Number(from),
-    to: Number(to),
-    uuid: uuid || ForegroundDataUUID(type),
-  }));
+  const {type, from = 0, to = 29, uuid} = req.query;
+  res.send(
+    generateJSON(req, {
+      type,
+      from: Number(from),
+      to: Number(to),
+      uuid: uuid || ForegroundDataUUID(type),
+    }),
+  );
 
   next();
 }

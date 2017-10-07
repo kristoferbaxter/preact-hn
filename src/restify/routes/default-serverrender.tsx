@@ -16,7 +16,7 @@ export default function defaultRoute(req, res, next) {
   if (resources) {
     let linkHeaderValue = '';
     const toPush = resources.route && resources.route.js ? [resources.js, resources.route.js] : [resources.js];
-    toPush.forEach((preloadResource) => {
+    toPush.forEach(preloadResource => {
       linkHeaderValue += `<${preloadResource}>; rel=preload; as=script,`;
     });
     res.setHeader('Link', linkHeaderValue);
@@ -24,12 +24,12 @@ export default function defaultRoute(req, res, next) {
 
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8',
-    'Connection': 'Transfer-Encoding',
+    Connection: 'Transfer-Encoding',
     'Transfer-Encoding': 'chunked',
     'Strict-Transport-Security': 'max-age=31557600; includeSubDomains; preload',
     'Timing-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
   });
 
   let data = {};
@@ -45,7 +45,9 @@ export default function defaultRoute(req, res, next) {
       <title>Preact Hacker News</title>
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
       ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
-      ${resources.inline !== null ? `<style>${resources.inline}</style>` : resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
+      ${resources.inline !== null
+        ? `<style>${resources.inline}</style>`
+        : resources.css !== null ? `<link rel="stylesheet" href="${resources.css}" />` : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icons/favicon.png">
       <script>window.seed=${JSON.stringify(data)}</script>
@@ -55,7 +57,7 @@ export default function defaultRoute(req, res, next) {
     <body>`);
 
   const RoutedViewComponent = render(
-    <RoutedView url={req.url} delay={0} child={listType ? List : Loading} data={data} />
+    <RoutedView url={req.url} delay={0} child={listType ? List : Loading} data={data} />,
   );
 
   res.write(`

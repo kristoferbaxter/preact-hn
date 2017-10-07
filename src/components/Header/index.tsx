@@ -94,5 +94,5 @@ export default class extends Component<Props, State> {
     this.setState({
       online: navigator.onLine,
     });
-  };
+  }
 }

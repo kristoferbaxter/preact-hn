@@ -6,11 +6,11 @@ export function route(req, res, next) {
   const ItemsToRetrieve = JSON.parse(req.query.items);
 
   res.send({
-    '$entities': ItemsToRetrieve.reduce(function(acc, cur, index) {
+    $entities: ItemsToRetrieve.reduce(function(acc, cur, index) {
       const item = getItem(cur);
       acc[item.id] = item;
       return acc;
-    }, {})
+    }, {}),
   });
 
   next();

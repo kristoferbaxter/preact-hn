@@ -4,18 +4,18 @@ import render from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView';
 
-export default function defaultRoute(req, res, next) {  
+export default function defaultRoute(req, res, next) {
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
 
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8',
-    'Connection': 'Transfer-Encoding',
+    Connection: 'Transfer-Encoding',
     'Transfer-Encoding': 'chunked',
     'Strict-Transport-Security': 'max-age=31557600; includeSubDomains; preload',
     'Timing-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
   });
 
   res.write(`<!DOCTYPE html>
@@ -25,7 +25,9 @@ export default function defaultRoute(req, res, next) {
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
       ${supportsManifest ? '<meta name="theme-color" content="#0077B5" />' : ''}
       <style>${resources.inline}</style>
-      ${resources.inline === null && resources.css !== null ? '<link rel="stylesheet" href="' + resources.css + '" />' : ''}
+      ${resources.inline === null && resources.css !== null
+        ? '<link rel="stylesheet" href="' + resources.css + '" />'
+        : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icons/favicon.png">
       <script src='${resources.js}' defer></script>
@@ -33,9 +35,7 @@ export default function defaultRoute(req, res, next) {
     <body>
       <div id="mount">`);
 
-  const RoutedViewComponent = render(
-    <RoutedView url={req.url} delay={0} />
-  );
+  const RoutedViewComponent = render(<RoutedView url={req.url} delay={0} />);
 
   res.write(`
         ${RoutedViewComponent}
@@ -43,7 +43,7 @@ export default function defaultRoute(req, res, next) {
       </body>
     </html>`);
 
-    // TODO: More research on why these scripts cannot be loaded async.
+  // TODO: More research on why these scripts cannot be loaded async.
 
   res.end();
 

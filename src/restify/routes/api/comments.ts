@@ -46,7 +46,7 @@ function getComments(res, acc, id, log) {
   } else {
     acc = {
       id: item.id,
-      $sentinel: true
+      $sentinel: true,
     };
   }
 
@@ -59,10 +59,10 @@ export function route(req, res, next) {
 
   const root = req.params.id;
   const comments = getComments(res, {}, root, req.log);
-  
+
   res.send({
     $entities: res.$entities,
-    comments: comments
+    comments: comments,
   });
 
   next();

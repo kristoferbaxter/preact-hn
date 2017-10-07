@@ -7,7 +7,7 @@ export default function staticRoute(req, res, next) {
       'Content-Type': 'application/javascript; charset=utf-8',
       'Timing-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
     });
 
     res.end(data, 'binary');

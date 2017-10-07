@@ -11,7 +11,7 @@ export default function staticRoute(req, res, next) {
         'Cache-Control': 'public,max-age=31536000,immutable',
         'Timing-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
       });
 
       res.end(data, 'binary');
@@ -19,7 +19,7 @@ export default function staticRoute(req, res, next) {
     });
   } else {
     res.writeHead(404);
-    
+
     res.end();
     next();
   }

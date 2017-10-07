@@ -4,7 +4,7 @@ export default function upgradeInsecureRequest(req, res, next) {
   if (cloudflareVisitorHeader) {
     const currentProtocol = JSON.parse(cloudflareVisitorHeader).scheme;
 
-    if (currentProtocol === "http") {
+    if (currentProtocol === 'http') {
       const newURL = `https://${req.header('x-forwarded-host')}${req.header('forwarded-request-uri')}`;
       res.redirect(301, newURL, next);
     } else {

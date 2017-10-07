@@ -7,33 +7,33 @@
 export default function setRequestResources(resourcesList) {
   function routeBundle(req, resources) {
     const routeResources = resources && resources.routes;
-    
+
     if (routeResources) {
       if (/\/item/.test(req.url)) {
         return {
-          js: routeResources.ItemHome
+          js: routeResources.ItemHome,
         };
       }
 
       if (/\/about/.test(req.url)) {
         return {
-          js: routeResources.AboutHome
+          js: routeResources.AboutHome,
         };
       }
-      
+
       if (/\/user/.test(req.url)) {
         return {
-          js: routeResources.UserHome
+          js: routeResources.UserHome,
         };
       }
 
       return {
-        js: routeResources.ListHome ? routeResources.ListHome : null
+        js: routeResources.ListHome ? routeResources.ListHome : null,
       };
     }
 
     return {
-      js: null
+      js: null,
     };
   }
 
@@ -46,12 +46,12 @@ export default function setRequestResources(resourcesList) {
         css: resources && resources.css && resources.css.url,
         js: resources && resources.js,
         'service.worker': resources && resources['service.worker'],
-        route: routeBundle(req, resources)
-      }
+        route: routeBundle(req, resources),
+      };
     }
-    
+
     next();
   }
 
-  return (setResources);
+  return setResources;
 }

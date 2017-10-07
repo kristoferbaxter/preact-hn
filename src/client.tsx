@@ -1,7 +1,7 @@
-import { h, render } from 'preact';
+import {h, render} from 'preact';
 import Routes from './routes';
 import 'utils/memory';
-import { storeList } from 'api/list';
+import {storeList} from 'api/list';
 
 import './reset.css';
 

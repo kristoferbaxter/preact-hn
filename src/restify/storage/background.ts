@@ -15,26 +15,26 @@ const FETCH_LOCATIONS = {
   [LIST_TYPES['new']]: 'https://hacker-news.firebaseio.com/v0/newstories.json',
   [LIST_TYPES['show']]: 'https://hacker-news.firebaseio.com/v0/showstories.json',
   [LIST_TYPES['ask']]: 'https://hacker-news.firebaseio.com/v0/askstories.json',
-  [LIST_TYPES['jobs']]: 'https://hacker-news.firebaseio.com/v0/jobstories.json' 
+  [LIST_TYPES['jobs']]: 'https://hacker-news.firebaseio.com/v0/jobstories.json',
 };
 
-process.on('message', (message) => {
+process.on('message', message => {
   const {type, id} = message;
   if (type) {
     updateList(type, {
-      success: (type) => {
+      success: type => {
         process.send({
-          type, 
+          type,
           uuid: LATEST_UUID[type],
-          list: LATEST_DATA[type]
+          list: LATEST_DATA[type],
         });
       },
-      error: (type) => {
+      error: type => {
         process.send({
-          type, 
-          error: true
+          type,
+          error: true,
         });
-      } 
+      },
     });
   } else if (id) {
     updateItemsRecursively(id);
@@ -50,7 +50,7 @@ process.on('message', (message) => {
 function updateList(type, callbacks) {
   fetch(FETCH_LOCATIONS[type])
     .then(response => response.json())
-    .then((json) => {
+    .then(json => {
       const thisUpdateUUID = uuid();
 
       LATEST_DATA[type] = json;
@@ -61,12 +61,12 @@ function updateList(type, callbacks) {
         //log.info(`please store ${item}, index: ${index}, type: ${type}`);
         updateItemsRecursively(item);
       });
-      
-      callbacks.success(type);  
+
+      callbacks.success(type);
     })
-    .catch((error) => {
+    .catch(error => {
       console.log('unable to update data', error);
-    
+
       callbacks.error(type);
     });
 }
@@ -89,39 +89,39 @@ function updateItem(id, forceReload, callbacks) {
 
   fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
     .then(response => response.json())
-    .then((json) => {
+    .then(json => {
       ALL_ITEMS[id] = json;
 
       if (callbacks && callbacks.success) {
         process.send({
           id,
-          item: ALL_ITEMS[id]
+          item: ALL_ITEMS[id],
         });
 
         callbacks.success(ALL_ITEMS[id]);
       }
     })
-    .catch((error) => {
+    .catch(error => {
       ALL_ITEMS[id] = null;
 
       if (callbacks && callbacks.error) {
         callbacks.error(error);
       }
-    }); 
+    });
 }
 
 function updateItemsRecursively(id) {
   // This is pretty hacky... move to Firebase client.
   updateItem(id, true, {
-    success: (item) => {
+    success: item => {
       if (item.kids && item.kids.length > 0) {
         item.kids.forEach((kid, index) => {
           updateItemsRecursively(kid);
         });
       }
     },
-    error: (error) => {
+    error: error => {
       //console.log(`error updating items`);
-    }
+    },
   });
 }

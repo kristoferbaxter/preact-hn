@@ -2,7 +2,7 @@ import {LIST_TYPES} from 'utils/constants';
 
 export type uuid = string;
 export type EntityId = number;
-export type EntityType = "job" | "story" | "comment" | "poll" | "pollopt";
+export type EntityType = 'job' | 'story' | 'comment' | 'poll' | 'pollopt';
 export type EntityItemMap = Map<number, EntityId> | {};
 export type EntityMap = Map<EntityId, Entity> | {};
 
@@ -46,7 +46,7 @@ export interface ListCallbacks {
 
 /* COMMENTS */
 export interface Comment {
-  [key:number]: CommentChildren
+  [key: number]: CommentChildren;
   id: EntityId;
   $sentinel?: boolean;
 }

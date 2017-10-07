@@ -48,7 +48,7 @@ export default class extends Component<Props, State> {
     this.setState({
       data: partialData,
     });
-  };
+  }
   private handleCompleteData(completeData): void {
     if (this.props.values.uuid !== completeData.uuid) {
       this.props.handleUUIDChange(completeData.uuid);
@@ -56,24 +56,24 @@ export default class extends Component<Props, State> {
     this.setState({
       data: completeData,
     });
-  };
+  }
   private handleErrorData(error): void {
     this.setState({
       error: true,
     });
-  };
+  }
 
   private handleNetworkChange(): void {
     if (this.state.error && navigator.onLine) {
       this.state.error = false;
       this.retrieve(this.props.values);
     }
-  };
+  }
   private retrieve(values): void {
     this.props.source(values, {
       partial: this.handlePartialData,
       complete: this.handleCompleteData,
       error: this.handleErrorData,
     });
-  };
+  }
 }

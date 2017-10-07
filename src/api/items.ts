@@ -30,10 +30,12 @@ export default async ({keys}: ItemsRetrieve, callbacks: ItemsCallbacks): Promise
   }
 
   try {
-    const {$entities}: Items = await (await fetch(`/api/items?items=${JSON.stringify(Object.keys(unresolved))}`)).json();
+    const {$entities}: Items = await (await fetch(
+      `/api/items?items=${JSON.stringify(Object.keys(unresolved))}`,
+    )).json();
     MemoryStore($entities);
     callbacks.complete(Object.assign(resolved, $entities));
-  } catch(error) {
+  } catch (error) {
     callbacks.error(error);
   }
-}
+};
