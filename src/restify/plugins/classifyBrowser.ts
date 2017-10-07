@@ -1,6 +1,4 @@
-'use strict';
-
-const useragent = require('useragent');
+import useragent from 'useragent';
 
 function canDecodeBrotli(classification, os) {  
   if (classification === 'chrome' || classification === 'firefox') {
@@ -25,7 +23,7 @@ function canDecodeBrotli(classification, os) {
  * @function classifyBrowser
  * @returns {Function}
  */
-function classifyBrowser(opts) {
+export default function classifyBrowser() {
   function userAgentClassification(req, res, next) {
     const {family, major, os} = useragent.lookup(req.headers['user-agent']);
     const lowerCaseFamily = family.toLowerCase();
@@ -55,5 +53,3 @@ function classifyBrowser(opts) {
 
   return (userAgentClassification);
 }
-
-module.exports = classifyBrowser;

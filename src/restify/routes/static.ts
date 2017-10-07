@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
 function fileValues(req, file, classification) {
   const format = req.canDecodeBrotli ? ['br', 'gzip'] : ['gzip'];
@@ -23,7 +23,7 @@ function fileValues(req, file, classification) {
   return returnValue;
 }
 
-function staticRoute(req, res, next) {
+export default function staticRoute(req, res, next) {
   const {classification, file} = req.params;
 
   if (['chrome', 'safari', 'firefox', 'edge', 'fallback'].indexOf(classification) >= 0) {
@@ -61,9 +61,6 @@ function staticRoute(req, res, next) {
     });
 
     res.end("file not found");
-    req.log.warn(`${resolvedPath} file not found.`);
     next();
   }
 }
-
-module.exports = staticRoute;

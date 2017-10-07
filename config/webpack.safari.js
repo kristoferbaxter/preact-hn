@@ -17,6 +17,7 @@ module.exports = {
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
+      CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
   },

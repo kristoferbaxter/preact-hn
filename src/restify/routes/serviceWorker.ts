@@ -1,7 +1,7 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
-function staticRoute(req, res, next) {
+export default function staticRoute(req, res, next) {
   fs.readFile(path.resolve('dist', 'chrome', 'service-worker.js'), 'binary', function(err, data) {
     res.writeHead(200, {
       'Content-Type': 'application/javascript; charset=utf-8',
@@ -14,5 +14,3 @@ function staticRoute(req, res, next) {
     next();
   });
 }
-
-module.exports = staticRoute;

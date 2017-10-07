@@ -1,38 +1,17 @@
 import {h, Component} from 'preact';
 import WithData from 'components/WithData';
-import Pagination from 'components/Pagination';
-import Loading from 'components/Loading';
-import ListItem from 'components/ListItem';
+import List from 'components/List';
 
 import {getList} from 'api/list';
-import {ITEMS_PER_PAGE} from 'utils/constants';
-
-interface ListViewProps {
-  data: any;
-}
-function ListView({data}: ListViewProps): JSX.Element {
-  if (!data || data === null) {
-    return <Loading />;
-  }
-
-  const {items, $entities, max, page, type} = data;
-  return (
-    <main>
-      <Pagination page={parseInt(page, 10)} maxPages={Math.ceil(parseInt(max, 10) / ITEMS_PER_PAGE)} type={type} />
-      {Object.keys(items).map(item => {
-        const itemAsInt = parseInt(item, 10);
-        return <ListItem index={itemAsInt + 1} entity={$entities[items[itemAsInt]]} />;
-      })}
-    </main>
-  );
-}
+import {ListRetrieve, PagedList, uuid} from 'api/api-types';
+import {LIST_TYPES} from 'utils/constants';
 
 interface Props {
   matches: any;
-  listType: string;
+  listType: LIST_TYPES;
 }
 interface State {
-  uuid: string;
+  uuid: uuid;
 }
 export default class extends Component<Props, State> {
   componentWillReceiveProps() {
@@ -40,7 +19,7 @@ export default class extends Component<Props, State> {
   }
 
   render({matches, listType}: Props, {uuid = {}}: State): JSX.Element {
-    const values = Object.assign(
+    const values: ListRetrieve = Object.assign(
       {
         page: parseInt(matches.page || 1, 10),
         listType,
@@ -58,10 +37,10 @@ export default class extends Component<Props, State> {
     );
   }
 
-  private ListViewWithData(data): JSX.Element {
-    return <ListView data={data} />;
+  private ListViewWithData(data: PagedList): JSX.Element {
+    return <List data={data} />;
   };
-  private handleUUIDChange(uuid): void {
+  private handleUUIDChange(uuid: uuid): void {
     this.state.uuid = uuid;
   };
 }

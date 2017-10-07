@@ -1,15 +1,13 @@
-'use strict';
+import {getItem} from '../../storage/foreground';
 
-const {getItem} = require('../../storage/foreground.js');
-
-function apiItemsRoute(req, res, next) {
+export function route(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
 
   const ItemsToRetrieve = JSON.parse(req.query.items);
 
   res.send({
     '$entities': ItemsToRetrieve.reduce(function(acc, cur, index) {
-      const item = getItem(cur, req.log);
+      const item = getItem(cur);
       acc[item.id] = item;
       return acc;
     }, {})
@@ -17,7 +15,3 @@ function apiItemsRoute(req, res, next) {
 
   next();
 }
-
-module.exports = {
-  route: apiItemsRoute
-};

@@ -1,8 +1,6 @@
-'use strict';
-
-const uuid = require('uuid/v1');
-const fetch = require('node-fetch');
-import {LIST_TYPES} from '../../lists/constants';
+import uuid from 'uuid/v1';
+import fetch from 'node-fetch';
+import {LIST_TYPES} from 'utils/constants';
 
 let ALL_ITEMS = {};
 let LATEST_UUID = {};

@@ -1,12 +1,10 @@
-'use strict';
-
 /**
  * Set on the request the resources needed for this particular request.
  * @public
  * @function setRequestResources
  * @returns {Function}
  */
-function setRequestResources(resourcesList) {
+export default function setRequestResources(resourcesList) {
   function routeBundle(req, resources) {
     const routeResources = resources && resources.routes;
     
@@ -57,5 +55,3 @@ function setRequestResources(resourcesList) {
 
   return (setResources);
 }
-
-module.exports = setRequestResources;

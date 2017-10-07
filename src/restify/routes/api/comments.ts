@@ -1,6 +1,4 @@
-'use strict';
-
-const {getItem} = require('../../storage/foreground.js');
+import {getItem} from '../../storage/foreground';
 
 /*
  * storage {Object}
@@ -36,7 +34,7 @@ const {getItem} = require('../../storage/foreground.js');
  */
 
 function getComments(res, acc, id, log) {
-  const item = getItem(id, log);
+  const item = getItem(id);
 
   res.$entities[id] = item;
   if (item.kids && item.kids.length > 0) {
@@ -55,7 +53,7 @@ function getComments(res, acc, id, log) {
   return acc;
 }
 
-function apiCommentsRoute(req, res, next) {
+export function route(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
   res.$entities = {};
 
@@ -69,7 +67,3 @@ function apiCommentsRoute(req, res, next) {
 
   next();
 }
-
-module.exports = {
-  route: apiCommentsRoute
-};

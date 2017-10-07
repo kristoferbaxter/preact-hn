@@ -6,13 +6,13 @@ const CommonOptions = require('./common.js');
 
 let nodeModules = {};
 fs.readdirSync('node_modules')
-  .filter((x) => ['.bin'].indexOf(x) === -1)
-  .forEach((mod) => nodeModules[mod] = 'commonjs ' + mod);
+  .filter(x => ['.bin'].indexOf(x) === -1)
+  .forEach(mod => nodeModules[mod] = 'commonjs ' + mod);
 
 module.exports = {
   entry: {
-    'server': './src/restify/index.js',
-    'background': './src/restify/storage/background.js'
+    'server': './src/restify/index',
+    'background': './src/restify/storage/background'
   },
   target: 'node',
   output: {
@@ -23,6 +23,7 @@ module.exports = {
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
+      CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule()
     ]
   },

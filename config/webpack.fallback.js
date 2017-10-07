@@ -16,6 +16,7 @@ module.exports = {
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
+      CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule()
     ]
   },

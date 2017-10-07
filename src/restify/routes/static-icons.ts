@@ -1,7 +1,7 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
-function staticRoute(req, res, next) {
+export default function staticRoute(req, res, next) {
   const {file} = req.params;
 
   if (fs.existsSync(path.resolve('dist', 'server', 'static', 'icons', file))) {
@@ -24,5 +24,3 @@ function staticRoute(req, res, next) {
     next();
   }
 }
-
-module.exports = staticRoute;

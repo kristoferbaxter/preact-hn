@@ -1,8 +1,7 @@
-'use strict';
+import cp from 'child_process';
+import {LIST_TYPES} from 'utils/constants';
 
-const cp = require('child_process');
 const updateThread = cp.fork('dist/server/restify.background.js'); // TODO: FIX THIS PATH, USE require('path')
-import {LIST_TYPES} from '../../lists/constants';
 
 const UPDATE_TIMER = 300000;
 let LATEST_UUID = {};
@@ -13,13 +12,12 @@ Object.keys(LIST_TYPES).forEach(function(list) {
   LATEST_DATA[list] = null;
 });
 
-function init() {
+export function init() {
   Object.keys(LIST_TYPES).forEach(function(type) {
     updateThread.send({type});
   });
 }
-
-function getItem(id) {
+export function getItem(id) {
   if (ALL_ITEMS[id]) {
     return ALL_ITEMS[id];
   }
@@ -27,9 +25,15 @@ function getItem(id) {
   updateThread.send({id});
   return null;
 }
+export function uuid(type) {
+  return LATEST_UUID[type];
+}
+export function latest(type) {
+  return LATEST_DATA[type];
+}
 
 updateThread.on('message', (message) => {
-  const {item, id, type, error, uuid, list, allItems} = message;
+  const {item, id, type, error, uuid, list} = message;
 
   if (!error) {
     if (list) {
@@ -43,11 +47,4 @@ updateThread.on('message', (message) => {
       ALL_ITEMS[id] = item; 
     }
   }
-})
-
-module.exports = {
-  uuid: (type) => LATEST_UUID[type],
-  latest: (type) => LATEST_DATA[type],
-  init: init,
-  getItem: getItem
-};
+});

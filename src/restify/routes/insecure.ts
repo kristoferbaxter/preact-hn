@@ -1,6 +1,4 @@
-'use strict';
-
-function upgradeInsecureRequest(req, res, next) {
+export default function upgradeInsecureRequest(req, res, next) {
   const cloudflareVisitorHeader = req.header('cf-visitor');
 
   if (cloudflareVisitorHeader) {
@@ -16,5 +14,3 @@ function upgradeInsecureRequest(req, res, next) {
     next();
   }
 }
-
-module.exports = upgradeInsecureRequest;

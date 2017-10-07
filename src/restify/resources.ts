@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const CLASSIFICATIONS = ['chrome', 'edge', 'safari', 'firefox', 'fallback'];
 
-function loadResources(bunyanLogger) {
+export default function loadResources(bunyanLogger) {
   let returnedResources = {};
 
   CLASSIFICATIONS.forEach((classification) => {
@@ -45,5 +45,3 @@ function loadResources(bunyanLogger) {
 
   return returnedResources;
 }
-
-module.exports = loadResources;
