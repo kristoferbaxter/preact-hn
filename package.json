@@ -6,22 +6,33 @@
   "author": "Kristofer Baxter",
   "license": "MIT",
   "scripts": {
-    "start": "node_modules/.bin/nodemon -e js,css --config nodemon.config.json --exec 'yarn' start:node:dev-after-bundle",
+    "start":
+      "node_modules/.bin/nodemon -e js,css --config nodemon.config.json --exec 'yarn' start:node:dev-after-bundle",
     "start:node": "node dist/server/restify.server.js | ./node_modules/.bin/bunyan",
     "start:node:dev-after-bundle": "yarn run bundle:dev; yarn run start:node",
     "start:h2o": "cd dist/server && h2o -c h2o.config.yaml",
     "bundle:dev": "BUNDLE_ENV=dev yarn run tcm; yarn run bundle:chrome; yarn run bundle:server",
-    "bundle:all": "yarn run bundle:chrome; yarn run bundle:safari; yarn run bundle:edge; yarn run bundle:firefox; yarn run bundle:fallback; yarn run bundle:server",
-    "bundle:chrome": "BABEL_ENV=chrome node_modules/.bin/webpack --config config/webpack.chrome.js --json > dist/chrome/webpack.json; node scripts/minify.js chrome false; node scripts/sw-precache.js; node scripts/minify.js chrome true;",
-    "bundle:safari": "BABEL_ENV=safari node_modules/.bin/webpack --config config/webpack.safari.js --json > dist/safari/webpack.json; node scripts/minify.js safari",
-    "bundle:edge": "BABEL_ENV=edge node_modules/.bin/webpack --config config/webpack.edge.js --json > dist/edge/webpack.json; node scripts/minify.js edge",
-    "bundle:firefox": "BABEL_ENV=firefox node_modules/.bin/webpack --config config/webpack.firefox.js --json > dist/firefox/webpack.json; node scripts/minify.js firefox",
-    "bundle:fallback": "BABEL_ENV=fallback node_modules/.bin/webpack --config config/webpack.fallback.js --json > dist/fallback/webpack.json; node scripts/minify.js fallback",
-    "bundle:server": "BABEL_ENV=server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
+    "bundle:all":
+      "yarn run bundle:chrome; yarn run bundle:safari; yarn run bundle:edge; yarn run bundle:firefox; yarn run bundle:fallback; yarn run bundle:server",
+    "bundle:chrome":
+      "BABEL_ENV=chrome node_modules/.bin/webpack --config config/webpack.chrome.js --json > dist/chrome/webpack.json; node scripts/minify.js chrome false; node scripts/sw-precache.js; node scripts/minify.js chrome true;",
+    "bundle:safari":
+      "BABEL_ENV=safari node_modules/.bin/webpack --config config/webpack.safari.js --json > dist/safari/webpack.json; node scripts/minify.js safari",
+    "bundle:edge":
+      "BABEL_ENV=edge node_modules/.bin/webpack --config config/webpack.edge.js --json > dist/edge/webpack.json; node scripts/minify.js edge",
+    "bundle:firefox":
+      "BABEL_ENV=firefox node_modules/.bin/webpack --config config/webpack.firefox.js --json > dist/firefox/webpack.json; node scripts/minify.js firefox",
+    "bundle:fallback":
+      "BABEL_ENV=fallback node_modules/.bin/webpack --config config/webpack.fallback.js --json > dist/fallback/webpack.json; node scripts/minify.js fallback",
+    "bundle:server":
+      "BABEL_ENV=server node_modules/.bin/webpack --config config/webpack.server.js --json > dist/server/webpack.json",
     "bundle:prod": "NODE_ENV=production yarn run tcm; yarn run bundle:all;",
     "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml",
     "tcm": "node_modules/typed-css-modules/lib/cli.js src/",
-    "prettier": "./node_modules/prettier/bin/prettier.js --config ./.prettierrc --write 'src/**/*.tsx' 'src/**/*.ts'"
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,css,ts,tsx}": ["./node_modules/prettier/bin/prettier.js --config ./.prettierrc --write", "git add"]
   },
   "dependencies": {
     "bunyan": "^1.8.12",
@@ -55,6 +66,8 @@
     "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "3.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.2.3",
     "nodemon": "^1.12.1",
     "object.values": "^1.0.4",
     "optimize-js-plugin": "^0.0.4",
