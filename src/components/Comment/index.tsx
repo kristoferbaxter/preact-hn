@@ -53,12 +53,12 @@ interface Props {
   descendants: number;
   root: number;
 }
-export default class extends Component<Props, null> {
+export default class Export extends Component<Props, null> {
   render({root}) {
     return <WithData source={comments} values={{root}} render={this.CommentsWithData} />;
   }
 
-  private CommentsWithData = (data, error) => {
+  private CommentsWithData(data, error): JSX.Element {
     const {descendants} = this.props;
     return (
       <div class={styles.comments}>

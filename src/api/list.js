@@ -1,7 +1,7 @@
 'use strict';
 
-import {MemoryRetrieve, MemoryStore} from './memory';
-import {ITEMS_PER_PAGE, LIST_TYPES} from '../../lists/constants';
+import {MemoryRetrieve, MemoryStore} from 'utils/memory';
+import {ITEMS_PER_PAGE, LIST_TYPES} from 'utils/constants';
 
 let LATEST_UUID = {};
 // Pre-populate based on how many list types are supported.

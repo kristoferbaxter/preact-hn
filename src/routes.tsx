@@ -11,8 +11,8 @@ export default props => (
     <RoutedView path="/show/:page" listType={LIST_TYPES.show} child={List} delay={0} />
     <RoutedView path="/ask/:page" listType={LIST_TYPES.ask} child={List} delay={0} />
     <RoutedView path="/jobs/:page" listType={LIST_TYPES.jobs} child={List} delay={0} />
-    <RoutedView path="/about" load={require('bundle-loader?lazy&name=AboutHome!./about/views/about')} {...props} />
-    <RoutedView path="/item/:id" load={require('bundle-loader?lazy&name=ItemHome!./components/Details')} {...props} />
-    <RoutedView path="/user/:id" load={require('bundle-loader?lazy&name=UserHome!./lists/views/user.js')} {...props} />
+    <RoutedView path="/about" load={require('bundle-loader?lazy&name=AboutHome!./routes/About')} {...props} />
+    <RoutedView path="/item/:id" load={require('bundle-loader?lazy&name=ItemHome!./routes/Item')} {...props} />
+    <RoutedView path="/user/:id" load={require('bundle-loader?lazy&name=UserHome!./routes/User')} {...props} />
   </Router>
 );

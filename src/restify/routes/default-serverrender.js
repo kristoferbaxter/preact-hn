@@ -1,13 +1,13 @@
 'use strict';
 
-import {serverRoute} from './api/list';
-import {LIST_TYPES} from '../../lists/constants';
+import {serverRoute} from 'api/list';
+import {LIST_TYPES} from 'utils/constants';
 // UI Imports
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView';
-import LoadingView from '../../core/loadingView';
+import Loading from 'components/Loading';
 import ListViewWithData from '../../lists/list';
 
 function defaultRoute(req, res, next) {
@@ -56,7 +56,7 @@ function defaultRoute(req, res, next) {
     <body>`);
 
   const RoutedViewComponent = render(
-    <RoutedView url={req.url} delay={0} child={listType ? ListViewWithData : LoadingView} data={data} />
+    <RoutedView url={req.url} delay={0} child={listType ? ListViewWithData : Loading} data={data} />
   );
 
   res.write(`

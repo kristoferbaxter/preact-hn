@@ -1,6 +1,6 @@
 import {h, Component} from 'preact';
 import Header from 'components/Header';
-import LoadingView from 'components/LoadingView';
+import Loading from 'components/Loading';
 
 import styles from './routedView.css';
 
@@ -9,7 +9,6 @@ export default class RoutedView extends Component {
     super(props);
 
     this.lazyLoadedRoutes = {};
-    this.loader = this.loader.bind(this);
   }
 
   loader() {
@@ -53,7 +52,7 @@ export default class RoutedView extends Component {
       <div id="mount" class={styles.viewHasHeader}>
         <Header {...props} />
         <div class={styles.mainView}>
-          {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? <LoadingView /> : null)}
+          {usableChild ? h(usableChild, props) : (pastDelay || props.delay === 0 ? <Loading /> : null)}
         </div>
       </div>
     );

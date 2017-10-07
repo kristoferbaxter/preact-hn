@@ -50,7 +50,7 @@ export default class extends Component<Props, null> {
     return <WithData source={getItems} values={{keys: [matches.id]}} render={this.ItemViewWithData} />;
   }
 
-  private ItemViewWithData = data => {
+  private ItemViewWithData(data) {
     return <Details data={data} matches={this.props.matches} />;
   };
 }

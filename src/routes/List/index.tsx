@@ -58,10 +58,10 @@ export default class extends Component<Props, State> {
     );
   }
 
-  private ListViewWithData = (data): JSX.Element => {
+  private ListViewWithData(data): JSX.Element {
     return <ListView data={data} />;
   };
-  private handleUUIDChange = (uuid): void => {
+  private handleUUIDChange(uuid): void {
     this.state.uuid = uuid;
   };
 }

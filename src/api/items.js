@@ -1,6 +1,6 @@
 'use strict';
 
-import {MemoryRetrieve, MemoryStore} from './memory';
+import {MemoryRetrieve, MemoryStore} from 'utils/memory';
 
 /*
 return {

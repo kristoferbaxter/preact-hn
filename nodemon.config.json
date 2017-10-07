@@ -1,5 +1,6 @@
 {
   "verbose": true,
+  "ignore": ["*.css.d.ts"],
   "watch": [
     "src/"
   ],
