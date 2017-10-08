@@ -1,9 +1,9 @@
 let ENTITIES = {};
 
-export function MemoryRetrieve(item) {
+export function MemoryRetrieve(item: string | number): any {
   return ENTITIES[item];
 }
-export function MemoryStore(items) {
+export function MemoryStore(items: object): void {
   ENTITIES = Object.assign(ENTITIES, items);
 }
 
