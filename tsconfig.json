@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/ts-out",
     "sourceMap": false,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es2017",
     "jsx": "preserve",
