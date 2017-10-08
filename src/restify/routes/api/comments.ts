@@ -57,8 +57,8 @@ export function route(req, res, next) {
   res.setHeader('content-type', 'application/json; charset=utf-8');
   res.$entities = {};
 
-  const root = req.params.id;
-  const comments = getComments(res, {}, root, req.log);
+  const {id} = req.params;
+  const comments = getComments(res, {}, id, req.log);
 
   res.send({
     $entities: res.$entities,

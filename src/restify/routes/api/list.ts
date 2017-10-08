@@ -1,5 +1,6 @@
 import {listRange} from 'api/list';
 import {PagedList, List, ListRange} from 'api/api-types';
+import {LIST_TYPES} from 'utils/constants';
 import {getItem, uuid as ForegroundDataUUID, latest} from '../../storage/foreground';
 
 function generateJSON(req, {type, from, to, uuid}): List & ListRange {
@@ -29,7 +30,7 @@ function generateJSON(req, {type, from, to, uuid}): List & ListRange {
 export function route(req, res, next): void {
   res.setHeader('content-type', 'application/json; charset=utf-8');
 
-  const {type, from = 0, to = 29, uuid} = req.query;
+  const {type = LIST_TYPES.top, from = 0, to = 29, uuid} = req.params;
   res.send(
     generateJSON(req, {
       type,

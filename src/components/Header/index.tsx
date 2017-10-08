@@ -90,9 +90,9 @@ export default class extends Component<Props, State> {
     );
   }
 
-  private handleNetworkChange(): void {
+  private handleNetworkChange = (): void => {
     this.setState({
       online: navigator.onLine,
     });
-  }
+  };
 }

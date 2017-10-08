@@ -58,7 +58,7 @@ export default class Export extends Component<Props, null> {
     return <WithData source={comments} values={{root}} render={this.CommentsWithData} />;
   }
 
-  private CommentsWithData(data, error): JSX.Element {
+  private CommentsWithData = (data, error): JSX.Element => {
     const {descendants} = this.props;
     return (
       <div class={styles.comments}>
@@ -71,5 +71,5 @@ export default class Export extends Component<Props, null> {
         )}
       </div>
     );
-  }
+  };
 }
