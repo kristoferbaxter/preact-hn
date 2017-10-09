@@ -64,7 +64,6 @@ const WebpackStats = {
 
 const ResolveAliases = {
   preact: 'preact/src/preact.js',
-  'preact-router$': 'preact-router/src',
   components: path.resolve(__dirname, '../src/components'),
   api: path.resolve(__dirname, '../src/api'),
   utils: path.resolve(__dirname, '../src/utils'),
@@ -84,11 +83,7 @@ const TSLoaderRule = {
 };
 const BabelLoaderRule = {
   test: /\.(js|ts|tsx)$/,
-  include: [
-    fs.realpathSync('./src'),
-    fs.realpathSync('./node_modules/preact'),
-    fs.realpathSync('./node_modules/preact-router'),
-  ],
+  include: [fs.realpathSync('./src'), fs.realpathSync('./node_modules/preact')],
   use: {
     loader: 'babel-loader',
     options: {

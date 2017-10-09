@@ -2,7 +2,7 @@ import {h, render} from 'preact';
 import 'utils/memory';
 import {storeList} from 'api/list';
 
-import {Router} from 'preact-router';
+import Router from 'components/Router';
 import RoutedView from './core/routedView';
 import List from 'routes/List';
 import {LIST_TYPES} from 'utils/constants';
