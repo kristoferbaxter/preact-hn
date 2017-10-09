@@ -16,12 +16,18 @@ module.exports = {
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
+      CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule()
     ]
+  },
+  resolve: {
+    extensions: CommonOptions.ResolveExtensions,
+    alias: CommonOptions.ResolveAliases
   },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      DO_NOT_TRACK: 'navigator.doNotTrack || navigator.msDoNotTrack || window.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: true,
       POLYFILL_OBJECT_VALUES: true,
       POLYFILL_PROMISES: true,
