@@ -13,6 +13,8 @@ function setUrl(url: string, type: HistoryChange = HistoryChange.push): void {
   }
 }
 
+const currentUrl = () => `${location.pathname}${location.search}`;
+
 function routeFromLink(node: HTMLElement, method: (url) => void): void {
   // only valid elements
   if (!node || !node.getAttribute) return;
@@ -45,7 +47,7 @@ export default class Router extends Component<Props, State> {
     super(props);
 
     this.state = {
-      url: props.url || `${location.pathname}${location.search}`,
+      url: props.url || currentUrl(),
     };
   }
 
@@ -53,9 +55,11 @@ export default class Router extends Component<Props, State> {
     return props.url !== this.props.url || state.url !== this.state.url;
   }
   componentDidMount() {
+    addEventListener('popstate', this.popStateHandler);
     addEventListener('click', this.handleLinkClick);
   }
   componentWillUnmount() {
+    removeEventListener('popstate', this.popStateHandler);
     removeEventListener('click', this.handleLinkClick);
   }
 
@@ -73,6 +77,8 @@ export default class Router extends Component<Props, State> {
 
     return active[0] || null;
   }
+
+  private popStateHandler = (): boolean => this.routeTo(currentUrl());
 
   private getMatchingChildren = (children: JSX.Element[], url: string, invoke: boolean): (JSX.Element | false)[] => {
     return children
@@ -115,8 +121,4 @@ export default class Router extends Component<Props, State> {
       }
     } while ((target = (target as HTMLElement).parentNode));
   };
-}
-
-export function Link(props: object): JSX.Element {
-  return h('a', Object.assign({onClick: handleLinkClick}, props));
 }
