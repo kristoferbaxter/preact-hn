@@ -1,19 +1,18 @@
-import {cloneElement, h, Component} from 'preact';
+import {cloneElement, Component} from 'preact';
 import {exec, pathRankSort} from './utils';
-
-const isPreactElement = node => node.__preactattr_ != null;
 
 const enum HistoryChange {
   push = 'pushState',
   replace = 'replaceState',
 }
-function setUrl(url: string, type: HistoryChange = HistoryChange.push): void {
-  if (typeof history !== 'undefined' && history[type]) {
-    history[type](null, null, url);
-  }
-}
 
-const currentUrl = () => `${location.pathname}${location.search}`;
+const isPreactElement = (node): boolean => node.__preactattr_ != null;
+const currentUrl = (): string => `${location.pathname}${location.search}`;
+const prevent = (event: MouseEvent): void => {
+  event.stopImmediatePropagation();
+  event.stopPropagation();
+  event.preventDefault();
+};
 
 function routeFromLink(node: HTMLElement, method: (url) => void): void {
   // only valid elements
@@ -24,15 +23,6 @@ function routeFromLink(node: HTMLElement, method: (url) => void): void {
 
   // attempt to route.
   return method(href);
-}
-
-function prevent(event: MouseEvent): boolean {
-  if (event) {
-    event.stopImmediatePropagation();
-    event.stopPropagation();
-    event.preventDefault();
-  }
-  return false;
 }
 
 interface Props {
@@ -63,8 +53,10 @@ export default class Router extends Component<Props, State> {
     removeEventListener('click', this.handleLinkClick);
   }
 
-  public routeTo = (url: string): boolean => {
-    setUrl(url);
+  public routeTo = (url: string, modifyHistory: boolean = true): boolean => {
+    if (modifyHistory && history) {
+      history[HistoryChange.push](null, null, url);
+    }
     this.setState({
       url,
     });
@@ -78,7 +70,7 @@ export default class Router extends Component<Props, State> {
     return active[0] || null;
   }
 
-  private popStateHandler = (): boolean => this.routeTo(currentUrl());
+  private popStateHandler = (): boolean => this.routeTo(currentUrl(), false);
 
   private getMatchingChildren = (children: JSX.Element[], url: string, invoke: boolean): (JSX.Element | false)[] => {
     return children
