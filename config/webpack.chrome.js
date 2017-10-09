@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 //const OfflinePlugin = require('offline-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
@@ -20,15 +19,18 @@ module.exports = {
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
+      CommonOptions.TSLoaderRule,
       CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
     ]
   },
   resolve: {
+    extensions: CommonOptions.ResolveExtensions,
     alias: CommonOptions.ResolveAliases
   },
   plugins: [
     CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
+      DO_NOT_TRACK: 'navigator.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
       POLYFILL_OBJECT_VALUES: false,
       POLYFILL_PROMISES: false,

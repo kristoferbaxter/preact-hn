@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/ts-out",
+    "sourceMap": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "baseUrl": ".",
+    "paths": {
+      "components/*": [
+        "src/components/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "api/*": [
+        "src/api/*"
+      ],
+      "routes/*": [
+        "src/routes/*"
+      ]
+    },
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true
+  }
+}

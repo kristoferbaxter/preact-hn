@@ -1,11 +1,16 @@
 import {h, Component} from 'preact';
 import objstr from 'obj-str';
 
-import Logo from '../icons/logo.js';
+import Logo from 'components/Logo';
 
-import styles from './header.css';
+import styles from './styles.css';
 
-function Item({href, text, url}) {
+interface ItemProps {
+  href: string;
+  text: string;
+  url: string;
+}
+function Item({href, text, url}: ItemProps): JSX.Element {
   const hrefRegex = href === '/' ? /(\/$|\/top)/ : new RegExp(href);
 
   return (
@@ -23,7 +28,14 @@ function Item({href, text, url}) {
   );
 }
 
-export default class extends Component {
+interface Props {
+  listType: string;
+  url: string;
+}
+interface State {
+  online: boolean;
+}
+export default class extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -37,29 +49,22 @@ export default class extends Component {
         online: true,
       };
     }
-
-    this.handleNetworkChange = this.handleNetworkChange.bind(this);
   }
 
-  shouldComponentUpdate({listType}, {online}) {
+  shouldComponentUpdate({listType}, {online}): boolean {
     return listType !== this.props.listType || online !== this.state.online;
   }
 
-  handleNetworkChange() {
-    this.setState({
-      online: navigator.onLine,
-    });
-  }
-  componentDidMount() {
+  componentDidMount(): void {
     window.addEventListener('online', this.handleNetworkChange);
     window.addEventListener('offline', this.handleNetworkChange);
   }
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     window.removeEventListener('online', this.handleNetworkChange);
     window.removeEventListener('offline', this.handleNetworkChange);
   }
 
-  render({url}, {online}) {
+  render({url}: Props, {online}: State): JSX.Element {
     return (
       <nav
         class={objstr({
@@ -69,7 +74,7 @@ export default class extends Component {
       >
         <ol class={styles.links}>
           <li class={styles.logo}>
-            <a href="/" aria-label="Home" url={url}>
+            <a href="/" aria-label="Home">
               <Logo />
             </a>
           </li>
@@ -83,4 +88,10 @@ export default class extends Component {
       </nav>
     );
   }
+
+  private handleNetworkChange = (): void => {
+    this.setState({
+      online: navigator.onLine,
+    });
+  };
 }

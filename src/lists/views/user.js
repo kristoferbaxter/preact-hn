@@ -1,9 +1,0 @@
-import {h} from 'preact';
-
-export default _ => {
-  return (
-    <div>UserHome</div>
-  );
-}
-
-//https://hacker-news.firebaseio.com/v0/user/jl.json?print=pretty
