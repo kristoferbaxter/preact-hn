@@ -1,10 +1,11 @@
 module.exports = function(context) {
   const env = context.cache(() => process.env.BABEL_ENV);
   const isServer = env === 'server';
+  const transformAsyncAwait = env === 'fallback' || isServer;
 
-  let targets = {
+  const targets = {
     chrome: {chrome: 59},
-    edge: {edge: 14},
+    edge: {edge: 15},
     safari: {safari: 11},
     firefox: {firefox: 55},
     server: {node: 6},
@@ -12,6 +13,11 @@ module.exports = function(context) {
       browsers: ['last 2 versions', 'ie >= 11', 'safari >= 7'],
     },
   };
+
+  const dynamicImportPlugin = ['syntax-dynamic-import'];
+  const blockScopingPlugin = ['transform-es2015-block-scoping', {throwIfClosureRequired: true}];
+  const transformJSXPlugin = ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
+  const fastAsyncPlugin = ['fast-async', {spec: true}];
 
   return {
     presets: [
@@ -21,25 +27,13 @@ module.exports = function(context) {
           targets: targets[env],
           modules: isServer ? 'commonjs' : false,
           loose: !isServer,
+          exclude: ['transform-regenerator'],
           // debug: true,
         },
       ],
     ],
-    plugins: [
-      ['syntax-dynamic-import'],
-      [
-        'transform-es2015-block-scoping',
-        {
-          throwIfClosureRequired: true,
-        },
-      ],
-      [
-        'transform-react-jsx',
-        {
-          pragma: 'h',
-          useBuiltIns: true,
-        },
-      ],
-    ],
+    plugins: transformAsyncAwait
+      ? [fastAsyncPlugin, dynamicImportPlugin, blockScopingPlugin, transformJSXPlugin]
+      : [dynamicImportPlugin, blockScopingPlugin, transformJSXPlugin],
   };
 };
