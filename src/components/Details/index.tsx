@@ -1,4 +1,5 @@
 import {h} from 'preact';
+import {FeedItem, Details} from '@kristoferbaxter/hn-api';
 
 import Loading from 'components/Loading';
 import Comment from 'components/Comment';
@@ -7,35 +8,38 @@ import Text from 'components/Text';
 import styles from './styles.css';
 
 interface Props {
-  data: any;
+  data: FeedItem | Details;
+  error: boolean;
   matches?: any;
   children?: JSX.Element[];
 }
-export default function({matches: {id}, data}: Props): JSX.Element {
+export default function({data, ...props}: Props): JSX.Element {
   if (!data || data === null) {
     return <Loading />;
   }
 
-  const thisId = parseInt(id, 10);
-  const {url, title, score, by, descendants = 0, text} = data[thisId];
   return (
     <div>
       <article class={styles.article}>
         <h1>
-          <a href={url} class={styles.outboundLink}>
-            {title}
+          <a href={data.url} class={styles.outboundLink}>
+            {data.title}
           </a>
         </h1>
-        {url && <small class={styles.hostname}>({new URL(url).hostname})</small>}
+        {data.domain && <small class={styles.hostname}>({data.domain})</small>}
         <p class={styles.byline}>
-          {score} points by{' '}
-          <a href={`/user/${by}`} class={styles.link}>
-            {by}
+          {data.points} points by{' '}
+          <a href={`/user/${data.user}`} class={styles.link}>
+            {data.user}
           </a>
         </p>
-        <Text text={text} />
+        {(data as Details).content && <Text text={(data as Details).content} />}
       </article>
-      <Comment descendants={descendants} root={thisId} />
+      <Comment
+        descendants={data.comments_count}
+        data={(data as Details).comments && (data as Details)}
+        error={props.error}
+      />
     </div>
   );
 }

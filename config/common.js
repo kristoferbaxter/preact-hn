@@ -68,6 +68,7 @@ const ResolveAliases = {
   api: path.resolve(__dirname, '../src/api'),
   utils: path.resolve(__dirname, '../src/utils'),
   routes: path.resolve(__dirname, '../src/routes'),
+  storage: path.resolve(__dirname, '../node_modules/@kristoferbaxter/hn-api/lib/storage'),
 };
 const ResolveExtensions = ['.ts', '.tsx', '.js', '.jsx'];
 
@@ -83,7 +84,11 @@ const TSLoaderRule = {
 };
 const BabelLoaderRule = {
   test: /\.(js|ts|tsx)$/,
-  include: [fs.realpathSync('./src'), fs.realpathSync('./node_modules/preact')],
+  include: [
+    fs.realpathSync('./src'),
+    fs.realpathSync('./node_modules/preact'),
+    fs.realpathSync('./node_modules/@kristoferbaxter/hn-api/lib'),
+  ],
   use: {
     loader: 'babel-loader',
     options: {

@@ -20,6 +20,9 @@
       ],
       "routes/*": [
         "src/routes/*"
+      ],
+      "storage/*": [
+        "src/server/storage/*"
       ]
     },
     "allowJs": true,

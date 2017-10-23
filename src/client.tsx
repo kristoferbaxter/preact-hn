@@ -5,7 +5,6 @@ import {storeList} from 'api/list';
 import Router from 'components/Router';
 import RoutedView from './core/routedView';
 import List from 'routes/List';
-import {LIST_TYPES} from 'utils/constants';
 
 import './reset.css';
 
@@ -34,11 +33,11 @@ if (POLYFILL_URL) {
 const mountEl = document.getElementById('mount');
 render(
   <Router>
-    <RoutedView path="/top/:page" default listType={LIST_TYPES.top} child={List} delay={0} />
-    <RoutedView path="/new/:page" listType={LIST_TYPES.new} child={List} delay={0} />
-    <RoutedView path="/show/:page" listType={LIST_TYPES.show} child={List} delay={0} />
-    <RoutedView path="/ask/:page" listType={LIST_TYPES.ask} child={List} delay={0} />
-    <RoutedView path="/jobs/:page" listType={LIST_TYPES.jobs} child={List} delay={0} />
+    <RoutedView path="/top/:page" default type="top" child={List} delay={0} />
+    <RoutedView path="/new/:page" type="new" child={List} delay={0} />
+    <RoutedView path="/show/:page" type="show" child={List} delay={0} />
+    <RoutedView path="/ask/:page" type="ask" child={List} delay={0} />
+    <RoutedView path="/jobs/:page" type="job" child={List} delay={0} />
     <RoutedView path="/about" load={require('bundle-loader?lazy&name=AboutHome!./routes/About')} />
     <RoutedView path="/item/:id" load={require('bundle-loader?lazy&name=ItemHome!./routes/Item')} />
     <RoutedView path="/user/:id" load={require('bundle-loader?lazy&name=UserHome!./routes/User')} />
@@ -48,5 +47,5 @@ render(
 );
 
 if (ALLOW_OFFLINE) {
-  navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js');
+  navigator.serviceWorker.register('/service-worker.js');
 }

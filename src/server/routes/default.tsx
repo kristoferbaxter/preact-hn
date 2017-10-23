@@ -1,6 +1,6 @@
 // UI Imports
 import {h} from 'preact';
-import render from 'preact-render-to-string';
+import {render} from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView';
 
@@ -30,12 +30,13 @@ export default function defaultRoute(req, res, next) {
         : ''}
       ${supportsManifest ? '<link rel="manifest" href="/dist/chrome/manifest.json" />' : ''}
       <link rel="icon" href="/static/icons/favicon.png">
+      <script>window.seed={"uuid": localStorage.getItem('uuid')}</script>
       <script src='${resources.js}' defer></script>
     </head>
     <body>
       <div id="mount">`);
 
-  const RoutedViewComponent = render(<RoutedView url={req.url} delay={0} />);
+  const RoutedViewComponent: string = render(<RoutedView url={req.url} delay={0} />);
 
   res.write(`
         ${RoutedViewComponent}

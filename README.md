@@ -32,9 +32,8 @@ Made with _kindness_ in California. 🏄
 I've focused mostly on first initial load performance, with the small caveat of using Webpack instead of Rollup. I'd like the route based code splitting to provide a extensible model for keeping initial view rendering costs low.
 
 In the future there are plenty of things to do:
-1. Move away from needlessly spamming the Firebase API (see src/restify/storage/*) and instead leverage the firebase client in the node server.
-2. Write a Webpack plugin to allow for split css files based on packages.
-3. Internationalization/Localization, including RTL layout.
-4. Support AppCache (even though it's kind of a jerk)
-5. Allow for posting comments!
-6. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!
+1. Write a Webpack plugin to allow for split css files based on packages.
+2. Internationalization/Localization, including RTL layout.
+3. Support AppCache (even though it's kind of a jerk)
+4. Allow for posting comments!
+5. FIX LOTS OF BUGS! ZOMG SO MANY BUGS!

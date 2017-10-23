@@ -3,29 +3,23 @@ import WithData from 'components/WithData';
 import List from 'components/List';
 
 import {getList} from 'api/list';
-import {ListRetrieve, PagedList, uuid} from 'api/api-types';
-import {LIST_TYPES} from 'utils/constants';
+import {RetrieveList} from 'api/types';
+import {LIST_TYPES, List as ListType, ListPage, UUID} from '@kristoferbaxter/hn-api';
 
 interface Props {
   matches: any;
-  listType: LIST_TYPES;
+  type: LIST_TYPES;
 }
 interface State {
-  uuid: uuid;
+  uuid: UUID;
 }
 export default class extends Component<Props, State> {
-  componentWillReceiveProps() {
-    this.handleUUIDChange(null);
-  }
-
-  render({matches, listType}: Props, {uuid = {}}: State): JSX.Element {
-    const values: ListRetrieve = Object.assign(
-      {
-        page: parseInt(matches.page || 1, 10),
-        listType,
-      },
+  render({matches, type}: Props, {uuid}: State): JSX.Element {
+    const values: RetrieveList = {
+      page: parseInt(matches.page || 1, 10),
+      type,
       uuid,
-    );
+    };
 
     return (
       <WithData
@@ -37,10 +31,10 @@ export default class extends Component<Props, State> {
     );
   }
 
-  private ListViewWithData = (data: PagedList): JSX.Element => {
+  private ListViewWithData = (data: ListType & ListPage): JSX.Element => {
     return <List data={data} />;
   };
-  private handleUUIDChange = (uuid: uuid): void => {
+  private handleUUIDChange = (uuid: UUID): void => {
     this.state.uuid = uuid;
   };
 }

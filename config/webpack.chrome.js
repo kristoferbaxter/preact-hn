@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-//const OfflinePlugin = require('offline-plugin');
 const CommonOptions = require('./common.js');
 
 const BROWSER_NAME = 'chrome';
@@ -13,19 +12,19 @@ module.exports = {
     filename: 'bundle.[name].[chunkhash].js',
     path: path.resolve(__dirname, '..', 'dist', BROWSER_NAME),
     publicPath: `/dist/${BROWSER_NAME}/`,
-    chunkFilename: 'bundle.[name].[chunkhash].js'
+    chunkFilename: 'bundle.[name].[chunkhash].js',
   },
   stats: CommonOptions.WebpackStats,
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
       CommonOptions.TSLoaderRule,
-      CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
-    ]
+      CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`),
+    ],
   },
   resolve: {
     extensions: CommonOptions.ResolveExtensions,
-    alias: CommonOptions.ResolveAliases
+    alias: CommonOptions.ResolveAliases,
   },
   plugins: [
     CommonOptions.CleanupPlugin,
@@ -39,11 +38,9 @@ module.exports = {
       ALLOW_OFFLINE: true,
       IS_CLIENT: true,
     }),
-    new CopyWebpackPlugin([
-      {from: 'src/core/manifest.json'}
-    ], {copyUnmodified: true}),
+    new CopyWebpackPlugin([{from: 'src/core/manifest.json'}], {copyUnmodified: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.OptimizeJS
-  ]
+    CommonOptions.OptimizeJS,
+  ],
 };
