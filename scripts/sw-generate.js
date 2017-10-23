@@ -51,6 +51,7 @@ const staticReplacement = {
 };
 
 try {
+  console.log(`[SW] Generating, NODE_ENV: ${process.env.NODE_ENV}`);
   execSync(`cp ${departure} ${destination}`);
   replace.sync(versionReplacement);
   replace.sync(prefetchReplacement);
@@ -59,7 +60,7 @@ try {
   replace.sync(networkFirstReplacement);
   replace.sync(cacheFirstReplacement);
   replace.sync(staticReplacement);
-  console.log(`Service Worker Generated at ${destination}`);
+  console.log(`[SW] Generated at ${destination}`);
 } catch (error) {
   console.error('Error Generating Service Worker', error);
 }
