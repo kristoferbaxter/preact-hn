@@ -1,7 +1,6 @@
 module.exports = function(context) {
   const env = context.cache(() => process.env.BABEL_ENV);
   const isServer = env === 'server';
-  const transformAsyncAwait = env === 'fallback' || isServer;
 
   const targets = {
     chrome: {chrome: 59},
@@ -17,8 +16,16 @@ module.exports = function(context) {
   const dynamicImport = ['syntax-dynamic-import'];
   const classProperties = ['transform-class-properties']; // Unused since TypeScript handles this for now.
   const blockScoping = ['transform-es2015-block-scoping', {throwIfClosureRequired: true}];
+  const destructuring = ['transform-es2015-destructuring'];
   const transformJSX = ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
   const fastAsync = ['fast-async', {spec: true}];
+
+  let plugins = [dynamicImport, blockScoping, transformJSX];
+  if (env === 'safari') {
+    plugins = [dynamicImport, destructuring, blockScoping, transformJSX];
+  } else if (env === 'fallback' || isServer) {
+    plugins = [fastAsync, destructuring, dynamicImport, blockScoping, transformJSX];
+  }
 
   return {
     presets: [
@@ -39,8 +46,6 @@ module.exports = function(context) {
         ),
       ],
     ],
-    plugins: transformAsyncAwait
-      ? [fastAsync, dynamicImport, blockScoping, transformJSX]
-      : [dynamicImport, blockScoping, transformJSX],
+    plugins,
   };
 };
