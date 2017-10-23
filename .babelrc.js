@@ -14,10 +14,11 @@ module.exports = function(context) {
     },
   };
 
-  const dynamicImportPlugin = ['syntax-dynamic-import'];
-  const blockScopingPlugin = ['transform-es2015-block-scoping', {throwIfClosureRequired: true}];
-  const transformJSXPlugin = ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
-  const fastAsyncPlugin = ['fast-async', {spec: true}];
+  const dynamicImport = ['syntax-dynamic-import'];
+  const classProperties = ['transform-class-properties']; // Unused since TypeScript handles this for now.
+  const blockScoping = ['transform-es2015-block-scoping', {throwIfClosureRequired: true}];
+  const transformJSX = ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
+  const fastAsync = ['fast-async', {spec: true}];
 
   return {
     presets: [
@@ -39,7 +40,7 @@ module.exports = function(context) {
       ],
     ],
     plugins: transformAsyncAwait
-      ? [fastAsyncPlugin, dynamicImportPlugin, blockScopingPlugin, transformJSXPlugin]
-      : [dynamicImportPlugin, blockScopingPlugin, transformJSXPlugin],
+      ? [fastAsync, dynamicImport, blockScoping, transformJSX]
+      : [dynamicImport, blockScoping, transformJSX],
   };
 };

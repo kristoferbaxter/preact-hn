@@ -8,6 +8,6 @@ export function MemoryStore(items: object): void {
 }
 
 //For debugging the Memory Store.
-//if (typeof window !== 'undefined') {
-//  window.peek = ENTITIES;
-//}
+// if (typeof window !== 'undefined') {
+//   (window as any).peek = ENTITIES;
+// }

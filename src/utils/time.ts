@@ -1,5 +1,5 @@
 const nearest = (count: number, units: string): string => {
-  return (count = ~~count), 1 !== count && (units += 's'), count + ' ' + units;
+  return `${Math.floor(count)} ${units}${count > 1 ? 's' : ''} ago`;
 };
 
 export default (time: number): string => {

@@ -1,15 +1,14 @@
 // UI Imports
 import {h} from 'preact';
-import render from 'preact-render-to-string';
+import {render} from 'preact-render-to-string';
 // UI Components
 import RoutedView from '../../core/routedView';
 import Loading from 'components/Loading';
 import List from 'components/List';
 
-import {serverRoute} from './api/list';
-import {LIST_TYPES} from 'utils/constants';
+import {serverRoute} from '@kristoferbaxter/hn-api/lib/routes/list';
 
-export default function defaultRoute(req, res, next) {
+export default async function defaultRoute(req, res, next): Promise<void> {
   const supportsManifest = req.userAgentClassifiction === 'chrome';
   const resources = req.resources;
 
@@ -33,10 +32,9 @@ export default function defaultRoute(req, res, next) {
   });
 
   let data = {};
-
-  const listType = req.params.type ? LIST_TYPES[req.params.type] : req.url === '/' ? LIST_TYPES['top'] : null;
+  const listType = (req.url === '/' && 'top') || req.params.type || null;
   if (listType) {
-    data = serverRoute(req, {type: listType});
+    data = await serverRoute(req, {type: listType});
   }
 
   res.write(`<!DOCTYPE html>
@@ -56,7 +54,7 @@ export default function defaultRoute(req, res, next) {
     </head>
     <body>`);
 
-  const RoutedViewComponent = render(
+  const RoutedViewComponent: string = render(
     <RoutedView url={req.url} delay={0} child={listType ? List : Loading} data={data} />,
   );
 

@@ -34,10 +34,10 @@ export default class extends Component<Props, State> {
   }
 
   componentDidMount() {
-    window.addEventListener('online', this.handleNetworkChange);
+    addEventListener('online', this.handleNetworkChange);
   }
   componentWillUnmount() {
-    window.removeEventListener('online', this.handleNetworkChange);
+    removeEventListener('online', this.handleNetworkChange);
   }
 
   render({render: propRender}: Props, {data, error}: State): JSX.Element {

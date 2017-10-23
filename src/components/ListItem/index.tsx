@@ -1,12 +1,17 @@
 import {h} from 'preact';
 import formatTime from 'utils/time';
+import {FeedItem} from '@kristoferbaxter/hn-api';
 
 import styles from './styles.css';
 
-export default function({index, entity}): JSX.Element {
+interface Props {
+  index: number;
+  entity: FeedItem;
+}
+export default function({index, entity}: Props): JSX.Element {
   if (!entity) return null;
 
-  const {url, title, score, by, time, descendants, id} = entity;
+  const {url, title, points, user, time, comments_count, id} = entity;
   return (
     <article class={styles.article}>
       <span class={styles.index}>{index}</span>
@@ -17,13 +22,13 @@ export default function({index, entity}): JSX.Element {
           </a>
         </h2>
         <p>
-          {score} points by{' '}
-          <a href={`/user/${by}`} class={styles.link}>
-            {by}
+          {points} points by{' '}
+          <a href={`/user/${user}`} class={styles.link}>
+            {user}
           </a>{' '}
-          {formatTime(time)} ago
+          {formatTime(time)}
           <a href={`/item/${id}`} class={styles.commentCount}>
-            {descendants > 1 ? `${descendants} comments` : 'discuss'}
+            {comments_count === 0 ? 'discuss' : `${comments_count} comment${comments_count > 1 ? 's' : ''}`}
           </a>
         </p>
       </div>

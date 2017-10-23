@@ -29,7 +29,7 @@ function Item({href, text, url}: ItemProps): JSX.Element {
 }
 
 interface Props {
-  listType: string;
+  type: string;
   url: string;
 }
 interface State {
@@ -51,17 +51,17 @@ export default class extends Component<Props, State> {
     }
   }
 
-  shouldComponentUpdate({listType}, {online}): boolean {
-    return listType !== this.props.listType || online !== this.state.online;
+  shouldComponentUpdate({type}, {online}): boolean {
+    return type !== this.props.type || online !== this.state.online;
   }
 
   componentDidMount(): void {
-    window.addEventListener('online', this.handleNetworkChange);
-    window.addEventListener('offline', this.handleNetworkChange);
+    addEventListener('online', this.handleNetworkChange);
+    addEventListener('offline', this.handleNetworkChange);
   }
   componentWillUnmount(): void {
-    window.removeEventListener('online', this.handleNetworkChange);
-    window.removeEventListener('offline', this.handleNetworkChange);
+    removeEventListener('online', this.handleNetworkChange);
+    removeEventListener('offline', this.handleNetworkChange);
   }
 
   render({url}: Props, {online}: State): JSX.Element {
