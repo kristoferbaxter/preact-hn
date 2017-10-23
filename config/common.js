@@ -83,7 +83,7 @@ const TSLoaderRule = {
 };
 const BabelLoaderRule = {
   test: /\.(js|ts|tsx)$/,
-  include: [fs.realpathSync('./src'), fs.realpathSync('./node_modules/preact')],
+  include: [fs.realpathSync('./src')],
   use: {
     loader: 'babel-loader',
     options: {

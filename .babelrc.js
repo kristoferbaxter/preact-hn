@@ -23,13 +23,19 @@ module.exports = function(context) {
     presets: [
       [
         'env',
-        {
-          targets: targets[env],
-          modules: isServer ? 'commonjs' : false,
-          loose: !isServer,
-          exclude: ['transform-regenerator'],
-          // debug: true,
-        },
+        Object.assign(
+          {
+            targets: targets[env],
+            modules: isServer ? 'commonjs' : false,
+            loose: !isServer,
+            // debug: true,
+          },
+          isServer
+            ? {}
+            : {
+                exclude: ['transform-regenerator'],
+              },
+        ),
       ],
     ],
     plugins: transformAsyncAwait
