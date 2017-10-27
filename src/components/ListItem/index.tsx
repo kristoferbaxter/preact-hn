@@ -22,11 +22,14 @@ export default function({index, entity}: Props): JSX.Element {
           </a>
         </h2>
         <p>
-          {points} points by{' '}
-          <a href={`/user/${user}`} class={styles.link}>
-            {user}
-          </a>{' '}
-          {formatTime(time)}
+          {points ? `${points} points` : null}
+          {user ? ' by ' : null}
+          {user ? (
+            <a href={`/user/${user}`} class={styles.link}>
+              {user}
+            </a>
+          ) : null}
+          {` ${formatTime(time)}`}
           <a href={`/item/${id}`} class={styles.commentCount}>
             {comments_count === 0 ? 'discuss' : `${comments_count} comment${comments_count > 1 ? 's' : ''}`}
           </a>
