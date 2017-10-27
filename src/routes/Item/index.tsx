@@ -1,14 +1,14 @@
 import {h, Component} from 'preact';
 import WithData from 'components/WithData';
 import Details from 'components/Details';
-import getDetails from 'api/details';
+import {memory, network} from 'api/details';
 
 interface Props {
   matches: any;
 }
 export default class extends Component<Props, null> {
   render({matches}) {
-    return <WithData source={getDetails} values={{root: matches.id}} render={this.ItemViewWithData} />;
+    return <WithData memory={memory} network={network} values={{root: matches.id}} render={this.ItemViewWithData} />;
   }
 
   private ItemViewWithData = (data, error) => {

@@ -1,40 +1,34 @@
 import {Component} from 'preact';
+import {ListCallback, CommentsCallback} from 'api/types';
 
-interface APICallbacks {
-  partial: (data: any) => void;
-  complete: (data: any) => void;
-  error: (error: any) => void;
-}
 interface Props {
-  source: (values: any, callbacks: APICallbacks) => void;
+  memory: (values: object) => ListCallback | CommentsCallback;
+  network: (values: object) => Promise<ListCallback | CommentsCallback>;
   values: any;
   handleUUIDChange?: (newUuid: string) => void;
   render: (data: any, error: boolean) => JSX.Element;
 }
 interface State {
   data: any;
+  complete: boolean;
   error: boolean;
 }
+
 export default class extends Component<Props, State> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      data: null,
-      error: false,
-    };
+    this.state = props.memory(props.values);
   }
 
-  componentWillMount() {
-    this.retrieve(this.props.values);
-  }
-  componentWillReceiveProps({values}) {
-    this.state.data = null;
+  componentWillReceiveProps({values, memory}) {
+    this.state = memory(values);
     this.retrieve(values);
   }
 
   componentDidMount() {
     addEventListener('online', this.handleNetworkChange);
+    this.retrieve(this.props.values);
   }
   componentWillUnmount() {
     removeEventListener('online', this.handleNetworkChange);
@@ -44,36 +38,23 @@ export default class extends Component<Props, State> {
     return propRender(data, error);
   }
 
-  private handlePartialData = (partialData): void => {
-    this.setState({
-      data: partialData,
-    });
-  };
-  private handleCompleteData = (completeData): void => {
-    if (this.props.values.uuid !== completeData.uuid) {
-      this.props.handleUUIDChange(completeData.uuid);
-    }
-    this.setState({
-      data: completeData,
-    });
-  };
-  private handleErrorData = (error): void => {
-    this.setState({
-      error: true,
-    });
-  };
-
   private handleNetworkChange = (): void => {
     if (this.state.error && navigator.onLine) {
-      this.state.error = false;
+      this.state = Object.assign(this.state, {error: false, complete: false});
       this.retrieve(this.props.values);
     }
   };
-  private retrieve = (values): void => {
-    this.props.source(values, {
-      partial: this.handlePartialData,
-      complete: this.handleCompleteData,
-      error: this.handleErrorData,
-    });
+  private retrieve = async function(values): Promise<void> {
+    if (!this.state.complete) {
+      const {data = null, error, complete} = await this.props.network(values);
+
+      if (JSON.stringify(values) === JSON.stringify(this.props.values)) {
+        this.setState({
+          data: data || this.state.data,
+          error,
+          complete,
+        });
+      }
+    }
   };
 }

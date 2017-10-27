@@ -3,7 +3,7 @@
 import {MemoryRetrieve, MemoryStore} from 'utils/memory';
 import {listRange} from '@kristoferbaxter/hn-api/lib/utilities';
 import {UUID, ListRange, List, ListPage, NumberToFeedItemId, NumberToFeedItem, FeedItem} from '@kristoferbaxter/hn-api';
-import {RetrieveList, ListCallbacks} from './types';
+import {RetrieveList, ListCallback} from './types';
 
 let LATEST_UUID: UUID;
 
@@ -67,15 +67,12 @@ export function setLatestUUID(uuid): void {
   }
 }
 
-export async function getList(
-  {type, page = 1, uuid = LATEST_UUID}: RetrieveList,
-  callbacks: ListCallbacks,
-): Promise<void> {
-  const list: List = (uuid && (MemoryRetrieve(`${uuid} ${type}`) as List)) || null;
+export function memory(values: RetrieveList): ListCallback {
+  const {page = 1, uuid = LATEST_UUID} = values;
   const {from, to}: ListRange = listRange(page);
-  let fetchUrl: string = `/api/list/${type}?${uuid ? `uuid=${uuid}&` : ''}from=${from}&to=${to}`;
-  let cached: number = 0;
+  const list: List = (uuid && (MemoryRetrieve(`${uuid} ${values.type}`) as List)) || null;
 
+  let cached: number = 0;
   if (list !== null) {
     // Create a copy of the data for the range we have in-memory.
     // This allows the UI to have at least a partial response.
@@ -92,30 +89,48 @@ export async function getList(
         cached++;
       }
     }
-    const storedResponse: List & ListPage = {
-      uuid,
-      items,
-      type: list.type,
-      page: Number(page),
-      max: Number(list.max),
-      $entities,
-    };
 
-    if (cached >= to - from) {
-      // If the filtered items (only ones within the range of from->to)
-      // has a length equal to the length between from and to...
-      // then all the items are present in the cachedKeys.
-      callbacks.complete(storedResponse);
-      return;
-    }
-    // Give the UI the partial response before we fetch the remainder.
-    callbacks.partial(storedResponse);
+    return {
+      values,
+      complete: cached >= to - from,
+      error: false,
+      data: {
+        uuid,
+        items,
+        type: list.type,
+        page: Number(page),
+        max: Number(list.max),
+        $entities,
+      },
+    };
   }
 
+  return {
+    values,
+    complete: false,
+    error: false,
+  };
+}
+
+export async function network(values: RetrieveList): Promise<ListCallback> {
   try {
-    const json: List = await (await fetch(fetchUrl)).json();
-    callbacks.complete(deriveResponse({to, from, page}, json));
+    const {page = 1, uuid = LATEST_UUID} = values;
+    const {from, to}: ListRange = listRange(page);
+
+    const json: List = await (await fetch(
+      `/api/list/${values.type}?${uuid ? `uuid=${uuid}&` : ''}from=${from}&to=${to}`,
+    )).json();
+    return {
+      values,
+      data: deriveResponse({to, from, page}, json),
+      error: false,
+      complete: true,
+    };
   } catch (error) {
-    callbacks.error(error);
+    return {
+      values,
+      error: true,
+      complete: true,
+    };
   }
 }
