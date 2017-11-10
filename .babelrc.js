@@ -13,11 +13,11 @@ module.exports = function(context) {
     },
   };
 
-  const dynamicImport = ['syntax-dynamic-import'];
-  const classProperties = ['transform-class-properties']; // Unused since TypeScript handles this for now.
-  const blockScoping = ['transform-es2015-block-scoping', {throwIfClosureRequired: true}];
-  const destructuring = ['transform-es2015-destructuring'];
-  const transformJSX = ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
+  const dynamicImport = ['@babel/syntax-dynamic-import'];
+  const classProperties = ['@babel/proposal-class-properties']; // Unused since TypeScript handles this for now.
+  const blockScoping = ['@babel/transform-block-scoping', {throwIfClosureRequired: true}];
+  const destructuring = ['@babel/transform-destructuring'];
+  const transformJSX = ['@babel/transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
   const fastAsync = ['fast-async', {spec: true}];
 
   let plugins = [dynamicImport, blockScoping, transformJSX];
@@ -30,7 +30,7 @@ module.exports = function(context) {
   return {
     presets: [
       [
-        'env',
+        '@babel/env',
         Object.assign(
           {
             targets: targets[env],
