@@ -29,7 +29,7 @@ function uglifyFile(name) {
 
 function brotliFile(name) {
   const filePath = path.resolve('dist', classification, name);
-  execSync(`bro -q 11 --input ${filePath} --output ${filePath + '.br'}`);
+  execSync(`brotli -q 11 ${filePath}`);
 }
 function zopfliFile(name) {
   const filePath = path.resolve('dist', classification, name);

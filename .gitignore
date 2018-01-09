@@ -6,6 +6,9 @@ dist/firefox/*
 dist/server/*
 dist/fallback/*
 
+# ignore css definition files
+.css.d.ts
+
 # ignore node_modules and yarn lock
 node_modules/
 yarn.lock
