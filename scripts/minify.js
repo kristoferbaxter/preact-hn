@@ -14,6 +14,7 @@ const jsFiles = assets.filter(asset => asset.name.endsWith('.js'));
 const applicationJsFile = jsFiles.filter(asset => asset.name.includes('bundle.application'));
 const routeJsFiles = jsFiles.filter(asset => !asset.name.includes('bundle.application'));
 const writeFileAsync = util.promisify(fs.writeFile);
+const readFileAsync = util.promisify(fs.readFile);
 
 let nameCache = {};
 let defaultOptions = {
@@ -33,7 +34,7 @@ function uglifyFile(name) {
 async function brotliFile(name) {
   try {
     const filePath = path.resolve('dist', classification, name);
-    const fileContent = fs.readFileSync(filePath);
+    const fileContent = await readFileAsync(filePath);
     const compressedFileContent = await brotli.compress(fileContent);
     await writeFileAsync(`${filePath}.br`, compressedFileContent);
   } catch (error) {
@@ -43,7 +44,7 @@ async function brotliFile(name) {
 async function zopfliFile(name) {
   try {
     const filePath = path.resolve('dist', classification, name);
-    const fileContent = fs.readFileSync(filePath);
+    const fileContent = await readFileAsync(filePath);
     const compressedFileContent = await zopfli.gzip(fileContent);
     await writeFileAsync(`${filePath}.gzip`, compressedFileContent);
   } catch (error) {
@@ -51,24 +52,24 @@ async function zopfliFile(name) {
   }
 }
 
-function optimizeFileDelivery(name) {
+async function optimizeFileDelivery(name) {
   uglifyFile(name);
   switch (classification) {
     case 'chrome':
     case 'firefox':
-      brotliFile(name);
+      await brotliFile(name);
       break;
     case 'safari':
-      // brotliFile(name); disabled until brotli resource paths are unique.
-      zopfliFile(name);
+      // await brotliFile(name); disabled until brotli resource paths are unique.
+      await zopfliFile(name);
       break;
     default:
-      zopfliFile(name);
+      await zopfliFile(name);
       break;
   }
 }
 
-(function() {
+(async function() {
   if (!interpretServiceWorker) {
     optimizeFileDelivery(applicationJsFile[0].name);
 
