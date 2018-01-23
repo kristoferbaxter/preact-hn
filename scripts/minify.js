@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const UglifyJS = require('uglify-es');
 const {execSync} = require('child_process');
+const {compress} = require('wasm-brotli');
+const {promisify} = require('util');
 
 // calling pattern `node uglify.js {classification} {worker}`
 // process.argv=['node', 'uglify.js', classification]
@@ -11,6 +13,7 @@ const {assets} = JSON.parse(fs.readFileSync(path.resolve('dist', classification,
 const jsFiles = assets.filter(asset => asset.name.endsWith('.js'));
 const applicationJsFile = jsFiles.filter(asset => asset.name.includes('bundle.application'));
 const routeJsFiles = jsFiles.filter(asset => !asset.name.includes('bundle.application'));
+const writeFileAsync = promisify(fs.writeFile);
 
 let nameCache = {};
 let defaultOptions = {
@@ -28,8 +31,31 @@ function uglifyFile(name) {
 }
 
 function brotliFile(name) {
+  // import { compress } from 'wasm-brotli';
+  // import { writeFile } from 'fs';
+  // import { promisify } from 'util';
+
+  // const writeFileAsync = promisify(writeFile);
+
+  // const content = Buffer.from('Hello, world!', 'utf8');
+
+  // (async () => {
+  //   try {
+  //     const compressedContent = await compress(content);
+  //     await writeFileAsync('./hello_world.txt.br', compressedContent);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // })();
+
   const filePath = path.resolve('dist', classification, name);
-  execSync(`brotli -q 11 ${filePath}`);
+  const fileContent = fs.readFileSync(filePath);
+  compress(fileContent).then(compressedFileContent => {
+    fs.writeFileSync(`${filePath}.br`, compressedFileContent, 'utf8');
+  });
+
+  // const filePath = path.resolve('dist', classification, name);
+  // execSync(`brotli -q 11 ${filePath}`);
 }
 function zopfliFile(name) {
   const filePath = path.resolve('dist', classification, name);

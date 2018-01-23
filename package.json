@@ -24,6 +24,9 @@
     "precommit": "lint-staged",
     "certs": "node scripts/dev-certs.js"
   },
+  "engines": {
+    "node" : ">=8.0.0"
+  },
   "lint-staged": {
     "*.{js,css,ts,tsx}": [
       "./node_modules/prettier/bin-prettier.js --config ./.prettierrc --write",
