@@ -25,7 +25,7 @@
     "certs": "node scripts/dev-certs.js"
   },
   "engines": {
-    "node" : ">=8.0.0"
+    "node": ">=8.0.0"
   },
   "lint-staged": {
     "*.{js,css,ts,tsx}": [
@@ -87,6 +87,8 @@
     "typings-for-css-modules-loader": "^1.7.0",
     "uglify-es": "^3.3.5",
     "url-polyfill": "^1.0.10",
+    "wasm-brotli": "^1.0.2",
+    "wasm-zopfli": "^1.0.2",
     "webpack": "^3.10.0",
     "webpack-cleanup-plugin": "^0.5.1"
   }

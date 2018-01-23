@@ -1,9 +1,9 @@
 const path = require('path');
 const fs = require('fs');
-const UglifyJS = require('uglify-es');
-const {execSync} = require('child_process');
-const {compress} = require('wasm-brotli');
-const {promisify} = require('util');
+const Uglify = require('uglify-es');
+const brotli = require('wasm-brotli');
+const zopfli = require('wasm-zopfli');
+const util = require('util');
 
 // calling pattern `node uglify.js {classification} {worker}`
 // process.argv=['node', 'uglify.js', classification]
@@ -13,7 +13,7 @@ const {assets} = JSON.parse(fs.readFileSync(path.resolve('dist', classification,
 const jsFiles = assets.filter(asset => asset.name.endsWith('.js'));
 const applicationJsFile = jsFiles.filter(asset => asset.name.includes('bundle.application'));
 const routeJsFiles = jsFiles.filter(asset => !asset.name.includes('bundle.application'));
-const writeFileAsync = promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 let nameCache = {};
 let defaultOptions = {
@@ -25,42 +25,30 @@ let defaultOptions = {
 function uglifyFile(name) {
   const filePath = path.resolve('dist', classification, name);
   const fileContent = fs.readFileSync(filePath).toString();
-  const {code: optimizedContent} = UglifyJS.minify(fileContent, Object.assign(defaultOptions, {nameCache: nameCache}));
+  const {code: optimizedContent} = Uglify.minify(fileContent, Object.assign(defaultOptions, {nameCache: nameCache}));
 
   fs.writeFileSync(filePath, optimizedContent, 'utf8');
 }
 
-function brotliFile(name) {
-  // import { compress } from 'wasm-brotli';
-  // import { writeFile } from 'fs';
-  // import { promisify } from 'util';
-
-  // const writeFileAsync = promisify(writeFile);
-
-  // const content = Buffer.from('Hello, world!', 'utf8');
-
-  // (async () => {
-  //   try {
-  //     const compressedContent = await compress(content);
-  //     await writeFileAsync('./hello_world.txt.br', compressedContent);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // })();
-
-  const filePath = path.resolve('dist', classification, name);
-  const fileContent = fs.readFileSync(filePath);
-  compress(fileContent).then(compressedFileContent => {
-    fs.writeFileSync(`${filePath}.br`, compressedFileContent, 'utf8');
-  });
-
-  // const filePath = path.resolve('dist', classification, name);
-  // execSync(`brotli -q 11 ${filePath}`);
+async function brotliFile(name) {
+  try {
+    const filePath = path.resolve('dist', classification, name);
+    const fileContent = fs.readFileSync(filePath);
+    const compressedFileContent = await brotli.compress(fileContent);
+    await writeFileAsync(`${filePath}.br`, compressedFileContent);
+  } catch (error) {
+    console.log(`Error brotli compressing ${name}.`);
+  }
 }
-function zopfliFile(name) {
-  const filePath = path.resolve('dist', classification, name);
-  execSync(`zopfli -i1000 ${filePath}`);
-  execSync(`mv ${filePath + '.gz'} ${filePath + '.gzip'}`);
+async function zopfliFile(name) {
+  try {
+    const filePath = path.resolve('dist', classification, name);
+    const fileContent = fs.readFileSync(filePath);
+    const compressedFileContent = await zopfli.gzip(fileContent);
+    await writeFileAsync(`${filePath}.gzip`, compressedFileContent);
+  } catch (error) {
+    console.log(`Error zopfli compressing ${name}.`);
+  }
 }
 
 function optimizeFileDelivery(name) {
