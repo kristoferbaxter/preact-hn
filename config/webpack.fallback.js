@@ -17,6 +17,7 @@ module.exports = {
         },
       },
     },
+    minimize: false,
   },
   entry: CommonOptions.EntryPoints,
   output: {

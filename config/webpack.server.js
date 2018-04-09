@@ -23,6 +23,7 @@ module.exports = {
         },
       },
     },
+    minimize: false,
   },
   entry: {
     server: './src/server/index',
