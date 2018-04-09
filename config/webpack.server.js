@@ -19,7 +19,6 @@ module.exports = {
           name: 'styles',
           test: /\.css$/,
           chunks: 'all',
-          enforce: true,
         },
       },
     },
