@@ -7,24 +7,37 @@ const BROWSER_NAME = 'edge';
 const BROWSER_MIN_SUPPORTED_VERSION = 14;
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
   entry: CommonOptions.EntryPoints,
   output: {
     filename: 'bundle.[name].[chunkhash].js',
     path: path.resolve(__dirname, '..', 'dist', BROWSER_NAME),
     publicPath: `/dist/${BROWSER_NAME}/`,
-    chunkFilename: 'bundle.[name].[chunkhash].js'
+    chunkFilename: 'bundle.[name].[chunkhash].js',
   },
   stats: CommonOptions.WebpackStats,
   module: {
     rules: [
       CommonOptions.BabelLoaderRule,
       CommonOptions.TSLoaderRule,
-      CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`)
-    ]
+      CommonOptions.CSSLoaderRule(`${BROWSER_NAME} ${BROWSER_MIN_SUPPORTED_VERSION}`),
+    ],
   },
   resolve: {
     extensions: CommonOptions.ResolveExtensions,
-    alias: CommonOptions.ResolveAliases
+    alias: CommonOptions.ResolveAliases,
   },
   plugins: [
     CommonOptions.CleanupPlugin,
@@ -38,7 +51,6 @@ module.exports = {
       ALLOW_OFFLINE: false,
       IS_CLIENT: true,
     }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    CommonOptions.ExtractCSSPlugin
-  ]
+    CommonOptions.ExtractCSSPlugin,
+  ],
 };

@@ -18,7 +18,7 @@ module.exports = function(context) {
   const blockScoping = ['@babel/transform-block-scoping', {throwIfClosureRequired: true}];
   const destructuring = ['@babel/transform-destructuring'];
   const transformJSX = ['@babel/transform-react-jsx', {pragma: 'h', useBuiltIns: true}];
-  const fastAsync = ['fast-async', {spec: true}];
+  const fastAsync = ['module:fast-async', {spec: true}];
 
   let plugins = [dynamicImport, blockScoping, transformJSX];
   if (env === 'safari') {

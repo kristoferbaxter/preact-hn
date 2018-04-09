@@ -11,6 +11,19 @@ fs
   .forEach(mod => (nodeModules[mod] = 'commonjs ' + mod));
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
   entry: {
     server: './src/server/index',
     background: './node_modules/@kristoferbaxter/hn-api/lib/storage/background',

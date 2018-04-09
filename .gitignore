@@ -12,6 +12,7 @@ dist/fallback/*
 # ignore node_modules and yarn lock
 node_modules/
 yarn.lock
+yarn-error.log
 
 # ignore vscode entries (best editor ever?!)
 .vscode/
