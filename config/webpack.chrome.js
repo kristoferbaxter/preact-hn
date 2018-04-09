@@ -7,6 +7,19 @@ const BROWSER_NAME = 'chrome';
 const BROWSER_MIN_SUPPORTED_VERSION = 59;
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
   entry: CommonOptions.EntryPoints,
   output: {
     filename: 'bundle.[name].[chunkhash].js',
@@ -39,8 +52,6 @@ module.exports = {
       IS_CLIENT: true,
     }),
     new CopyWebpackPlugin([{from: 'src/core/manifest.json'}], {copyUnmodified: true}),
-    new webpack.optimize.ModuleConcatenationPlugin(),
     CommonOptions.ExtractCSSPlugin,
-    CommonOptions.OptimizeJS,
   ],
 };

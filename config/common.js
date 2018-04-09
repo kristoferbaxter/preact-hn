@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const autoprefixer = require('autoprefixer');
@@ -29,9 +29,9 @@ const POSTCSS_LOADER_OPTIONS = (browsers = ['last 3 versions']) => {
 const OptimizeJS = new OptimizeJsPlugin({
   sourceMap: false,
 });
-const ExtractCSSPlugin = new ExtractTextPlugin({
+const ExtractCSSPlugin = new MiniCssExtractPlugin({
   filename: 'bundle.[name].[chunkhash].css',
-  allChunks: true, // This is not ideal. However, Extract-Text doesn't support extractng the per bundle css.
+  chunkFilename: 'bundle.[name].[chunkhash].css',
 });
 const CleanupPlugin = new WebpackCleanupPlugin({
   exclude: ['webpack.json', '.gitignore'],
@@ -100,13 +100,18 @@ const CSSLoaderRule = browsers => {
   return {
     test: /\.css$/,
     include: [fs.realpathSync('./src')],
-    use: ExtractCSSPlugin.extract({
-      fallback: 'style-loader',
-      use: [
-        {loader: 'css-loader', options: CSS_LOADER_OPTIONS},
-        {loader: 'postcss-loader', options: POSTCSS_LOADER_OPTIONS(browsers)},
-      ],
-    }),
+    use: [
+      MiniCssExtractPlugin.loader,
+      {loader: 'css-loader', options: CSS_LOADER_OPTIONS},
+      {loader: 'postcss-loader', options: POSTCSS_LOADER_OPTIONS(browsers)},
+    ],
+    // use: ExtractCSSPlugin.extract({
+    //   fallback: 'style-loader',
+    //   use: [
+    //     {loader: 'css-loader', options: CSS_LOADER_OPTIONS},
+    //     {loader: 'postcss-loader', options: POSTCSS_LOADER_OPTIONS(browsers)},
+    //   ],
+    // }),
   };
 };
 
