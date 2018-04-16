@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
-const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const autoprefixer = require('autoprefixer');
 
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -32,10 +31,6 @@ const OptimizeJS = new OptimizeJsPlugin({
 const ExtractCSSPlugin = new MiniCssExtractPlugin({
   filename: 'bundle.[name].[chunkhash].css',
   chunkFilename: 'bundle.[name].[chunkhash].css',
-});
-const CleanupPlugin = new WebpackCleanupPlugin({
-  exclude: ['webpack.json', '.gitignore'],
-  quiet: true,
 });
 
 const EntryPoints = {
@@ -127,5 +122,4 @@ module.exports = {
   OptimizeJS,
   ResolveExtensions,
   ResolveAliases,
-  CleanupPlugin,
 };

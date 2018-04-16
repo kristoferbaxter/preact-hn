@@ -6,23 +6,26 @@
   "author": "Kristofer Baxter",
   "license": "MIT",
   "scripts": {
-    "start": "yarn certs; yarn nodemon -e js,css,ts,tsx --config nodemon.config.json --exec 'yarn' start:node:dev-after-bundle",
-    "start:node": "node dist/server/restify.server.js | ./node_modules/.bin/bunyan",
-    "start:node:dev-after-bundle": "yarn bundle:dev && yarn start:node",
-    "start:h2o": "cd dist/server && h2o -c h2o.config.yaml",
-    "bundle:dev": "BUNDLE_ENV=dev yarn tcm && yarn bundle:chrome & yarn bundle:server",
-    "bundle:all": "yarn bundle:chrome & yarn bundle:safari & yarn bundle:edge & yarn bundle:firefox & yarn bundle:fallback & yarn bundle:server",
+    "preh2o": "cpr proxy dist/server --delete-first; BUNDLE_ENV=dev yarn tcm && yarn bundle:server",
+    "h2o": "cd dist/server && h2o --mode daemon --conf h2o.config.yaml",
+
+    "prestart": "cpr static dist/server --delete-first; node scripts/dev-certs.js; yarn h2o",
+    "start": "yarn nodemon -e js,css,ts,tsx --config nodemon.config.json --exec 'yarn' server",
+    "preserver": "BUNDLE_ENV=dev yarn bundle",
+    "server": "node dist/server/restify.server.js | ./node_modules/.bin/bunyan",
+        
+    "prebundle": "NODE_ENV=production yarn tcm",
+    "bundle": "NODE_ENV=production yarn bundle:chrome & yarn bundle:safari & yarn bundle:edge & yarn bundle:firefox & yarn bundle:fallback & yarn bundle:server",
     "bundle:chrome": "BABEL_ENV=chrome node_modules/.bin/webpack-cli --config config/webpack.chrome.js --json > dist/chrome/webpack.json && node scripts/minify.js chrome false && node scripts/sw-generate.js && node scripts/minify.js chrome true",
-    "bundle:safari": "BABEL_ENV=safari node_modules/.bin/webpack-cli --config config/webpack.safari.js --json > dist/safari/webpack.json; node scripts/minify.js safari",
-    "bundle:edge": "BABEL_ENV=edge node_modules/.bin/webpack-cli --config config/webpack.edge.js --json > dist/edge/webpack.json; node scripts/minify.js edge",
-    "bundle:firefox": "BABEL_ENV=firefox node_modules/.bin/webpack-cli --config config/webpack.firefox.js --json > dist/firefox/webpack.json; node scripts/minify.js firefox",
-    "bundle:fallback": "BABEL_ENV=fallback node_modules/.bin/webpack-cli --config config/webpack.fallback.js --json > dist/fallback/webpack.json; node scripts/minify.js fallback",
+    "bundle:safari": "BABEL_ENV=safari node_modules/.bin/webpack-cli --config config/webpack.safari.js --json > dist/safari/webpack.json && node scripts/minify.js safari",
+    "bundle:edge": "BABEL_ENV=edge node_modules/.bin/webpack-cli --config config/webpack.edge.js --json > dist/edge/webpack.json && node scripts/minify.js edge",
+    "bundle:firefox": "BABEL_ENV=firefox node_modules/.bin/webpack-cli --config config/webpack.firefox.js --json > dist/firefox/webpack.json && node scripts/minify.js firefox",
+    "bundle:fallback": "BABEL_ENV=fallback node_modules/.bin/webpack-cli --config config/webpack.fallback.js --json > dist/fallback/webpack.json && node scripts/minify.js fallback",
     "bundle:server": "BABEL_ENV=server node_modules/.bin/webpack-cli --config config/webpack.server.js --json > dist/server/webpack.json",
-    "bundle:prod": "NODE_ENV=production yarn tcm; NODE_ENV=production yarn bundle:all;",
-    "test:h2o": "cd dist/server && h2o -t -c h2o.config.yaml",
+
+    "test": "cd dist/server && h2o -t -c h2o.config.yaml",
     "tcm": "node_modules/typed-css-modules/lib/cli.js src/",
-    "precommit": "lint-staged",
-    "certs": "node scripts/dev-certs.js"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,css,ts,tsx}": [
@@ -62,6 +65,7 @@
     "bundle-loader": "^0.5.5",
     "chalk": "^2.3.0",
     "copy-webpack-plugin": "^4.3.1",
+    "cpr": "^3.0.1",
     "css-loader": "^0.28.8",
     "cssnano": "^3.10.0",
     "devcert-with-localhost": "^0.3.3",
@@ -80,7 +84,7 @@
     "style-loader": "^0.19.1",
     "ts-loader": "^4.2.0",
     "typed-css-modules": "^0.3.1",
-    "typescript": "^2.6.2",
+    "typescript": "^2.8.1",
     "typings-for-css-modules-loader": "^1.7.0",
     "uglify-es": "^3.3.5",
     "url-polyfill": "^1.0.10",

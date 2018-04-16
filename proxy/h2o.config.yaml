@@ -19,9 +19,9 @@ hosts:
         # proxy.preserve-host: ON     # to not rewrite the incoming host:port
         proxy.timeout.keepalive: 0  # to explicitly disable persistent connections to the application server
         header.unset: "link"
-#access-log: ./logs/h2o/access
-#error-log: ./logs/h2o/error
-#pid-file: ./h2o.pid
+access-log: ./logs/access
+error-log: ./logs/error
+pid-file: ./h2o.pid
 http2-reprioritize-blocking-assets: OFF   # performance tuning option
 http2-push-preload: ON
 compress: OFF # Enable Brotli and Gzip compression

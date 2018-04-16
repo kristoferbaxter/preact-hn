@@ -43,19 +43,9 @@ module.exports = {
     alias: CommonOptions.ResolveAliases,
   },
   plugins: [
-    CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       IS_CLIENT: false,
     }),
-    new CopyWebpackPlugin(
-      [
-        {from: 'static', to: 'static'},
-        {from: 'proxy/cert.pem'},
-        {from: 'proxy/h2o.config.yaml'},
-        {from: 'proxy/key.pem'},
-      ],
-      {copyUnmodified: true},
-    ),
     new webpack.DefinePlugin({
       IS_CLIENT: false,
     }),

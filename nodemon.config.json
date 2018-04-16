@@ -5,7 +5,6 @@
     "src/"
   ],
   "events": {
-    "start": "yarn run start:h2o",
     "restart": "osascript -e 'display notification \"hn-web restarting\" with title \"nodemon\"'"
   }
 }

@@ -40,7 +40,6 @@ module.exports = {
     alias: CommonOptions.ResolveAliases,
   },
   plugins: [
-    CommonOptions.CleanupPlugin,
     new webpack.DefinePlugin({
       DO_NOT_TRACK: 'navigator.msDoNotTrack || window.doNotTrack',
       POLYFILL_OBJECT_ASSIGN: false,
